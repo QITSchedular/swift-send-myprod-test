@@ -17,7 +17,9 @@ How to correctly deploy the application
         LINK TO THE DOCS:  https://pptr.dev/troubleshooting
 4. Finally upload the zip of the original project code and deploy the app again and it should work fine.
 
-Application_name: SwiftSendProductions.
-Environment_name: SwiftSendProductions.
+Application_name: SwiftSendProduction.
+Environment_name: SwiftSendProduction.
+Code_Pipeline: SwiftSendProductionPipeline.
+cONNECTION_nAMES: PipelineConnectionSSPROD
 
 Check Browser version: chromium-browser --version
