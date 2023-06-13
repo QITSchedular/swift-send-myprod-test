@@ -49,11 +49,11 @@ const conn = mysql.createConnection({
 });
 
 // const conn = mysql.createConnection({
-//     host: 'm3-db.cpqpqooy9dzn.ap-south-1.rds.amazonaws.com',
-//     user: 'admin',
-//     password: 'M3passb4u#0',
-//     database: 'qrdb',
-// })
+//   host: "m3-db.cpqpqooy9dzn.ap-south-1.rds.amazonaws.com",
+//   user: "admin",
+//   password: "M3passb4u#0",
+//   database: "qrdb",
+// });
 conn.connect((err) => {
   if (err) {
     console.error("Error connecting to the database:", err);
