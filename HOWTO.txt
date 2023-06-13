@@ -1,0 +1,23 @@
+How to correctly deploy the application
+1. The application requires some depedencies to be installed in ec2 instances.
+2. Create a sample elastic beanstalk project and user the sample code to deploy.
+3. Then ssh into the ec2 instance and run these commands:
+        Running Puppeteer on AWS EC2 instance running Amazon-Linux
+        If you are using an EC2 instance running amazon-linux in your CI/CD pipeline, and if you want to run Puppeteer tests in amazon-linux, follow these steps.
+
+        To install Chromium, you have to first enable amazon-linux-extras which comes as part of EPEL (Extra Packages for Enterprise Linux):
+
+        sudo amazon-linux-extras install epel -y
+
+        Next, install Chromium:
+
+        sudo yum install -y chromium
+
+        Now Puppeteer can launch Chromium to run your tests. If you do not enable EPEL and if you continue installing chromium as part of npm install, Puppeteer cannot launch Chromium due to unavailablity of libatk-1.0.so.0 and many more packages.
+        LINK TO THE DOCS:  https://pptr.dev/troubleshooting
+4. Finally upload the zip of the original project code and deploy the app again and it should work fine.
+
+Application_name: SwiftSendProductions.
+Environment_name: SwiftSendProductions.
+
+Check Browser version: chromium-browser --version

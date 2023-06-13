@@ -1,0 +1,9 @@
+node_modules
+.env
+node_modules
+/serverlogs.js
+/index_s.js
+/sadie.jpg
+/test.html
+/test.js
+/swift-send-key-pair.pem
