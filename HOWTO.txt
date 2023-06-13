@@ -25,3 +25,5 @@ Check Browser version: chromium-browser --version
 
 Issue--------------------------------------------------------
 npm issue
+
+Fixed by using a greater instance
