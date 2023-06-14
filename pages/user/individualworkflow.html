@@ -2304,7 +2304,8 @@
                                 timer: 4000,
                                 showConfirmButton: false,
                             })
-                        } else if (!data.status_code && data[0].isActive == 1) {
+                        } 
+                        else if (!data.status_code && data[0].isActive == 1) {
                             $.ajax({
                                 url: "/getData",
                                 method: "post",
@@ -2350,7 +2351,8 @@
                                                     $('#execute')
                                                         .removeClass('btn-warning btn-primary')
                                                         .addClass('btn-success')
-                                                        .html(`Execute`);
+                                                        .html(`<i class=" ri-play-circle-line align-middle fs-15 me-lg-1 me-md-1"></i>
+                                                                <span class="d-none d-lg-inline-block d-md-inline-block">Execute</span>`);
                                                 }
                                             })
                                         }
@@ -2362,6 +2364,12 @@
                                             type: 'error',
                                             timer: 4000,
                                             showConfirmButton: false,
+                                        }).then(()=>{
+                                            $('#execute')
+                                                .removeClass('btn-warning btn-primary')
+                                                .addClass('btn-success')
+                                                .html(`<i class=" ri-play-circle-line align-middle fs-15 me-lg-1 me-md-1"></i>
+                                                                <span class="d-none d-lg-inline-block d-md-inline-block">Execute</span>`);
                                         })
                                     }
                                 }

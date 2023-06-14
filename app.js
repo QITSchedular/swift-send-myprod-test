@@ -43,14 +43,16 @@ const conn = mysql.createConnection({
     host: '164.52.208.110',
     user: 'qitsolution_tempuser',
     password: 'Qit123@#india',
-    database: 'qitsolution_sample',
+    database: 'qitsolution_swiftsend',
 })
 
+//Db itentifier: swift-send-db-itentifier
+// username: admin
 // const conn = mysql.createConnection({
 //     host: 'm3-db.cpqpqooy9dzn.ap-south-1.rds.amazonaws.com',
 //     user: 'admin',
-//     password: 'M3passb4u#0',
-//     database: 'qrdb',
+//     password: 'Swiftsendpassb4u#0',
+//     database: 'swiftsend',
 // })
 conn.connect((err) => {
     if (err) {
@@ -919,7 +921,7 @@ app.post("/bulktemplatemessage", async function (req, res) {
                                 let msgid = crypto.randomBytes(8).toString("hex");
 
                                 conn.query(`insert into message values(?,?,?,?,?,?,?,?)`,
-                                    [msgid, msgarr[i], 'Bulk Message Template localfile', chatId, iid, apikey, token, new Date()],
+                                    [msgid, msgarr[i], 'Bulk Message Template', chatId, iid, apikey, token, new Date()],
                                     function (err, result) {
                                         if (err || result.affectedRows < 1) return status.internalservererror();
                                         if (i === clientobj.length - 1) {
@@ -1087,7 +1089,7 @@ app.post("/bulkcustommessage", async function (req, res) {
 
                             obj[iid].send_whatsapp_message(chatId, message).then((messageId) => {
                                 conn.query(`insert into message values(?,?,?,?,?,?,?,?)`,
-                                    [msgid, message, 'Bulk Message custom localfile', chatId, iid, apikey, token, new Date()],
+                                    [msgid, message, 'Bulk Message custom', chatId, iid, apikey, token, new Date()],
                                     function (err, result) {
                                         if (err || result.affectedRows < 1) return res.send(status.internalservererror());
                                         if (i === contacts.length - 1) return res.send(status.ok());
