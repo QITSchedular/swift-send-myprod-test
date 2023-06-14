@@ -1,0 +1,922 @@
+<!doctype html>
+<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg"
+    data-sidebar-image="none" data-preloader="disable">
+
+<head>
+
+    <meta charset="utf-8" />
+    <title>Landing | SwiftSend</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="../assets/images/favicon.ico">
+
+    <!--Swiper slider css-->
+    <link href="../assets/libs/swiper/swiper-bundle.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- aos css -->
+    <link rel="stylesheet" href="../assets/libs/aos/aos.css" />
+    <!-- Layout config Js -->
+    <script src="../assets/js/layout.js"></script>
+    <!-- Bootstrap Css -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="../assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="../assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <!-- custom Css-->
+    <link href="../assets/css/custom.min.css" rel="stylesheet" type="text/css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.11/typed.min.js"
+        integrity="sha512-BdHyGtczsUoFcEma+MfXc71KJLv/cd+sUsUaYYf2mXpfG/PtBjNXsPo78+rxWjscxUYN2Qr2+DbeGGiJx81ifg=="
+        crossorigin="anonymous"></script>
+
+</head>
+
+<style>
+    .positivity {
+        /* position: absolute;
+        top: 0%;
+        left: 50%;
+        transform: translate(-50%, -50%); */
+
+        width: auto;
+        height: auto;
+        padding: 1rem;
+        overflow: hidden;
+        text-transform: uppercase;
+    }
+
+    .positivity .positivity__alone {
+        font-size: 2rem;
+        font-family: serif;
+        color: #000000;
+    }
+
+    .positivity .positivity__words .change {
+        position: absolute;
+        left: 10%;
+        opacity: 0;
+        -webkit-animation: changeword 8s linear infinite;
+        animation: changeword 8s linear infinite;
+        font-family: serif;
+        font-size: 2rem;
+        font-weight: bolder;
+    }
+
+    .positivity .positivity__words .change:nth-child(1) {
+        -webkit-animation-delay: 0s;
+        animation-delay: 0s;
+    }
+
+    .positivity .positivity__words .change:nth-child(2) {
+        -webkit-animation-delay: 2s;
+        animation-delay: 2s;
+    }
+
+    .positivity .positivity__words .change:nth-child(3) {
+        -webkit-animation-delay: 4s;
+        animation-delay: 4s;
+    }
+
+    .positivity .positivity__words .change:nth-child(4) {
+        -webkit-animation-delay: 6s;
+        animation-delay: 6s;
+    }
+
+    @-webkit-keyframes changeword {
+        0% {
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+
+        5% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        20% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        30% {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        80% {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+    }
+
+    @keyframes changeword {
+        0% {
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+
+        5% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        20% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        30% {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        80% {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+    }
+</style>
+
+<body data-bs-spy="scroll" data-bs-target="#navbar-example">
+
+    <!-- Begin page -->
+    <div class="layout-wrapper landing">
+        <nav class="navbar navbar-expand-lg navbar-landing fixed-top" id="navbar">
+            <div class="container">
+                <a class="navbar-brand" href="/">
+                    <img src="../assets/images/logo-dark.svg" class="card-logo card-logo-dark" alt="logo dark"
+                        height="80">
+                    <img src="../assets/images/logo-dark.svg" class="card-logo card-logo-light" alt="logo light"
+                        height="80">
+                </a>
+                <button class="navbar-toggler py-0 fs-20 text-body" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="mdi mdi-menu"></i>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-auto mt-2 mt-lg-0" id="navbar-example">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#hero">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#services">Services</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#reviews">Reviews</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#plans">Plans</a>
+                        </li>
+                    </ul>
+
+                    <div class="">
+                        <a href="/signin" class="btn btn-link fw-medium text-decoration-none text-dark">Sign in</a>
+                        <a href="/signup" class="btn btn-primary">Sign Up</a>
+                    </div>
+                </div>
+
+            </div>
+        </nav>
+        <!-- end navbar -->
+        <div class="vertical-overlay" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent.show"></div>
+
+        <!-- start hero section -->
+        <section class="section mb-2 hero-section" id="hero">
+            <div class="bg-overlay bg-overlay-pattern"></div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 col-sm-10">
+                        <div class="text-center mt-lg-5 pt-5">
+                            <h1 class="display-6 fw-semibold mb-3 lh-base">The better way to communicate with
+                                <span class="text-info">SwiftSend</span>
+                            </h1>
+
+                            <div class="d-flex gap-4 justify-content-center mt-4 ">
+                                <a href="/signup" class="btn btn-primary fs-16">Get Started
+                                    <i class="ri-arrow-right-line align-middle ms-1"></i>
+                                </a>
+                                <a href="/docs" class="btn btn-outline-success fs-16">
+                                    <i class="bx bx-file align-middle me-2 fs-20"></i>Api Documentation
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 mt-sm-5 pt-sm-5 mb-sm-n5 demo-carousel">
+                            <div class="demo-img-patten-top d-none d-sm-block">
+                                <img src="../assets/images/landing/img-pattern.png" class="d-block img-fluid" alt="...">
+                            </div>
+                            <div class="demo-img-patten-bottom d-none d-sm-block">
+                                <img src="../assets/images/landing/img-pattern.png" class="d-block img-fluid" alt="...">
+                            </div>
+                            <div class="carousel slide carousel-fade" data-bs-ride="carousel">
+                                <div class="carousel-inner shadow-lg p-2 bg-white rounded">
+                                    <div class="carousel-item active" data-bs-interval="2000">
+                                        <img src="../assets/images/demos/dashboard_img.png" class="d-block w-100"
+                                            alt="...">
+                                    </div>
+                                    <div class="carousel-item" data-bs-interval="2000">
+                                        <img src="../assets/images/demos/instance_img.png" class="d-block w-100"
+                                            alt="...">
+                                    </div>
+                                    <div class="carousel-item" data-bs-interval="2000">
+                                        <img src="../assets/images/demos/channel_img.png" class="d-block w-100"
+                                            alt="...">
+                                    </div>
+                                    <div class="carousel-item" data-bs-interval="2000">
+                                        <img src="../assets/images/demos/contact_img.png" class="d-block w-100"
+                                            alt="...">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container -->
+            <div class="position-absolute start-0 end-0 bottom-0 hero-shape-svg">
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    viewBox="0 0 1440 120">
+                    <g mask="url(&quot;#SvgjsMask1003&quot;)" fill="none">
+                        <path d="M 0,118 C 288,98.6 1152,40.4 1440,21L1440 140L0 140z">
+                        </path>
+                    </g>
+                </svg>
+            </div>
+            <!-- end shape -->
+        </section>
+        <!-- end hero section -->
+
+        <section class="section mb-2" id="services">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="text-center mb-5">
+                            <h3 class="mb-3 fw-semibold">Key Features</h3>
+                            <p class="text-muted mb-4 ff-secondary">"Simplify, automate, and elevate your communication
+                                with our powerful web app."</p>
+                        </div>
+                    </div>
+                    <!-- end col -->
+                </div>
+                <!-- end row -->
+
+                <div class="row g-3">
+                    <div class="col-lg-4">
+                        <div class="d-flex p-3">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="avatar-sm icon-effect">
+                                    <div class="avatar-title bg-transparent text-success rounded-circle">
+                                        <i class="mdi mdi-whatsapp fs-36"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h5 class="fs-18">Send WhatsApp Messages</h5>
+                                <p class="text-muted my-3 ff-secondary">
+                                    Streamline your messaging with our web app - effortlessly send customized and personalized messages to your clients.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end col -->
+                    <div class="col-lg-4">
+                        <div class="d-flex p-3">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="avatar-sm icon-effect">
+                                    <div class="avatar-title bg-transparent text-success rounded-circle">
+                                        <i class="mdi mdi-email-check-outline fs-36"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h5 class="fs-18">Send Emails</h5>
+                                <p class="text-muted my-3 ff-secondary">Elevate your email communication with our web app - easily send customized and personalized emails</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end col -->
+                    <div class="col-lg-4">
+                        <div class="d-flex p-3">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="avatar-sm icon-effect">
+                                    <div class="avatar-title bg-transparent text-success rounded-circle">
+                                        <i class="bx bxs-contact fs-36"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h5 class="fs-18">Contact Management</h5>
+                                <p class="text-muted my-3 ff-secondary">Effortlessly manage and communicate with your contacts by creating groups for private messaging and email campaigns on our web app.</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end col -->
+                    <div class="col-lg-4">
+                        <div class="d-flex p-3">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="avatar-sm icon-effect">
+                                    <div class="avatar-title bg-transparent text-success rounded-circle">
+                                        <i class="mdi mdi-google-spreadsheet fs-36"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h5 class="fs-18">Connect with Google Sheet</h5>
+                                <p class="text-muted my-3 ff-secondary">Establish a seamless connection with your Google Sheet to effortlessly retrieve vital data about your esteemed clients.</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end col -->
+                    <div class="col-lg-4">
+                        <div class="d-flex p-3">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="avatar-sm icon-effect">
+                                    <div class="avatar-title bg-transparent text-success rounded-circle">
+                                        <i class=" las la-file-csv fs-36"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h5 class="fs-18">Connect with your CSV File</h5>
+                                <p class="text-muted my-3 ff-secondary">Forge a connection with your CSV file to effortlessly access valuable data pertaining to your esteemed clients.</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end col -->
+                    <div class="col-lg-4">
+                        <div class="d-flex p-3">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="avatar-sm icon-effect">
+                                    <div class="avatar-title bg-transparent text-success rounded-circle">
+                                        <i class="bx bxs-book fs-36"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h5 class="fs-18">Exceptional documentation</h5>
+                                <p class="text-muted my-3 ff-secondary">Access comprehensive API documentation to empower developers with clear request and response information, enabling seamless integration with our web app.</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end col -->
+                    <div class="col-lg-4">
+                        <div class="d-flex p-3">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="avatar-sm icon-effect">
+                                    <div class="avatar-title bg-transparent text-success rounded-circle">
+                                        <i class="mdi mdi-arrow-decision fs-36"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h5 class="fs-18">Automate Your Task</h5>
+                                <p class="text-muted my-3 ff-secondary">Experience powerful automation of APIs, workflows and functionalities, streamlining processes and boosting efficiency, all on our web app.</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end col -->
+                    <div class="col-lg-4">
+                        <div class="d-flex p-3">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="avatar-sm icon-effect">
+                                    <div class="avatar-title bg-transparent text-success rounded-circle">
+                                        <i class="ri-pages-fill fs-36"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h5 class="fs-18">Customized Templates</h5>
+                                <p class="text-muted my-3 ff-secondary">On our web app, you can effortlessly craft personalized message templates to suit your specific needs and preferences.</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end col -->
+                    <div class="col-lg-4">
+                        <div class="d-flex p-3">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="avatar-sm icon-effect">
+                                    <div class="avatar-title bg-transparent text-success rounded-circle">
+                                        <i class=" bx bxs-microphone fs-36"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h5 class="fs-18">Voice Commands</h5>
+                                <p class="text-muted my-3 ff-secondary">Our web app has the capability to accurately interpret and respond to voice commands, ensuring seamless functionality based on your spoken instructions.</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end col -->
+                    <div class="col-lg-4">
+                        <div class="d-flex p-3">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="avatar-sm icon-effect">
+                                    <div class="avatar-title bg-transparent text-success rounded-circle">
+                                        <i class="ri-customer-service-line fs-36"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h5 class="fs-18">Awesome Support</h5>
+                                <p class="text-muted my-3 ff-secondary">Awesome Support is the most versatile and feature-rich support plugin for all version.Solve your problems and get instant support with our WhatsApp bot or generate support tickets for seamless issue resolution.</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end col -->
+                    <div class="col-lg-4">
+                        <div class="d-flex p-3">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="avatar-sm icon-effect">
+                                    <div class="avatar-title bg-transparent text-success rounded-circle">
+                                        <i class="ri-dashboard-2-line fs-36"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h5 class="fs-18">Amazing Insights</h5>
+                                <p class="text-muted my-3 ff-secondary">Our web app provides you with remarkable insights that allow for in-depth analysis of your messaging patterns.</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end col -->
+                    <div class="col-lg-4">
+                        <div class="d-flex p-3">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="avatar-sm icon-effect">
+                                    <div class="avatar-title bg-transparent text-success rounded-circle">
+                                        <i class="mdi mdi-clock-outline fs-36"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h5 class="fs-18">Schedule Your Message</h5>
+                                <p class="text-muted my-3 ff-secondary">Our web app offers a convenient solution for scheduling messages, empowering users to plan and automate their communication effectively.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end col -->
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container -->
+        </section>
+        <!-- start review -->
+        <section class="section mb-2 bg-primary" id="reviews">
+            <div class="bg-overlay bg-overlay-pattern"></div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="text-center">
+                            <div>
+                                <i class="ri-double-quotes-l text-success display-3"></i>
+                            </div>
+                            <h4 class="text-white mb-5"><span class="text-success">19k</span>+ Satisfied clients</h4>
+
+                            <!-- Swiper -->
+                            <div class="swiper client-review-swiper rounded" dir="ltr">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <div class="row justify-content-center">
+                                            <div class="col-10">
+                                                <div class="text-white-50">
+                                                    <p class="fs-20 ff-secondary mb-4">" I am givng 5 stars. Theme is
+                                                        great and everyone one stuff everything in theme. Future request
+                                                        should not affect current state of theme. "</p>
+
+                                                    <div>
+                                                        <h5 class="text-white">gregoriusus</h5>
+                                                        <p>- Skote User</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end slide -->
+                                    <div class="swiper-slide">
+                                        <div class="row justify-content-center">
+                                            <div class="col-10">
+                                                <div class="text-white-50">
+                                                    <p class="fs-20 ff-secondary mb-4">" Awesome support. Had few issues
+                                                        while setting up because of my device, the support team helped
+                                                        me fix them up in a day. Everything looks clean and good. Highly
+                                                        recommended! "</p>
+
+                                                    <div>
+                                                        <h5 class="text-white">GeekyGreenOwl</h5>
+                                                        <p>- Skote User</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end slide -->
+                                    <div class="swiper-slide">
+                                        <div class="row justify-content-center">
+                                            <div class="col-10">
+                                                <div class="text-white-50">
+                                                    <p class="fs-20 ff-secondary mb-4">" Amazing template, Redux store
+                                                        and components is nicely designed. It's a great start point for
+                                                        an admin based project. Clean Code and good documentation.
+                                                        Template is completely in React and absolutely no usage of
+                                                        jQuery "</p>
+
+                                                    <div>
+                                                        <h5 class="text-white">sreeks456</h5>
+                                                        <p>- Veltrix User</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end slide -->
+                                </div>
+                                <div class="swiper-button-next bg-white rounded-circle"></div>
+                                <div class="swiper-button-prev bg-white rounded-circle"></div>
+                                <div class="swiper-pagination position-relative mt-2"></div>
+                            </div>
+                            <!-- end slider -->
+                        </div>
+                    </div>
+                    <!-- end col -->
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container -->
+        </section>
+        <!-- end review -->
+
+        <section class="py-5 position-relative bg-white">
+            <div class="container">
+                <div class="row text-center gy-4">
+                    <div class="col-lg-4 col-6">
+                        <div>
+                            <h2 class="mb-2">
+                                <span class="counter-value" data-target="" id="totaluser"></span>+
+                            </h2>
+                            <div class="text-muted">Total Users</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-6">
+                        <div>
+                            <h2 class="mb-2">
+                                <span class="counter-value" data-target="" id="totalinstance"></span>
+                            </h2>
+                            <div class="text-muted">Total Instance</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-6">
+                        <div>
+                            <h2 class="mb-2">
+                                <span class="counter-value" data-target="" id="totalmessage"></span>
+                            </h2>
+                            <div class="text-muted">Total Message Sent</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container -->
+        </section>
+
+
+        <!-- start plan -->
+        <section class="section mb-0 bg-light" id="plans">
+            <div class="bg-overlay bg-overlay-pattern"></div>
+            <!-- <div class="container"> -->
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="text-center mb-5">
+                            <h3 class="mb-3 fw-semibold">Choose the plan that's right for you</h3>
+                            <p class="text-muted mb-4">Simple pricing. No hidden fees. Advanced features for you
+                                business.</p>
+                        </div>
+                    </div>
+                    <!-- end col -->
+                </div>
+                <!-- end row -->
+
+                <div class="row">
+                    <div class="col-lg-8 m-auto">
+                    <ul class="nav nav-pills justify-content-center arrow-navtabs nav-success mb-3" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bs-toggle="tab" href="#month" role="tab" id="month_tab">
+                                <span class="d-block d-sm-none"><i class="mdi mdi-home-variant"></i></span>
+                                <span class="d-none d-sm-block" id="monthlyplans">Monthly Plans</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#year" role="tab" id="year_tab">
+                                <span class="d-block d-sm-none">
+                                    <i class="mdi mdi-account"></i>
+                                </span>
+                                <span class="d-none d-sm-block" id="yearlyplans">Yearly Plans</span>
+                            </a>
+                        </li>
+                    </ul>
+                
+                    <!-- Tab panes -->
+                    <div class="tab-content text-muted">
+                        <div class="tab-pane active" id="month" role="tabpanel">
+                            <div class="row mt-4 justify-content-center" id="month_data"></div>
+                        </div>
+                        <div class="tab-pane" id="year" role="tabpanel">
+                            <div class="row mt-4 justify-content-center" id="year_data"></div>
+                        </div>
+                    </div>
+
+                    
+                </div>
+                </div>
+            <!-- </div> -->
+        </section>
+        <!-- end plan -->
+
+        
+        <!-- Start footer -->
+        <footer class="custom-footer bg-dark py-5 position-relative">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 mt-4">
+                        <div>
+                            <div>
+                                <img src="../assets/images/logo-dark.svg" alt="logo light" height="90">
+                            </div>
+                            <div class="mt-4 fs-13">
+                                <p>Premium Multipurpose Bulk Messaging System</p>
+                                <p class="ff-secondary">
+                                    Our groundbreaking web app effortlessly sends personalized bulk WhatsApp messages and emails while seamlessly integrating with Google Sheets, CSV files, or contact groups. With task automation, scheduling capabilities, and voice command functionality, communication becomes streamlined and efficient.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-7 ms-lg-auto">
+                        <div class="row">
+                            <div class="col-sm-4 mt-4">
+                                <h5 class="text-white mb-0">Company</h5>
+                                <div class="text-muted mt-3">
+                                    <ul class="list-unstyled ff-secondary footer-list">
+                                        <li><a href="#hero">About Us</a></li>
+                                        <li><a href="#services">Services</a></li>
+                                        <li><a href="#reviews">Reviews</a></li>
+                                        <li><a href="#plans">Plans</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 mt-4">
+                                <h5 class="text-white mb-0">Apps Pages</h5>
+                                <div class="text-muted mt-3">
+                                    <ul class="list-unstyled ff-secondary footer-list">
+                                        <li><a href="/signin">Bulk Message</a></li>
+                                        <li><a href="/signin">Bulk Mail</a></li>
+                                        <li><a href="/signin">Contacts</a></li>
+                                        <li><a href="/signin">Channel</a></li>
+                                        <li><a href="/signin">Chat</a></li>
+                                        <li><a href="/signin">Workflow</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 mt-4">
+                                <h5 class="text-white mb-0">Support</h5>
+                                <div class="text-muted mt-3">
+                                    <ul class="list-unstyled ff-secondary footer-list">
+                                        <li><a href="">FAQ</a></li>
+                                        <li><a href="">Contact</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row text-center text-sm-start align-items-center mt-5">
+                    <div class="col-sm-6">
+
+                        <div>
+                            <p class="copy-rights mb-0">
+                                <script> document.write(new Date().getFullYear()) </script> © SwiftSend
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="text-sm-end mt-3 mt-sm-0">
+                            <ul class="list-inline mb-0 footer-social-link">
+                                <li class="list-inline-item">
+                                    <a href="javascript: void(0);" class="avatar-xs d-block">
+                                        <div class="avatar-title rounded-circle">
+                                            <i class="ri-facebook-fill"></i>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="javascript: void(0);" class="avatar-xs d-block">
+                                        <div class="avatar-title rounded-circle">
+                                            <i class="ri-github-fill"></i>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="javascript: void(0);" class="avatar-xs d-block">
+                                        <div class="avatar-title rounded-circle">
+                                            <i class="ri-linkedin-fill"></i>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="javascript: void(0);" class="avatar-xs d-block">
+                                        <div class="avatar-title rounded-circle">
+                                            <i class="ri-google-fill"></i>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="javascript: void(0);" class="avatar-xs d-block">
+                                        <div class="avatar-title rounded-circle">
+                                            <i class="ri-dribbble-line"></i>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- end footer -->
+
+
+        <!--start back-to-top-->
+        <button onclick="topFunction()" class="btn btn-danger btn-icon landing-back-top" id="back-to-top">
+            <i class="ri-arrow-up-line"></i>
+        </button>
+        <!--end back-to-top-->
+
+    </div>
+    <!-- end layout wrapper -->
+
+
+    <!-- JAVASCRIPT -->
+    <script src="../assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="../assets/libs/node-waves/waves.min.js"></script>
+    <script src="../assets/libs/feather-icons/feather.min.js"></script>
+    <script src="../assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
+    <script src="../assets/js/plugins.js"></script>
+
+    <!--Swiper slider js-->
+    <script src="../assets/libs/swiper/swiper-bundle.min.js"></script>
+
+    <!-- landing init -->
+    <script src="../assets/js/pages/landing.init.js"></script>
+    <script src="../assets/js/jquery.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+            $.ajax({
+                url: "/get-landingpage-data",
+                method: "GET",
+                success: function (val) {
+                    console.log(val[0].total);
+                    $('#totaluser').html(val[0].total);
+                    $('#totalinstance').html(val[1].total);
+                    $('#totalmessage').html(val[2].total);
+                    $('#totaluser').attr('data-target', val[0].total);
+                    $('#totalinstance').attr('data-target', val[1].total);
+                    $('#totalmessage').attr('data-target', val[2].total);
+                }
+            })
+
+            text = ["Send Message", "Bulk Message", "Bulk Mail", "Manage Contact"]
+            intervalTime = 600;
+            // window.load = displayText();
+            function displayText() {
+                document.querySelector('#dynamicContent').innerText = text[0];
+                setTimeout(() => {
+                    document.querySelector('#dynamicContent').innerText = text[1];
+                }, intervalTime * 3);
+                setTimeout(() => {
+                    document.querySelector('#dynamicContent').innerText = text[2];
+                }, intervalTime * 5);
+                setTimeout(() => {
+                    document.querySelector('#dynamicContent').innerText = text[3];
+                }, intervalTime * 7);
+            }
+
+            // displayText();
+
+            setInterval(() => {
+                displayText();
+            }, intervalTime * 9);
+
+            function planDataDisplay(type, str) {
+                $.ajax({
+                    url: "/getDataWithCondition",
+                    method: "POST",
+                    data: {
+                        
+                            "table": `plans`,
+                            "paramstr": `plan_type = '${type}'`
+                        
+                    },
+                    success: function (val) {
+                        console.log(val);
+                        let result = ``;
+                        for (let i in val) {
+                            result += `<div class="col-lg-4">
+                                        <div class="card pricing-box">
+                                            <div class="card-body bg-light m-2 p-4">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="flex-grow-1 text-center">
+                                                        <h3 class="text-primary">${val[i].pname}</h3>
+                                                    </div>
+                                                </div>
+                                                <h4 class="text-center">${val[i].price} &#8377;</h4>
+                                                <ul class="list-unstyled vstack gap-3">
+                                                    <li class="mt-2">
+                                                        <div class="d-flex">
+                                                            <div class="flex-shrink-0 text-success me-1">
+                                                                <i class="ri-checkbox-circle-fill fs-15 align-middle"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1">
+                                                                Valid for 
+                                                                <span class="text-primary">
+                                                                    ${val[i].durationMonth} Month
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="mt-2">
+                                                        <div class="d-flex">
+                                                            <div class="flex-shrink-0 text-success me-1">
+                                                                <i class="ri-checkbox-circle-fill fs-15 align-middle"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1">
+                                                                ${val[i].totalMessage} Messages Limit
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="mt-2">
+                                                        <div class="d-flex">
+                                                            <div class="flex-shrink-0 text-success me-1">
+                                                                <i class="ri-checkbox-circle-fill fs-15 align-middle"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1">
+                                                                Send Media / documents
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="mt-2">
+                                                        <div class="d-flex">
+                                                            <div class="flex-shrink-0 text-success me-1">
+                                                                <i class="ri-checkbox-circle-fill fs-15 align-middle"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1">
+                                                                ${val[i].totalInstance} Instances Limit
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <div class="mt-4">
+                                                    <button class="btn btn-info w-100" onclick="window.location.href='/signup'">
+                                                        SUBSCRIBE
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                        }
+                        $(`#${str}_data`).html(result);
+                    }
+                })
+            }
+            planDataDisplay('Monthly', 'month');
+
+            $(document).on('click', '#year_tab', function () {
+                planDataDisplay('Yearly', 'year');
+            })
+
+            $(document).on('click', '#month_tab', function () {
+                planDataDisplay('Monthly', 'month');
+            })
+        })
+    </script>
+</body>
+
+</html>
