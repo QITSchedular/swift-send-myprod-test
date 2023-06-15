@@ -302,7 +302,7 @@ async function sendEmail(sender, to, subject, body) {
         subject: subject,
         html: body,
     };
-    console.log("This is mail options", mailOptions)
+
     return await new Promise((resolve, reject) => {
         transporter.sendMail(mailOptions, function (error) {
             if (error) return reject(error);
@@ -441,7 +441,7 @@ app.post("/sheetdata", async (req, res) => {
         }
         object["colnames"] = colnames;
         object["values"] = data;
-        console.log(object);
+        // console.log(object);
         res.send(object);
     }
     catch (e) {
@@ -511,7 +511,7 @@ app.get("/adminBotWork/:iid", (req, res) => {
             // Update the form questions with the user's answers
             questions.forEach((q, i) => {
                 q.answer = answers[i];
-                console.log(q.answer);
+                // console.log(q.answer);
             });
             const generateUniqueId = () => {
                 const prefix = "W-";
@@ -537,28 +537,28 @@ app.get("/adminBotWork/:iid", (req, res) => {
             let a_Feedback = new Array();
 
             conn.query(`select * from support_agents`, (err, result) => {
-                console.log(result);
+                // console.log(result);
                 if (err || result.length <= 0) res.send(status.internalservererror());
                 if (result.length > 0) {
                     for (let i = 0; i < result.length; i++) {
                         a_agents.push(result[i].email);
-                        console.log("agents", a_agents);
+                        // console.log("agents", a_agents);
                         if (result[i].category == "Account Management") {
-                            console.log(a_Account_Management);
+                            // console.log(a_Account_Management);
                             a_Account_Management.push(result[i].email);
                         } else if (result[i].category == "Technical Support") {
-                            console.log(a_Technical_Support);
+                            // console.log(a_Technical_Support);
                             a_Technical_Support.push(result[i].email);
                         } else if (result[i].category == "Payment Problem") {
-                            console.log(a_Payment_Problem);
+                            // console.log(a_Payment_Problem);
                             a_Payment_Problem.push(result[i].email);
                         }
                         else if (result[i].category == "Service Inquiry") {
-                            console.log(a_Service_Inquiry);
+                            // console.log(a_Service_Inquiry);
                             a_Service_Inquiry.push(result[i].email);
                         }
                         else if (result[i].category == "Feedback and Suggestions") {
-                            console.log(a_Feedback);
+                            // console.log(a_Feedback);
                             a_Feedback.push(result[i].email);
                         }
                     }
@@ -582,7 +582,7 @@ app.get("/adminBotWork/:iid", (req, res) => {
                             conn.query(`INSERT INTO support_ticket VALUES(?,?,?,?,?,?,?,?,?,?)`,
                                 [t_id, 'whatsapp', phone, subject, type, description, 'open', new Date(), res1[0].apikey, Agent_email], (err, res2) => {
                                     if (err) console.log(err);
-                                    console.log(res2);
+                                    // console.log(res2);
                                     if (res2 > 0) {
                                         obj[iid].send_whatsapp_message(message.from, 'your support-ticket has been generated successfully!!!');
                                     }
@@ -607,7 +607,7 @@ app.get("/adminBotWork/:iid", (req, res) => {
                         async (error, results) => {
                             if (error) console.log(error);
                             if (results.length > 0) {
-                                console.log(results);
+                                // console.log(results);
 
                                 let count = 1;
                                 let msg = "*you have to write a number correspond to the problem which displaying in below message for the information.*\n";
@@ -627,7 +627,7 @@ app.get("/adminBotWork/:iid", (req, res) => {
                         async (error, results) => {
                             if (error) console.log(error);
                             if (results.length > 0) {
-                                console.log(results);
+                                // console.log(results);
 
                                 await obj[iid].send_whatsapp_message(message.from, results[0].description);
                             }
@@ -639,7 +639,7 @@ app.get("/adminBotWork/:iid", (req, res) => {
                         async (error, results) => {
                             if (error) console.log(error);
                             if (results.length > 0) {
-                                console.log(results);
+                                // console.log(results);
 
                                 await obj[iid].send_whatsapp_message(message.from, results[0].description);
                             }
@@ -651,7 +651,7 @@ app.get("/adminBotWork/:iid", (req, res) => {
                         async (error, results) => {
                             if (error) console.log(error);
                             if (results.length > 0) {
-                                console.log(results);
+                                // console.log(results);
 
                                 await obj[iid].send_whatsapp_message(message.from, results[0].description);
                             }
@@ -663,7 +663,7 @@ app.get("/adminBotWork/:iid", (req, res) => {
                         async (error, results) => {
                             if (error) console.log(error);
                             if (results.length > 0) {
-                                console.log(results);
+                                // console.log(results);
 
                                 await obj[iid].send_whatsapp_message(message.from, results[0].description);
                             }
@@ -675,7 +675,7 @@ app.get("/adminBotWork/:iid", (req, res) => {
                         async (error, results) => {
                             if (error) console.log(error);
                             if (results.length > 0) {
-                                console.log(results);
+                                // console.log(results);
 
                                 await obj[iid].send_whatsapp_message(message.from, results[0].description);
                             }
@@ -687,7 +687,7 @@ app.get("/adminBotWork/:iid", (req, res) => {
                         async (error, results) => {
                             if (error) console.log(error);
                             if (results.length > 0) {
-                                console.log(results);
+                                // console.log(results);
 
                                 await obj[iid].send_whatsapp_message(message.from, results[0].description);
                             }
@@ -699,7 +699,7 @@ app.get("/adminBotWork/:iid", (req, res) => {
                         async (error, results) => {
                             if (error) console.log(error);
                             if (results.length > 0) {
-                                console.log(results);
+                                // console.log(results);
 
                                 await obj[iid].send_whatsapp_message(message.from, results[0].description);
                             }
@@ -711,7 +711,7 @@ app.get("/adminBotWork/:iid", (req, res) => {
                         async (error, results) => {
                             if (error) console.log(error);
                             if (results.length > 0) {
-                                console.log(results);
+                                // console.log(results);
 
                                 await obj[iid].send_whatsapp_message(message.from, results[0].description);
                             }
@@ -723,7 +723,7 @@ app.get("/adminBotWork/:iid", (req, res) => {
                         async (error, results) => {
                             if (error) console.log(error);
                             if (results.length > 0) {
-                                console.log(results);
+                                // console.log(results);
 
                                 await obj[iid].send_whatsapp_message(message.from, results[0].description);
                             }
@@ -970,7 +970,7 @@ app.post("/sendimage", async function (req, res) {
                         uploadedFile.mv(uploadPath, async function (err) {
                             if (err) res.send(status.badRequest());
                             let filepath = `${__dirname}/assets/upload/image_data/${apikey}/${iid}/${uploadedFile.name}`;
-                            console.log(filepath);
+                            // console.log(filepath);
                             const media = MessageMedia.fromFilePath(filepath);
                             const caption = req.body.caption;
                             if (obj[iid]) {
@@ -983,7 +983,7 @@ app.post("/sendimage", async function (req, res) {
                                             conn.query(`insert into message values(?,?,?,?,?,?,?,?)`,
                                                 [msgid, data.secure_url, `Document-${req.files.image.mimetype}`, chatId, iid, apikey, token, new Date()],
                                                 function (err, result) {
-                                                    console.log(err);
+                                                    // console.log(err);
                                                     if (err || result.affectedRows < 1) return res.send(status.internalservererror());
                                                     if (i == phonearray.length - 1) {
                                                         res.send(status.ok());
@@ -1386,8 +1386,8 @@ async function sendMessageToTeams(webhookUrl, message) {
         const payload = { text: message };
 
         const response = await axios.post(webhookUrl, payload);
-        console.log('Message sent to Microsoft Teams successfully');
-        console.log('Response:', response.data);
+        // console.log('Message sent to Microsoft Teams successfully');
+        // console.log('Response:', response.data);
         return true;
 
     } catch (error) {
@@ -1870,7 +1870,7 @@ app.post("/addinstance", async (req, res) => {
                         latest.setMonth(latest.getMonth() + duration);
                         remaining_days = Math.ceil(Math.round(latest - current_date) / (1000 * 60 * 60 * 24));
 
-                        console.log(latest, total_instance);
+                        // console.log(latest, total_instance);
                         if (remaining_days > 0) {
                             tableData({
                                 table: "instance",
@@ -1918,7 +1918,6 @@ app.post("/create_custom_template", async function (req, res) {
                         letter_Count += 1;
                     }
                 }
-                console.log(letter_Count);
                 return letter_Count;
             }
             let tempmsg = cstm_message;
@@ -2003,19 +2002,15 @@ app.post("/adduser", (req, res) => {
     const state = req.body.state;
     const city = req.body.city;
 
-    console.log(name, phone, email, password, country, state, city);
-
     if (name && phone && email && password && country && state && name != undefined && phone != undefined && email != undefined && password != undefined && country != undefined && state != undefined) {
         conn.query("SELECT * FROM users WHERE email='" + email + "'",
             function (err, result) {
-                console.log("email find err", err);
                 if (err) return res.send(status.internalservererror());
                 if (result.length > 0) return res.send(status.duplicateRecord());
                 bcrypt.hash(password, 10, (err, hash) => {
                     if (err) return res.send("err in bcrypt");
                     conn.query(`INSERT INTO users (apikey,uname,email,password,phone,phoneverify,country,state,city,registrationDate,image) VALUES(?,?,?,?,?,?,?,?,?,?,?)`, [id, name, email, hash, phone, false, country, state, city, new Date(), null],
                         function (err, result) {
-                            console.log("insert err", err);
                             res.clearCookie("everify");
                             if (err || result.affectedRows == 0) return res.send(status.internalservererror());
                             return res.send(status.ok());
@@ -2052,7 +2047,6 @@ app.post("/signin", (req, res) => {
 
                     res.send(status.ok());
                 } else {
-                    console.log("do not Match");
                     return res.send(status.unauthorized());
                 }
             });
@@ -2478,8 +2472,6 @@ app.put("/updateData", (req, res) => {
         else {
             conn.query(`UPDATE ${req.body.table} SET ${req.body.paramstr} WHERE ${req.body.condition}`,
                 (err, result) => {
-                    console.log(err);
-                    console.log(result);
                     if (err || result.affectedRows <= 0) return res.send(status.internalservererror());
                     if (result <= 0) return res.send(status.nodatafound());
                     res.send(status.ok());
@@ -2500,7 +2492,6 @@ app.delete("/deleterecord", async (req, res) => {
         if (isValidapikey) {
             conn.query(`DELETE FROM ${req.body.obj.table} WHERE ${req.body.obj.paramstr}`,
                 (err, result) => {
-                    console.log(err);
                     if (err || result.affectedRows < 0) return res.send(status.internalservererror());
                     res.send(status.ok());
                 });
@@ -2568,7 +2559,6 @@ app.post('/api/:iid/message', async (req, res) => {
     const iid = req.params.iid;
     const message = req.body.message;
     const chatId = `91${req.body.phone}@c.us`;
-    console.log(iid, chatId, message);
     const isValidapikey = await checkAPIKey(apikey);
     try {
         if (isValidapikey) {
@@ -2769,8 +2759,6 @@ app.post("/createWorkflow", async (req, res) => {
             let iid = req.body.iid;
             conn.query(`insert into workflow values(?,?,?,?,?,?,?)`, [wid, wname, '', 0, '', apikey, iid],
                 (err, result) => {
-                    console.log(err);
-                    console.log(result);
                     if (err) return res.send(status.internalservererror());
                     if (result.affectedRows == 1) {
                         res.send(status.ok());
@@ -2796,11 +2784,9 @@ app.post("/insertWorkflowApi", (req, res) => {
     let body_data = req.body.body_data;
     let apikey = req.body.apikey;
     let instance_id = req.body.instance_id;
-    console.log(req.body);
 
     conn.query(`insert into workflow values('${wfid}','${wfname}','${api_name}',${index_no},'${body_data}','${apikey}','${instance_id}')`,
         (err, result) => {
-            console.log(err);
             if (err) return res.send(status.internalservererror());
             if (result.affectedRows == 1) {
                 res.send(status.ok());
@@ -2812,7 +2798,6 @@ app.post("/insertWorkflowApi", (req, res) => {
 });
 
 app.put("/updateWorkflowSteps", (req, res) => {
-    console.log(req.body);
     conn.query("select * from workflow where workflow_id='" + req.body.workflow_id + "'", (err, result) => {
         if (err) return res.send(status.internalservererror());
         if (result.length > 0) {
@@ -2820,7 +2805,6 @@ app.put("/updateWorkflowSteps", (req, res) => {
             // for (let i = req.body.index_start; i < result.length; i++) { 
             conn.query(`update workflow set index_no=index_no-1 where workflow_id='${req.body.workflow_id}' and index_no>=${req.body.index_start}`, (err, rslt) => {
                 if (err) res.send(status.internalservererror());
-                console.log(rslt);
                 if (rslt.affectedRows == 0) {
                     res.send(status.internalservererror());
                 } else {
@@ -2912,15 +2896,12 @@ app.post("/resetpasswordmail", async (req, res) => {
 
 app.post("/create/orderId", (req, res) => {
     let amount = req.body.amount;
-    console.log("amt", amount);
     var options = {
         amount: amount,
         currency: "INR",
         receipt: "order_rcptid_i5",
     };
     instance.orders.create(options, function (err, order) {
-        console.log("err", err);
-        console.log("order", order);
         res.send({ orderId: order.id });
     });
 });
@@ -2991,7 +2972,6 @@ app.post("/updatePasscode", (req, res) => {
     }
     conn.query(query, (err, result) => {
         if (err) return res.send(status.internalservererror());
-        console.log(result);
         if (result.affectedRows == 1) {
             res.send(status.ok());
         } else {
@@ -3019,7 +2999,6 @@ app.post("/getDataByPage", (req, res) => {
         conn.query(
             `SELECT * FROM ${table} LIMIT ${offset},${limit};`,
             (err, results) => {
-                //console.log(results);
                 res.send(results);
             }
         );
@@ -3033,8 +3012,6 @@ app.post("/getBtn", (req, res) => {
     conn.query(
         `SELECT count(*) as cnt FROM ${table} WHERE ${req.body.paramstr}`,
         (err, results) => {
-            console.log(results);
-            //res.send(results);
             var totalBtn = results[0].cnt / limit;
             res.send({ totalBtn: Math.ceil(totalBtn) });
         }
@@ -3061,7 +3038,6 @@ app.post("/adminSearchRecord", async (req, res) => {
 app.post("/addRecord", function (req, res) {
     let table = req.body.table;
 
-    console.log("inside api");
     if (table == "plans") {
         conn.query(
             `insert into plans(pname,price,durationMonth,totalInstance,totalMessage,discount,plan_type) values('${req.body.pname}',${req.body.price},${req.body.duration},${req.body.instances},${req.body.messages},${req.body.discount},'${req.body.type}')`,
@@ -3078,7 +3054,6 @@ app.post("/addRecord", function (req, res) {
         conn.query(
             `insert into template(temp_name,temp_message,userfields) values('${req.body.tname}','${req.body.message}',${req.body.userfields})`,
             (err, result) => {
-                console.log(result);
                 if (err) return res.send(status.internalservererror());
                 if (result.affectedRows == 1) {
                     res.send(status.ok());
@@ -3088,7 +3063,6 @@ app.post("/addRecord", function (req, res) {
             }
         );
     } else if (table == "support_agents") {
-        console.log(req.body);
         conn.query(
             `insert into support_agents(name,email,password,category) values('${req.body.aname}','${req.body.email}','${req.body.password}','${req.body.category}')`,
             (err, result) => {
@@ -3136,7 +3110,6 @@ app.get("/adminBotWork/:iid", (req, res) => {
             // Update the form questions with the user's answers
             questions.forEach((q, i) => {
                 q.answer = answers[i];
-                console.log(q.answer);
             });
             const generateUniqueId = () => {
                 const prefix = "W-";
@@ -3146,7 +3119,6 @@ app.get("/adminBotWork/:iid", (req, res) => {
                 return prefix + uniqueId.toString().padStart(maxLength, '0');
             };
             // Store the form data in a database
-            //console.log(answers);
             const t_id = generateUniqueId();
             let phone = answers[0];
             let subject = answers[1];
@@ -3162,28 +3134,21 @@ app.get("/adminBotWork/:iid", (req, res) => {
             let a_Feedback = new Array();
 
             conn.query(`select * from support_agents`, (err, result) => {
-                console.log(result);
                 if (err || result.length <= 0) res.send(status.internalservererror());
                 if (result.length > 0) {
                     for (let i = 0; i < result.length; i++) {
                         a_agents.push(result[i].a_email);
-                        console.log("agents", a_agents);
                         if (result[i].a_category == "Account Management") {
-                            console.log(a_Account_Management);
                             a_Account_Management.push(result[i].a_email);
                         } else if (result[i].a_category == "Technical Support") {
-                            console.log(a_Technical_Support);
                             a_Technical_Support.push(result[i].a_email);
                         } else if (result[i].a_category == "Payment Problem") {
-                            console.log(a_Payment_Problem);
                             a_Payment_Problem.push(result[i].a_email);
                         }
                         else if (result[i].a_category == "Service Inquiry") {
-                            console.log(a_Service_Inquiry);
                             a_Service_Inquiry.push(result[i].a_email);
                         }
                         else if (result[i].a_category == "Feedback and Suggestions") {
-                            console.log(a_Feedback);
                             a_Feedback.push(result[i].a_email);
                         }
                     }
@@ -3197,17 +3162,13 @@ app.get("/adminBotWork/:iid", (req, res) => {
                     const agentsInCategory = categories[type];
                     const Agent_email = agentsInCategory[Math.floor(Math.random() * agentsInCategory.length)];
 
-                    //console.log(t_id + " " + phone + " " + subject + " " + type + " " + description);
                     conn.query("select * from users where email='" + Email + "'", (err1, res1) => {
 
-                        if (err1) console.log(err1);
+                        if (err1) return console.log(err1);
                         if (res1.length > 0) {
-                            console.log(res1);
-
                             conn.query(`INSERT INTO support_ticket VALUES(?,?,?,?,?,?,?,?,?,?)`,
                                 [t_id, 'whatsapp', phone, subject, type, description, 'open', new Date(), res1[0].apikey, Agent_email], (err, res2) => {
                                     if (err) console.log(err);
-                                    console.log(res2);
                                     if (res2 > 0) {
                                         obj[iid].send_whatsapp_message(message.from, 'your support-ticket has been generated successfully!!!');
                                     }
@@ -3230,9 +3191,8 @@ app.get("/adminBotWork/:iid", (req, res) => {
                     conn.query(
                         `select description from bot where referencekey='A'`,
                         async (error, results) => {
-                            if (error) console.log(error);
+                            if (error) return console.log(error);
                             if (results.length > 0) {
-                                console.log(results);
 
                                 let count = 1;
                                 let msg = "*you have to write a number correspond to the problem which displaying in below message for the information.*\n";
@@ -3252,7 +3212,6 @@ app.get("/adminBotWork/:iid", (req, res) => {
                         async (error, results) => {
                             if (error) console.log(error);
                             if (results.length > 0) {
-                                console.log(results);
 
                                 await obj[iid].send_whatsapp_message(message.from, results[0].description);
                             }
@@ -3264,7 +3223,6 @@ app.get("/adminBotWork/:iid", (req, res) => {
                         async (error, results) => {
                             if (error) console.log(error);
                             if (results.length > 0) {
-                                console.log(results);
 
                                 await obj[iid].send_whatsapp_message(message.from, results[0].description);
                             }
@@ -3276,7 +3234,6 @@ app.get("/adminBotWork/:iid", (req, res) => {
                         async (error, results) => {
                             if (error) console.log(error);
                             if (results.length > 0) {
-                                console.log(results);
 
                                 await obj[iid].send_whatsapp_message(message.from, results[0].description);
                             }
@@ -3288,7 +3245,6 @@ app.get("/adminBotWork/:iid", (req, res) => {
                         async (error, results) => {
                             if (error) console.log(error);
                             if (results.length > 0) {
-                                console.log(results);
 
                                 await obj[iid].send_whatsapp_message(message.from, results[0].description);
                             }
@@ -3300,7 +3256,6 @@ app.get("/adminBotWork/:iid", (req, res) => {
                         async (error, results) => {
                             if (error) console.log(error);
                             if (results.length > 0) {
-                                console.log(results);
 
                                 await obj[iid].send_whatsapp_message(message.from, results[0].description);
                             }
@@ -3312,7 +3267,6 @@ app.get("/adminBotWork/:iid", (req, res) => {
                         async (error, results) => {
                             if (error) console.log(error);
                             if (results.length > 0) {
-                                console.log(results);
 
                                 await obj[iid].send_whatsapp_message(message.from, results[0].description);
                             }
@@ -3324,7 +3278,6 @@ app.get("/adminBotWork/:iid", (req, res) => {
                         async (error, results) => {
                             if (error) console.log(error);
                             if (results.length > 0) {
-                                console.log(results);
 
                                 await obj[iid].send_whatsapp_message(message.from, results[0].description);
                             }
@@ -3336,7 +3289,6 @@ app.get("/adminBotWork/:iid", (req, res) => {
                         async (error, results) => {
                             if (error) console.log(error);
                             if (results.length > 0) {
-                                console.log(results);
 
                                 await obj[iid].send_whatsapp_message(message.from, results[0].description);
                             }
@@ -3348,7 +3300,6 @@ app.get("/adminBotWork/:iid", (req, res) => {
                         async (error, results) => {
                             if (error) console.log(error);
                             if (results.length > 0) {
-                                console.log(results);
 
                                 await obj[iid].send_whatsapp_message(message.from, results[0].description);
                             }
@@ -3412,9 +3363,7 @@ app.get("/chartsupportticket", (req, res) => {
     conn.query(
         "SELECT t_type,ticket_id FROM support_ticket",
         (err, result) => {
-            if (err) {
-                console.log(err);
-            }
+            if (err) return console.log(err);
             if (result.length > 0) {
                 for (let i = 0; i < result.length; i++) {
                     if (result[i].t_type == "Account Management") {
@@ -3441,9 +3390,7 @@ app.get("/chartemail", (req, res) => {
     conn.query(
         "SELECT email_type,email_id FROM email",
         (err, result) => {
-            if (err) {
-                console.log(err);
-            }
+            if (err) return console.log(err);
             if (result.length > 0) {
                 for (let i = 0; i < result.length; i++) {
                     if (result[i].email_type == "Template Bulk Mail") {
@@ -3489,7 +3436,6 @@ app.post("/monthlyreport", function (req, res) {
     let month = req.body.month;
     let year = req.body.year;
     conn.query(`SELECT count(*) as cnt FROM users WHERE MONTH(registrationDate) = ${month} AND YEAR(registrationDate)=${year}`, (err, result) => {
-        console.log(result);
         if (err) return res.send(err);
         if (result.length > 0) {
             res.send(result);
@@ -3501,7 +3447,6 @@ app.post("/instancereport", function (req, res) {
     let month = req.body.month;
     let year = req.body.year;
     conn.query(`SELECT count(*) as cnt FROM instance WHERE MONTH(create_date) = ${month} AND YEAR(create_date)=${year}`, (err, result) => {
-        console.log(result);
         if (err) return res.send(err);
         if (result.length > 0) {
             res.send(result);
@@ -3514,7 +3459,6 @@ app.get("/usersubscription", (req, res) => {
     conn.query(
         "SELECT planID,count(*) as cnt from subscription GROUP BY planID",
         (err, result) => {
-            console.log(result);
             if (err) return res.send(err);
             if (result.length > 0) {
                 res.send(result);
@@ -3553,23 +3497,17 @@ app.post("/addticket", async (req, res) => {
                 if (err || result.length <= 0) res.send(status.internalservererror());
                 for (let i = 0; i < result.length; i++) {
                     agents.push(result[i].email);
-                    console.log("agents", agents);
                     if (result[i].category == "Account Management") {
-                        console.log(Account_Management);
                         Account_Management.push(result[i].email);
                     } else if (result[i].category == "Technical Support") {
-                        console.log(Technical_Support);
                         Technical_Support.push(result[i].email);
                     } else if (result[i].category == "Payment Problem") {
-                        console.log(Payment_Problem);
                         Payment_Problem.push(result[i].email);
                     }
                     else if (result[i].category == "Service Inquiry") {
-                        console.log(Service_Inquiry);
                         Service_Inquiry.push(result[i].email);
                     }
                     else if (result[i].category == "Feedback and Suggestions") {
-                        console.log(Feedback);
                         Feedback.push(result[i].email);
                     }
                 }
@@ -3587,7 +3525,6 @@ app.post("/addticket", async (req, res) => {
                 conn.query(`INSERT INTO support_ticket VALUES(?,?,?,?,?,?,?,?,?,?)`,
                     [t_id, `email`, email, subject, t_type, description, `open`, new Date(), apikey, assignedAgent],
                     async (err, resp) => {
-                        console.log(err);
                         if (err) return res.send(status.internalservererror());
                         //mail to support person for support ticket assigning
                         const sender = {
@@ -3598,7 +3535,6 @@ app.post("/addticket", async (req, res) => {
                         };
 
                         sendEmail(sender, assignedAgent, `New support ticket (${t_id}): ${t_type}`, `Dear ${assignedAgent},\n\nYou have been assigned a new support ticket (${t_id}) for the category '${t_type}'.\n\nPlease log in to the support portal to view and respond to this ticket.\n\nThank you,\nThe support team`).then(() => {
-                            console.log("Email Sent Scuuessfully");
                             sendEmail(sender, email, `Support ticket (${t_id}) issued`, `Dear customer,\n\nThank you for submitting a support ticket (${t_id}).\n\nOur support team will review your ticket and get back to you as soon as possible.\n\nThank you,\nThe support team`).then(() => {
                                 return res.send(status.ok());
                             }).catch((error) => {
@@ -3674,8 +3610,6 @@ app.post("/AgentReplyToTicket", async (req, res) => {
         case 'email': {
             sendEmail(sender, to, subject, body).then(() => {
                 conn.query(`INSERT INTO ticket_reply VALUES (?,?,?,?,?,?)`, [indexno, identity, id, response, new Date(), agent_id], (err, result) => {
-                    console.log(err);
-
                     if (err) return res.send(status.internalservererror());
                     conn.query(`update support_ticket set status='inprogress' where ticket_id='${id}'`, (err2, result2) => {
                         if (err2 || result2.affectedRows <= 0) return res.send(status.internalservererror());
@@ -3724,34 +3658,6 @@ app.post("/ClientReplyToTicketAgent", async (req, res) => {
     }).catch((error) => {
         return console.log(`error in Sending  E-Mail ::::::: <${error}>`);
     })
-});
-
-//msgcount chart
-app.get("/messagecount", (req, res) => {
-    (msgcount = 0), (imgcount = 0), (channelcount = 0), (bulkcount = 0);
-    conn.query(
-        "SELECT msg_type,msgid FROM message",
-        (err, result) => {
-            if (err) {
-                console.log(err);
-            }
-            if (result.length > 0) {
-                for (let i = 0; i < result.length; i++) {
-                    if (result[i].msg_type == "msg") {
-                        msgcount++;
-                    } else if (result[i].msg_type == "img") {
-                        imgcount++;
-                    } else if (result[i].msg_type == "bulk") {
-                        bulkcount++;
-                    } else if (result[i].msg_type == "channel") {
-                        channelcount++;
-                    }
-                }
-                var obj = { msg: msgcount, img: imgcount, bulk: bulkcount, channel: channelcount };
-                res.send(obj);
-            }
-        }
-    );
 });
 
 app.get("/dis_cstm_template", function (req, res) {
@@ -3982,35 +3888,3 @@ app.listen(port, () => {
     console.log(`Your server is up and running on : ${port}`);
     console.log(`http://localhost:${port}/signin`);
 });
-
-// bcrypt.hash('harsh@123', 10, (err, hash) => {
-//     if (err) return res.send("err in bcrypt");
-//     console.log(hash);
-// });
-
-// var task = cron.schedule('*/1 * * * * *', () => {
-//     console.log('will execute every minute until stopped');
-// });
-
-// setTimeout(() => {
-//     task.stop();
-// }, 5000)
-
-// task.stop();
-
-// const generateUniqueId = () => {
-//     const prefix = "ST-";
-//     const maxLength = 7 - prefix.length;
-//     const maxNumber = Math.pow(10, maxLength) - 1;
-//     const uniqueId = Math.floor(Math.random() * maxNumber) + 1;
-//     return prefix + uniqueId.toString().padStart(maxLength, '0');
-// };
-
-// // Example usage
-// for(var i = 0;i < 20;i++){
-//     // console.log(existingIds);
-//     const uniqueId = generateUniqueId();
-//     console.log(uniqueId);
-// }
-
-// console.log(crypto.randomBytes(16).toString("hex"));
