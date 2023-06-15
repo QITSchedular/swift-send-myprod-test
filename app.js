@@ -286,7 +286,7 @@ const tableData = (data, callback) => {
 }
 
 async function sendEmail(sender, to, subject, body) {
-    var transporter = nodemailer.createTransport({
+    let transporter = nodemailer.createTransport({
         host: sender.hostname,
         port: sender.port,
         secure: true,
@@ -296,13 +296,13 @@ async function sendEmail(sender, to, subject, body) {
         },
     });
 
-    var mailOptions = {
-        from: "sakshiiit232@gmail.com",
+    let mailOptions = {
+        from: sender.email,
         to: to,
         subject: subject,
         html: body,
     };
-
+    console.log("This is mail options", mailOptions)
     return await new Promise((resolve, reject) => {
         transporter.sendMail(mailOptions, function (error) {
             if (error) return reject(error);
@@ -1530,17 +1530,19 @@ app.post("/bulktemplatemail", async function (req, res) {
             conn.query(`select * from instance where instance_id = '${iid}' and apikey = '${apikey}' and token = '${token}'`,
                 async function (err, result) {
                     if (err || result.length <= 0) return res.send(status.forbidden());
+                    
+                    const from = await findData(apikey, 'email');
+                    const sender = {
+                        hostname: await findData(apikey, 'hostname'),
+                        port: await findData(apikey, 'port'),
+                        email: from,
+                        passcode: await findData(apikey, 'emailpasscode')
+                    };
                     for (let i = 0; i < clientobj.length; i++) {
-                        const from = await findData(apikey, 'email');
                         const to = contacts[i];
                         const subject = req.body.subject;
                         const body = msgarr[i];
-                        const sender = {
-                            hostname: await findData(apikey, 'hostname'),
-                            port: await findData(apikey, 'port'),
-                            email: from,
-                            passcode: await findData(apikey, 'emailpasscode')
-                        };
+                        
                         sendEmail(sender, to, subject, body).then(() => {
                             const id = crypto.randomBytes(8).toString("hex");
                             conn.query(`insert into email values(?,?,?,?,?,?,?,?,?)`,
@@ -1907,14 +1909,16 @@ app.post("/create_custom_template", async function (req, res) {
             let cstm_name = req.body.name;
             let cstm_message = req.body.message;
             let field = req.body.field;
+            // console.log(cstm_message);
 
-            function char_count(str, letter) {
+            function char_count(cstm_message, letter) {
                 var letter_Count = 0;
-                for (var position = 0; position < str.length; position++) {
-                    if (str.charAt(position) == letter) {
+                for (var position = 0; position < cstm_message.length; position++) {
+                    if (cstm_message.charAt(position) === letter) {
                         letter_Count += 1;
                     }
                 }
+                console.log(letter_Count);
                 return letter_Count;
             }
             let tempmsg = cstm_message;
@@ -1922,6 +1926,7 @@ app.post("/create_custom_template", async function (req, res) {
             for (let k = 1; k <= cnt; k++) {
                 tempmsg = tempmsg.replace("{}", `[value${[k]}]`);
             }
+
 
             conn.query(`insert into cstm_template values(?,?,?,?,?)`,
                 [cstm_id, cstm_name, tempmsg, field, apikey],
