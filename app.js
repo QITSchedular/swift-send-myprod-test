@@ -49,11 +49,12 @@ const SESSION_FILE_PATH = './assets/json/session-data.json';
 //Db itentifier: swift-send-db-itentifier
 // username: admin
 const conn = mysql.createConnection({
-    host: 'swift-send-db.cpqpqooy9dzn.ap-south-1.rds.amazonaws.com',
-    user: 'swiftsendsuper',
-    password: 'Swiftsendb4u#0',
-    database: 'swiftsenddev',
+    host:process.env.HOST,
+    user: process.env.USER,
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE,
 })
+
 conn.connect((err) => {
     if (err) {
         console.error('Error connecting to the database:', err);
