@@ -39,21 +39,21 @@ const SESSION_FILE_PATH = './assets/json/session-data.json';
 //     database: process.env.DB_NAME,
 // });
 
-const conn = mysql.createConnection({
-    host: '164.52.208.110',
-    user: 'qitsolution_tempuser',
-    password: 'Qit123@#india',
-    database: 'qitsolution_swiftsend',
-})
+// const conn = mysql.createConnection({
+//     host: '164.52.208.110',
+//     user: 'qitsolution_tempuser',
+//     password: 'Qit123@#india',
+//     database: 'qitsolution_swiftsend',
+// })
 
 //Db itentifier: swift-send-db-itentifier
 // username: admin
-// const conn = mysql.createConnection({
-//     host: 'm3-db.cpqpqooy9dzn.ap-south-1.rds.amazonaws.com',
-//     user: 'admin',
-//     password: 'Swiftsendpassb4u#0',
-//     database: 'swiftsend',
-// })
+const conn = mysql.createConnection({
+    host: 'swift-send-db.cpqpqooy9dzn.ap-south-1.rds.amazonaws.com',
+    user: 'swiftsendsuper',
+    password: 'Swiftsendb4u#0',
+    database: 'swiftsenddev',
+})
 conn.connect((err) => {
     if (err) {
         console.error('Error connecting to the database:', err);
