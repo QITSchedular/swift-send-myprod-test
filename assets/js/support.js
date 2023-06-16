@@ -26,8 +26,7 @@ function InternalServerError() {
 }
 
 function InvalidUser() {
-    document.cookie =
-        "apikey=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "apikey=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     location.href = "/signin";
 }
 
@@ -40,7 +39,7 @@ function chkLogin() {
         url: "/getAdminData",
         method: "POST",
         data: {
-            table: `admin where apikey = '${apikey}'`,
+            table: `support_agents where apikey = '${apikey}'`,
         },
         success: function (val) {
             if (val.length <= 0) {
@@ -53,7 +52,7 @@ function chkLogin() {
 $(document).ready(function () {
     chkLogin();
     let page = document.URL.split("/");
-    fetch('/assets/json/admin-nav.json')
+    fetch('/assets/json/support-nav.json')
         .then(response => response.json())
         .then(data => {
             let result = ``;

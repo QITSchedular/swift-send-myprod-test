@@ -206,9 +206,9 @@
     <!-- END layout-wrapper -->
 
     <!--start back-to-top-->
-    <!-- <button onclick="topFunction()" class="btn btn-danger btn-icon" id="back-to-top">
+    <button onclick="topFunction()" class="btn btn-danger btn-icon" id="back-to-top">
         <i class="ri-arrow-up-line"></i>
-    </button> -->
+    </button>
     <!--end back-to-top-->
 
     <!--preloader-->
@@ -217,13 +217,6 @@
             <div class="spinner-border text-primary avatar-sm" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
-        </div>
-    </div>
-
-    <div class="customizer-setting d-none d-md-block">
-        <div class="btn-info btn-rounded shadow-lg btn btn-icon btn-lg p-2" data-bs-toggle="offcanvas"
-            data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas">
-            <i class="mdi mdi-spin mdi-cog-outline fs-22"></i>
         </div>
     </div>
 
@@ -274,7 +267,7 @@
                     >
                       <thead class="gridjs-thead">
                         <tr class="gridjs-tr">`;
-            console.log(Object.keys(content[0]));
+            // console.log(Object.keys(content[0]));
             for (let i = 0; i < Object.keys(content[0]).length; i++) {
                 out += `<th
                             data-column-id="${Object.keys(content[0])[i]}"
@@ -337,7 +330,7 @@
                     paramstr: paramstr,
                 },
                 success: (data) => {
-                    console.log(data);
+                    // console.log(data);
                     let btns = `<button
                           tabindex="0"
                           role="button"
@@ -424,7 +417,7 @@
                     >
                       <thead class="gridjs-thead">
                         <tr class="gridjs-tr">`;
-            console.log(Object.keys(content[0]));
+            // console.log(Object.keys(content[0]));
             for (let i = 0; i < Object.keys(content[0]).length; i++) {
                 out += `<th
                             data-column-id="${Object.keys(content[0])[i]}"
@@ -487,7 +480,7 @@
                     paramstr: paramstr,
                 },
                 success: (data) => {
-                    console.log(data);
+                    // console.log(data);
                     let btns = "";
                     if (pn + 1 == 1) {
                         btns += `<button
@@ -586,7 +579,7 @@
                     >
                       <thead class="gridjs-thead">
                         <tr class="gridjs-tr">`;
-            console.log(Object.keys(content[0]));
+            // console.log(Object.keys(content[0]));
             for (let i = 0; i < Object.keys(content[0]).length; i++) {
                 out += `<th
                             data-column-id="${Object.keys(content[0])[i]}"
@@ -649,7 +642,7 @@
                     paramstr: paramstr,
                 },
                 success: (data) => {
-                    console.log(data);
+                    // console.log(data);
                     let btns = "";
                     if (pn - 1 == 1) {
                         btns += `<button
@@ -750,7 +743,7 @@
                     >
                       <thead class="gridjs-thead">
                         <tr class="gridjs-tr">`;
-            console.log(Object.keys(content[0]));
+            // console.log(Object.keys(content[0]));
             for (let i = 0; i < Object.keys(content[0]).length; i++) {
                 out += `<th
                             data-column-id="${Object.keys(content[0])[i]}"
@@ -813,7 +806,7 @@
                     paramstr: paramstr,
                 },
                 success: (data) => {
-                    console.log(data);
+                    // console.log(data);
                     let btns = "";
                     if (btnno == 1) {
                         btns += `<button
@@ -919,7 +912,7 @@
                             limit: localStorage.getItem("limit"),
                         },
                         success: function (content) {
-                            console.log(content);
+                            // console.log(content);
                             if(content.status_code == "404"){
                                 swal({
                                     title: "No such record found",
@@ -961,7 +954,7 @@
                             paramstr: paramstr,
                         },
                         success: function (result) {
-                            console.log(result);
+                            // console.log(result);
                            if (result.status_code == "404") {
                                 $("#mycomplementry").html(`<div class="noresult py-5">
                                     <div class="text-center">
@@ -1007,7 +1000,7 @@
                     limit: localStorage.getItem("limit"),
                 },
                 success: function (content) {
-                    console.log(content);
+                    // console.log(content);
                     displayAtBeginning(
                         content,
                         "previousBtn",
@@ -1019,7 +1012,7 @@
             });
 
             $(document).on("click", ".nextBtn", function () {
-                console.log(document.getElementsByClassName("mybtn"));
+                // console.log(document.getElementsByClassName("mybtn"));
                 var arr = document.getElementsByClassName("mybtn").length;
                 count = 0;
                 for (let pn = 1; pn <= arr; pn++) {
@@ -1037,7 +1030,7 @@
                                 limit: localStorage.getItem("limit"),
                             },
                             success: function (content) {
-                                console.log(content);
+                                // console.log(content);
                                 nextBtnDisplay(
                                     content,
                                     "previousBtn",
@@ -1065,7 +1058,7 @@
                             limit: localStorage.getItem("limit"),
                         },
                         success: function (content) {
-                            console.log(content);
+                            // console.log(content);
                             if(content.status_code == "404"){
                                 swal({
                                     title: "No such record found",
@@ -1096,7 +1089,7 @@
                         },
                     });
                 } else {
-                    console.log(document.getElementsByClassName("mysearchbtn"));
+                    // console.log(document.getElementsByClassName("mysearchbtn"));
                     var arr = document.getElementsByClassName("mysearchbtn").length;
                     count = 0;
                     let paramstr = `apikey like '%${str}%' or uname like '%${str}%' or email like '%${str}%' or cast(phone as char) like '%${str}%' or country like '%${str}%' or state like '%${str}%' or city like '%${str}%' or cast(registrationDate as char) like '%${str}%'`;
@@ -1116,7 +1109,7 @@
                                     paramstr: paramstr,
                                 },
                                 success: function (content) {
-                                    console.log(content);
+                                    // console.log(content);
                                     if(content.status_code == "404"){
                                 swal({
                                     title: "No such record found",
@@ -1153,7 +1146,7 @@
             });
 
             $(document).on("click", ".previousBtn", function () {
-                console.log(document.getElementsByClassName("mybtn"));
+                // console.log(document.getElementsByClassName("mybtn"));
                 var arr = document.getElementsByClassName("mybtn").length;
                 count = 0;
                 for (let pn = 1; pn <= arr; pn++) {
@@ -1171,7 +1164,7 @@
                                 limit: localStorage.getItem("limit"),
                             },
                             success: function (content) {
-                                console.log(content);
+                                // console.log(content);
                                 previousBtnDisplay(
                                     content,
                                     "previousBtn",
@@ -1199,7 +1192,7 @@
                             limit: localStorage.getItem("limit"),
                         },
                         success: function (content) {
-                            console.log(content);
+                            // console.log(content);
                             if(content.status_code == "404"){
                                 swal({
                                     title: "No such record found",
@@ -1230,7 +1223,7 @@
                         },
                     });
                 } else {
-                    console.log(document.getElementsByClassName("mysearchbtn"));
+                    // console.log(document.getElementsByClassName("mysearchbtn"));
                     var arr = document.getElementsByClassName("mysearchbtn").length;
                     count = 0;
                     let paramstr = `apikey like '%${str}%' or uname like '%${str}%' or email like '%${str}%' or cast(phone as char) like '%${str}%' or country like '%${str}%' or state like '%${str}%' or city like '%${str}%' or cast(registrationDate as char) like '%${str}%'`;
@@ -1250,7 +1243,7 @@
                                     paramstr: paramstr,
                                 },
                                 success: function (content) {
-                                    console.log(content);
+                                    // console.log(content);
                                     if(content.status_code == "404"){
                                 swal({
                                     title: "No such record found",
@@ -1299,7 +1292,7 @@
                         limit: localStorage.getItem("limit"),
                     },
                     success: function (content) {
-                        console.log(content);
+                        // console.log(content);
                         myBtnDisplay(
                             content,
                             "previousBtn",
@@ -1327,7 +1320,7 @@
                             limit: localStorage.getItem("limit"),
                         },
                         success: function (content) {
-                            console.log(content);
+                            // console.log(content);
                             if(content.status_code == "404"){
                                 swal({
                                     title: "No such record found",
@@ -1372,7 +1365,7 @@
                             paramstr: paramstr,
                         },
                         success: function (content) {
-                            console.log(content);
+                            // console.log(content);
                             if(content.status_code == "404"){
                                 swal({
                                     title: "No such record found",

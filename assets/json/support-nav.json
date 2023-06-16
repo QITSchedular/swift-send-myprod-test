@@ -1,0 +1,12 @@
+[
+    {
+        "page": "Scan Whatsapp",
+        "link": "supportScan",
+        "icon": "ri-qr-code-line"
+    },
+    {
+        "page": "Support Tickets",
+        "link": "supportTicket",
+        "icon": "mdi mdi-ticket-account"
+    }
+]

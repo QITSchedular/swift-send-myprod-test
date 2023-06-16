@@ -52,7 +52,7 @@
     {
         "page": "Support Agents",
         "link": "agentsData",
-        "icon": "mdi mdi-face-agent"
+        "icon": "bx bx-support"
     },
     {
         "page": "Templates",

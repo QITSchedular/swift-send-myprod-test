@@ -261,7 +261,7 @@
                     <div class="card">
                         <h3 class="card-header text-center">Contact List</h3>
                         <div class="card-body">
-                            <div class="table-responsive table-card mb-1">
+                            <div class="table-responsive table-card mb-1" id="table-fixed-header">
                                 <table class="table align-middle table-nowrap" id="customerTable">
                                     <thead class="table-light">
                                         <tr>
@@ -352,37 +352,36 @@
                                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
                                     aria-label="Close" id="close_btn_import_localfile"></button>
                             </div>
-                            <div class="offcanvas-body h-100">
+                            <div class="offcanvas-body">
                                 <div class="bg-info bg-opacity-10 border border-info p-2 rounded-3 text-info mb-3">
-                                    <div class="d-flex align-items-center">
+                                    <div class="d-flex align-items-center px-2">
                                         <i class="ri-error-warning-line align-middle fs-18"></i>
                                         <div class="vr mx-3"></div>
                                         <p class="fs-14 fw-medium mb-0" style="text-align: justify;">
                                             Only <span class="text-danger">CSV</span>
                                             File Allowed and File must have column name like
-                                            <span class="text-primary">name, phone, email</span>
+                                            <span class="text-primary">name, phone, email.</span>
+                                            <span class="text-danger">Only 500 data allowed to add.</span>
                                         </p>
                                     </div>
                                 </div>
-                                <div class="mb-2">
-                                    <label for="contact_name" class="form-label">
-                                        Select CSV File
-                                        <span class="text-danger">*</span>
-                                        <span class="text-danger" id="err_contact_name"></span>
-                                    </label>
-                                    <input type="file" id="csvfile" class="form-control mb-2">
-                                    <div class="mt-3" data-simplebar data-simplebar-auto-hide="false"
-                                        style="height: 350px;">
-                                        <div id="tblcsvdata">
-                                            <h5 class="d-flex justify-content-center text-muted text-center p-5">
-                                                Preview of the data will show here after you select the
-                                                CSV File
-                                            </h5>
-                                        </div>
+                                <label for="contact_name" class="form-label">
+                                    Select CSV File
+                                    <span class="text-danger">*</span>
+                                    <span class="text-danger" id="err_contact_name"></span>
+                                </label>
+                                <input type="file" id="csvfile" class="form-control mb-2">
+                                <div class="mt-3" data-simplebar data-simplebar-auto-hide="false"
+                                    style="height: 300px;">
+                                    <div id="tblcsvdata">
+                                        <h5 class="d-flex justify-content-center text-muted text-center p-5">
+                                            Preview of the data will show here after you select the
+                                            CSV File
+                                        </h5>
                                     </div>
                                 </div>
                             </div>
-                            <div class="offcanvas-footer bg-soft-primary bg-gradient p-3 text-end">
+                            <div class="offcanvas-footer p-3 text-end">
                                 <button id="importFromCSV" class="btn btn-primary btn-load">Import Data</button>
                             </div>
                         </div>
@@ -458,13 +457,13 @@
     </button>
     <!--end back-to-top-->
 
+    
     <!--preloader-->
     <div id="preloader">
         <div id="status">
             <div class="spinner-border text-primary avatar-sm" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
-            <span class="">Loading...</span>
         </div>
     </div>
 
@@ -536,7 +535,7 @@
     <script src="/assets/js/chatbot.js"></script>
     <script src="/assets/js/voiceRecognition.js"></script>
     <script src="/assets/js/validate.js"></script>
-
+    
     <script src="/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/assets/libs/simplebar/simplebar.min.js"></script>
     <script src="/assets/libs/node-waves/waves.min.js"></script>
@@ -1252,11 +1251,13 @@
                             else {
                                 colnames = Object.keys(val.json[0]);
                                 if (colnames.includes("name") && colnames.includes("phone") && colnames.includes("email")) {
-                                    let data = `<table class="table align-middle"><thead class="table-light"><tr>`;
+                                    let data = `<table class="table align-middle table-striped table-hover">
+                                                    <thead class="table-primary">
+                                                        <tr>`;
                                     for (var i in colnames) {
                                         data += `<th>${colnames[i]}</th>`;
                                     }
-                                    data += `</tr></thead><tbody class="list form-check-all">`;
+                                    data += `</tr></thead><tbody>`;
                                     for (var i in val.json) {
                                         clientobj = val.json;
                                         colvalues = Object.values(val.json[i]);

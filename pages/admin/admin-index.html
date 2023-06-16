@@ -129,7 +129,7 @@
         </div>
         <!-- Left Sidebar End -->
         <!-- Vertical Overlay-->
-       <!--  <div class="vertical-overlay"></div>-->
+        <!-- <div class="vertical-overlay"></div> -->
 
         <!-- ============================================================== -->
         <!-- Start right Content here -->
@@ -327,15 +327,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    
-
-                    <!-- End Page-content -->
-
+                    </div>                   
                     <footer class="footer"></footer>
                 </div>
-                <!-- end main content-->
             </div>
         </div>
     </div>
@@ -355,14 +349,6 @@
             </div>
         </div>
     </div>
-
-    <div class="customizer-setting d-none d-md-block">
-        <div class="btn-info btn-rounded shadow-lg btn btn-icon btn-lg p-2" data-bs-toggle="offcanvas"
-            data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas">
-            <i class='mdi mdi-spin mdi-cog-outline fs-22'></i>
-        </div>
-    </div>
-
 
     <!-- JAVASCRIPT -->
     <script src="/assets/js/jquery.js"></script>
@@ -485,7 +471,6 @@
                     column: "country"
                 },
                 success: function (data) {
-                    console.log('data', data);
                     for (i = 0; i < data.length; i++) {
                         countryname.push(data[i].country);
                     }
@@ -647,7 +632,6 @@
                         year: currentDate.getFullYear(),
                     },
                     success: function (data) {
-                        //console.log(data);
                         monthlyuser.push(data[0].cnt);
                         var xValues = usermonth;
                         var yValues = monthlyuser;
@@ -740,7 +724,6 @@
                 url: "/message_summary_admin",
                 method: "GET",
                 success: function (val) {
-                    console.log(val);
                     let output = ``;
                     let obj = {};
                     switch (val.status_code) {
@@ -778,7 +761,6 @@
                 url: "/email_summary_admin",
                 method: "GET",
                 success: function (val) {
-                    console.log(val);
                     let output = ``;
                     let obj = {};
                     switch (val.status_code) {
@@ -918,7 +900,6 @@
                 url: "/usersubscription",
                 method: "get",
                 success: function (data) {
-                    console.log(data);
                     let flag = false;
                     for (i = 0; i < data.length; i++) {
                         if (data[i].planID == "101") {
@@ -969,7 +950,7 @@
                     if (flag == false) {
                         plancount.push(0);
                     }
-                    console.log(plancount);
+                    // console.log(plancount);
                     var xValues = ["Basic", "Standard(month)", "Premium(month)", "Standard(year)", "Premium(year)"];
                     var yValues = plancount;
                     var barColors = ['rgb(255, 99, 132)',
@@ -1030,7 +1011,7 @@
                 url: "/chartsupportticket",
                 method: "get",
                 success: function (data) {
-                    console.log(data);
+                    // console.log(data);
                     tickettype.push(data.AM);
                     tickettype.push(data.TS);
                     tickettype.push(data.PP);

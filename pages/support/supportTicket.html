@@ -272,7 +272,6 @@
                                 </div>
                                 <div class="chat-conversation p-3 p-lg-4" id="chat-conversation" data-simplebar>
                                     <ul class="list-unstyled chat-conversation-list" id="users-conversation">
-                                        <li>ABC</li>
                                     </ul>
                                 </div>
                             </div>
@@ -323,12 +322,6 @@
         </div>
     </div>
 
-    <div class="customizer-setting d-none d-md-block" id="chatbot">
-        <div class="btn-info btn-rounded shadow-lg btn btn-icon btn-lg p-2">
-            <i class="fa-solid fa-comment" id="iconchat"></i>
-        </div>
-    </div>
-
     <div class="email-chat-detail" id="emailchat-detailElem" style="display: none">
         <div class="card mb-0">
             <div class="card-header align-items-center d-flex bg-primary text-white-50">
@@ -372,7 +365,8 @@
     <!-- JAVASCRIPT -->
     <script src="/assets/js/jquery.js"></script>
     <script src="/assets/js/main.js"></script>
-    <script src="/assets/js/chatbot.js"></script>
+    <script src="/assets/js/support.js"></script>
+
     <!-- App js -->
     <script src="/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/assets/libs/simplebar/simplebar.min.js"></script>
@@ -392,7 +386,7 @@
 
 
 
-    <script type="text/javascript">
+    <script>
         $(document).ready(() => {
 
             var indexno;
@@ -401,10 +395,6 @@
             let queryString = new URLSearchParams(paramString);
             let email, category, user;
             let userdata, agentdata, client_apikey, t_email;
-
-            $(".navbar-nav").html(
-                '<li class="nav-item"><a class="nav-link menu-link" href="/supportScan"><i class="ri-dashboard-2-line"></i><span data-key="t-apps">Scan WhatsApp</span></a></li><li class="nav-item"><a class="nav-link menu-link" href="/manageSupportTicket"><i class="ri-apps-2-line"></i><span data-key="t-apps">Support Tickets</span></a></li>'
-            );
 
             const ticket_id = document.URL.split('/')[4];
 
@@ -418,8 +408,6 @@
                     },
                 },
                 success: function (data) {
-                    console.log(data);
-                    //console.log(data.length);
                     client_apikey = data[0].apikey;
                     $.ajax({
                         url: "/getTickets",
@@ -431,7 +419,6 @@
                             },
                         },
                         success: function (data) {
-                            console.log(data);
                             t_email = data[0].email;
                             $("#ticket-user-email").html(t_email);
                         }
@@ -445,7 +432,6 @@
 
                     category = data[0].category;
                     var index = getCookie("sindex");
-                    // console.log(index);
                     if (category == "whatsapp") {
                         if (index == null || index == "") {
                             swal({
@@ -521,7 +507,6 @@
                         },
                     },
                     success: function (data) {
-                        console.log(data);
                         if (data.status_code == 404) {
                             indexno = 0;
                         } else {
@@ -546,7 +531,6 @@
                                 email: $("#ticket-user-email").html(),
                             },
                             success: function (data) {
-                                console.log(data);
                                 if (data.status_code == 200) {
                                     $("#response").val("");
                                     swal({
@@ -584,7 +568,6 @@
                         }
                     },
                     success: function (data) {
-                        console.log(data);
                         for (let i = 0; i < data.length; i++) {
                             if (data[i].identity == "client") {
                                 output += `

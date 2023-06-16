@@ -49,7 +49,7 @@ const SESSION_FILE_PATH = './assets/json/session-data.json';
 //Db itentifier: swift-send-db-itentifier
 // username: admin
 const conn = mysql.createConnection({
-    host:process.env.HOST,
+    host: process.env.HOST,
     user: process.env.USER,
     password: process.env.PASSWORD,
     database: process.env.DATABASE,
@@ -358,6 +358,11 @@ function createInstance() {
     conn.query(`update instance set isActive = 0 where 1`, (err, result) => {
         if (err || result.affectedRows <= 0) return console.log(status.internalservererror());
         if (result <= 0) return console.log(status.nodatafound());
+        conn.query(`update admin set isActive = 0 where 1`,
+            (err, result) => {
+                if (err || result.affectedRows < 1) console.log(status.internalservererror());
+                if (result <= 0) return console.log(status.nodatafound());
+            });
     });
 }
 createInstance();
@@ -366,14 +371,24 @@ const CREDENTIALS = JSON.parse(fs.readFileSync("spreadsheet-388213-84c50f351ad0.
 
 passport.use(new GoogleStrategy(
     {
-        clientID: "998325770347-9s0fe9oph1a8blesbtl7hkccgs69fc1h.apps.googleusercontent.com",
-        clientSecret: "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",
+        clientID: "552657255780-ud1996049ike2guu982i3ms5ver5gbsf.apps.googleusercontent.com",
+        clientSecret: "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",
         callbackURL: `${process.env.DOMAIN}/auth/google/callback`,
     }, function (accessToken, refreshToken, profile, done) {
         userProfile = profile;
         return done(null, userProfile);
     }
 ));
+// passport.use(new GoogleStrategy(
+//     {
+//         clientID: "998325770347-9s0fe9oph1a8blesbtl7hkccgs69fc1h.apps.googleusercontent.com",
+//         clientSecret: "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",
+//         callbackURL: `${process.env.DOMAIN}/auth/google/callback`,
+//     }, function (accessToken, refreshToken, profile, done) {
+//         userProfile = profile;
+//         return done(null, userProfile);
+//     }
+// ));
 
 app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
@@ -450,7 +465,7 @@ app.post("/sheetdata", async (req, res) => {
 });
 
 app.post("/file", async (req, res) => {
-    try{
+    try {
         if (req.files && req.files.csvfile.mimetype === 'text/csv') {
             let csvData = await req.files.csvfile.data.toString("utf8");
             return csvtojson().fromString(csvData).then((json) => {
@@ -463,7 +478,7 @@ app.post("/file", async (req, res) => {
         else {
             return res.send(status.notAccepted());
         }
-    }catch(error){
+    } catch (error) {
         console.log(error);
     }
 });
@@ -501,7 +516,7 @@ app.get("/adminBotWork/:iid", (req, res) => {
             { question: '# Ticket subject:', answer: '' },
             { question: '# Registered Email:', answer: '' },
             {
-                question: `# Write a name of your Ticket type:\n\t* Account Management\n\t* Technical Support\n\t* Payment Problem\n\t* Service Inquiry\n\t* Feedback and suggestions`, answer: ''
+                question: `# Write a name of your Ticket type:\n\t* Account Management\n\t* Technical Support\n\t* Payment Problem\n\t* Service Inquiry\n\t* Feedback and suggestions`, answer: ''
             },
             { question: `# Description:`, answer: '' }
 
@@ -537,12 +552,10 @@ app.get("/adminBotWork/:iid", (req, res) => {
             let a_Feedback = new Array();
 
             conn.query(`select * from support_agents`, (err, result) => {
-                // console.log(result);
                 if (err || result.length <= 0) res.send(status.internalservererror());
                 if (result.length > 0) {
                     for (let i = 0; i < result.length; i++) {
                         a_agents.push(result[i].email);
-                        // console.log("agents", a_agents);
                         if (result[i].category == "Account Management") {
                             // console.log(a_Account_Management);
                             a_Account_Management.push(result[i].email);
@@ -577,8 +590,6 @@ app.get("/adminBotWork/:iid", (req, res) => {
 
                         if (err1) console.log(err1);
                         if (res1.length > 0) {
-                            console.log(res1);
-
                             conn.query(`INSERT INTO support_ticket VALUES(?,?,?,?,?,?,?,?,?,?)`,
                                 [t_id, 'whatsapp', phone, subject, type, description, 'open', new Date(), res1[0].apikey, Agent_email], (err, res2) => {
                                     if (err) console.log(err);
@@ -793,18 +804,18 @@ app.get("/adminbotauthenticated/:iid", async function (req, res) {
 // Bulkmessage : Authentication Client API
 app.get("/supportAuthenticated/:iid", async function (req, res) {
     try {
-            let iid = req.params.iid;
+        let iid = req.params.iid;
 
-            await obj[iid].client.on("authenticated", (session) => {
+        await obj[iid].client.on("authenticated", (session) => {
 
-                // conn.query(`update instance set isActive = 1 where instance_id = '${iid}'`,
-                //     (err, result) => {
-                //         if (err || result.affectedRows < 1) res.send(status.internalservererror());
+            // conn.query(`update instance set isActive = 1 where instance_id = '${iid}'`,
+            //     (err, result) => {
+            //         if (err || result.affectedRows < 1) res.send(status.internalservererror());
 
-                //     });
-                    res.send(status.ok());
-            });
-       
+            //     });
+            res.send(status.ok());
+        });
+
     }
     catch (e) {
         //console.log(e);
@@ -970,7 +981,7 @@ app.post("/sendimage", async function (req, res) {
                         uploadedFile.mv(uploadPath, async function (err) {
                             if (err) res.send(status.badRequest());
                             let filepath = `${__dirname}/assets/upload/image_data/${apikey}/${iid}/${uploadedFile.name}`;
-                            // console.log(filepath);
+
                             const media = MessageMedia.fromFilePath(filepath);
                             const caption = req.body.caption;
                             if (obj[iid]) {
@@ -983,7 +994,6 @@ app.post("/sendimage", async function (req, res) {
                                             conn.query(`insert into message values(?,?,?,?,?,?,?,?)`,
                                                 [msgid, data.secure_url, `Document-${req.files.image.mimetype}`, chatId, iid, apikey, token, new Date()],
                                                 function (err, result) {
-                                                    // console.log(err);
                                                     if (err || result.affectedRows < 1) return res.send(status.internalservererror());
                                                     if (i == phonearray.length - 1) {
                                                         res.send(status.ok());
@@ -1379,7 +1389,7 @@ app.post('/schedule', async (req, res) => {
         console.log(e);
         res.send(status.unauthorized());
     }
-})
+});
 
 async function sendMessageToTeams(webhookUrl, message) {
     try {
@@ -1530,7 +1540,7 @@ app.post("/bulktemplatemail", async function (req, res) {
             conn.query(`select * from instance where instance_id = '${iid}' and apikey = '${apikey}' and token = '${token}'`,
                 async function (err, result) {
                     if (err || result.length <= 0) return res.send(status.forbidden());
-                    
+
                     const from = await findData(apikey, 'email');
                     const sender = {
                         hostname: await findData(apikey, 'hostname'),
@@ -1542,7 +1552,7 @@ app.post("/bulktemplatemail", async function (req, res) {
                         const to = contacts[i];
                         const subject = req.body.subject;
                         const body = msgarr[i];
-                        
+
                         sendEmail(sender, to, subject, body).then(() => {
                             const id = crypto.randomBytes(8).toString("hex");
                             conn.query(`insert into email values(?,?,?,?,?,?,?,?,?)`,
@@ -2470,7 +2480,8 @@ app.put("/updateData", (req, res) => {
             });
         }
         else {
-            conn.query(`UPDATE ${req.body.table} SET ${req.body.paramstr} WHERE ${req.body.condition}`,
+            let sql = `UPDATE ${req.body.table} SET ${req.body.paramstr} WHERE ${req.body.condition}`;
+            conn.query(sql,
                 (err, result) => {
                     if (err || result.affectedRows <= 0) return res.send(status.internalservererror());
                     if (result <= 0) return res.send(status.nodatafound());
@@ -2530,11 +2541,11 @@ app.get("/instance/:id/:pagename", async (req, res) => {
                     }
                 }
             });
-        } else res.send(status.unauthorized());
+        } else res.sendFile(`${__dirname}/pages/404.html`);
     }
     catch (e) {
         console.log(e);
-        res.send(status.unauthorized());
+        res.sendFile(`${__dirname}/pages/404.html`);
     }
 })
 
@@ -3564,7 +3575,7 @@ app.post("/getTickets", (req, res) => {
             res.send(result);
         });
     } catch (e) {
-        //console.log(e);
+        console.log(e);
     }
 });
 
@@ -3879,6 +3890,15 @@ app.post("/getAdminData", function (req, res) {
         res.send(result);
     });
 });
+
+app.get("/ticket_users", (req, res) => {
+    conn.query(`SELECT distinct s.apikey,u.uname FROM support_ticket s,users u where s.apikey=u.apikey`, (err, result) => {
+        if (err) res.send(err);
+        if (result.length > 0) {
+            res.send(result);
+        }
+    })
+})
 
 app.use((req, res) => {
     res.status(404).sendFile(`${__dirname}/pages/404.html`);

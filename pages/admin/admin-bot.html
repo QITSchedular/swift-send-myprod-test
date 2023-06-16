@@ -240,14 +240,6 @@
         </div>
     </div>
 
-    <div class="customizer-setting d-none d-md-block">
-        <div class="btn-info btn-rounded shadow-lg btn btn-icon btn-lg p-2" data-bs-toggle="offcanvas"
-            data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas">
-            <i class='mdi mdi-spin mdi-cog-outline fs-22'></i>
-        </div>
-    </div>
-
-
     <!-- JAVASCRIPT -->
     <script src="/assets/js/jquery.js"></script>
     <script src="/assets/js/admin.js"></script>
@@ -276,7 +268,6 @@
     <script>
         $(document).ready(function () {
             const iid = getCookie("apikey");
-            console.log(iid);
 
             function authdone() {
                 $.ajax({
@@ -287,7 +278,6 @@
                         paramstr: `isActive = 1 and apikey = '${iid}'`
                     },
                     success: function (data) {
-                        console.log(data);
                         if (!data.status_code && data[0].isActive == 1) {
                             $("#disconnect").removeClass("d-none");
                             $("#scanqr").addClass("d-none");
@@ -333,8 +323,6 @@
                             url: `/adminbotauthenticated/${iid}`,
                             method: "GET",
                             success: function (val) {
-                                console.log(iid);
-                                console.log(val);
                                 switch (val.status_code) {
                                     case '401': {
                                         InvalidUser();
@@ -348,9 +336,8 @@
                                     case '200': {
                                         $.ajax({
                                             url: `/adminBotWork/${iid}`,
-                                            method: "get",
+                                            method: "GET",
                                             success: function (data) {
-                                                console.log(data);
                                             }
                                         })
                                         swal({
@@ -372,12 +359,10 @@
             });
 
             $(document).on("click", "#disconnect_btn", function () {
-                alert();
                 $.ajax({
                     url: `/adminbotdisconnected/${iid}`,
-                    method: 'get',
+                    method: 'GET',
                     success: function (data) {
-                        console.log(data);
                         swal({
                             title: "disconnected successfully",
                             type: "success",

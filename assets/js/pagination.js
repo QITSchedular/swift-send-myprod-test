@@ -1,12 +1,8 @@
-function displayAtBeginning(content,prevclass,myclass,nextclass,
-    paramstr,
-    table
-) {
+function displayAtBeginning(content, prevclass, myclass, nextclass, paramstr, table) {
     let out = `<div class="gridjs-wrapper" style="height: auto">
     <table role="grid" class="gridjs-table" style="height: auto">
         <thead class="gridjs-thead">
             <tr class="gridjs-tr">`;
-    console.log(Object.keys(content[0]));
     for (let i = 0; i < Object.keys(content[0]).length; i++) {
         out += `<th data-column-id="${Object.keys(content[0])[i]}" class="gridjs-th" style="min-width: 77px; width: 77px">
                     <div class="gridjs-th-content">${Object.keys(content[0])[i]}</div>
@@ -38,17 +34,7 @@ function displayAtBeginning(content,prevclass,myclass,nextclass,
             paramstr: paramstr,
         },
         success: (data) => {
-            console.log(data);
-            let btns = `<button
-                          tabindex="0"
-                          role="button"
-                          disabled=""
-                          title="Previous"
-                          aria-label="Previous"
-                          class=""
-                        >
-                          Previous</button
-                        >`;
+            let btns = `<button tabindex="0" role="button" disabled="" title="Previous" aria-label="Previous" class="">Previous</button>`;
             totalBtn = data.totalBtn;
             for (let i = 0; i < totalBtn; i++) {
                 if (i == 0) {
@@ -108,45 +94,22 @@ function displayAtBeginning(content,prevclass,myclass,nextclass,
     });
 }
 
-function nextBtnDisplay(
-    content,
-    prevclass,
-    myclass,
-    nextclass,
-    pn,
-    paramstr,
-    table
-) {
-    let out = `
-                  <div class="gridjs-wrapper" style="height: auto">
-                    <table
-                      role="grid"
-                      class="gridjs-table"
-                      style="height: auto"
-                    >
+function nextBtnDisplay(content,prevclass,myclass,nextclass,pn,paramstr,table) {
+    let out = `<div class="gridjs-wrapper" style="height: auto">
+                    <table role="grid" class="gridjs-table" style="height: auto">
                       <thead class="gridjs-thead">
                         <tr class="gridjs-tr">`;
-    console.log(Object.keys(content[0]));
     for (let i = 0; i < Object.keys(content[0]).length; i++) {
-        out += `<th
-                            data-column-id="${Object.keys(content[0])[i]}"
-                            class="gridjs-th"
-                            style="min-width: 77px; width: 77px"
-                          >
-                            <div class="gridjs-th-content">${Object.keys(content[0])[i]
-            }</div>
-                          </th>`;
+        out += `<th data-column-id="${Object.keys(content[0])[i]}" class="gridjs-th" style="min-width: 77px; width: 77px">
+                    <div class="gridjs-th-content">${Object.keys(content[0])[i]}</div>
+                </th>`;
     }
-    `</tr>
-                      </thead>
-                      <tbody class="gridjs-tbody">`;
+    `</tr></thead><tbody class="gridjs-tbody">`;
     for (let j = 0; j < content.length; j++) {
         out += `<tr class="gridjs-tr">`;
         for (let k = 0; k < Object.keys(content[j]).length; k++) {
-            out += `<td data-column-id="${Object.values(content[j])[k]
-                }" class="gridjs-td">${Object.values(content[j])[k]}</td>`;
+            out += `<td data-column-id="${Object.values(content[j])[k]}" class="gridjs-td">${Object.values(content[j])[k]}</td>`;
         }
-
         out += `</tr>`;
     }
     out += `</tbody>
@@ -165,7 +128,6 @@ function nextBtnDisplay(
             paramstr: paramstr,
         },
         success: (data) => {
-            console.log(data);
             let btns = "";
             if (pn + 1 == 1) {
                 btns += `<button
@@ -247,50 +209,25 @@ function nextBtnDisplay(
     });
 }
 
-function previousBtnDisplay(
-    content,
-    prevclass,
-    myclass,
-    nextclass,
-    pn,
-    paramstr,
-    table
-) {
-    let out = `
-                  <div class="gridjs-wrapper" style="height: auto">
-                    <table
-                      role="grid"
-                      class="gridjs-table"
-                      style="height: auto"
-                    >
+function previousBtnDisplay(content,prevclass,myclass,nextclass,pn,paramstr,table) {
+    let out = `<div class="gridjs-wrapper" style="height: auto">
+                    <table role="grid" class="gridjs-table" style="height: auto">
                       <thead class="gridjs-thead">
                         <tr class="gridjs-tr">`;
-    console.log(Object.keys(content[0]));
     for (let i = 0; i < Object.keys(content[0]).length; i++) {
-        out += `<th
-                            data-column-id="${Object.keys(content[0])[i]}"
-                            class="gridjs-th"
-                            style="min-width: 77px; width: 77px"
-                          >
-                            <div class="gridjs-th-content">${Object.keys(content[0])[i]
-            }</div>
-                          </th>`;
+        out += `<th data-column-id="${Object.keys(content[0])[i]}" class="gridjs-th" style="min-width: 77px; width: 77px">
+                    <div class="gridjs-th-content">${Object.keys(content[0])[i]}</div>
+                </th>`;
     }
-    `</tr>
-                      </thead>
-                      <tbody class="gridjs-tbody">`;
+    `</tr></thead><tbody class="gridjs-tbody">`;
     for (let j = 0; j < content.length; j++) {
         out += `<tr class="gridjs-tr">`;
         for (let k = 0; k < Object.keys(content[j]).length; k++) {
-            out += `<td data-column-id="${Object.values(content[j])[k]
-                }" class="gridjs-td">${Object.values(content[j])[k]}</td>`;
+            out += `<td data-column-id="${Object.values(content[j])[k]}" class="gridjs-td">${Object.values(content[j])[k]}</td>`;
         }
-
         out += `</tr>`;
     }
-    out += `</tbody>
-                    </table>
-                  </div>
+    out += `</tbody></table></div>
                   <div class="gridjs-footer">
                     <div class="gridjs-pagination">
                       <div class="gridjs-pages">`;
@@ -304,29 +241,11 @@ function previousBtnDisplay(
             paramstr: paramstr,
         },
         success: (data) => {
-            console.log(data);
             let btns = "";
             if (pn - 1 == 1) {
-                btns += `<button
-                          tabindex="0"
-                          role="button"
-                          disabled=""
-                          title="Previous"
-                          aria-label="Previous"
-                          class="${prevclass}"
-                        >
-                          Previous</button
-                        >`;
+                btns += `<button tabindex="0" disabled="" title="Previous" aria-label="Previous" class="${prevclass}">Previous</button>`;
             } else {
-                btns += `<button
-                          tabindex="0"
-                          role="button"
-                          title="Previous"
-                          aria-label="Previous"
-                          class="${prevclass}"
-                        >
-                          Previous</button
-                        >`;
+                btns += `<button tabindex="0" title="Previous" aria-label="Previous" class="${prevclass}">Previous</button>`;
             }
             totalBtn = data.totalBtn;
             for (let i = 0; i < totalBtn; i++) {
@@ -391,7 +310,6 @@ function myBtnDisplay(content, prevclass, myclass, nextclass, index, btnno, pgno
     <table role="grid" class="gridjs-table" style="height: auto">
         <thead class="gridjs-thead">
             <tr class="gridjs-tr">`;
-    console.log(Object.keys(content[0]));
     for (let i = 0; i < Object.keys(content[0]).length; i++) {
         out += `<th data-column-id="${Object.keys(content[0])[i]}" class="gridjs-th" style="min-width: 77px; width: 77px">
                     <div class="gridjs-th-content">
@@ -425,7 +343,6 @@ function myBtnDisplay(content, prevclass, myclass, nextclass, index, btnno, pgno
             paramstr: paramstr,
         },
         success: (data) => {
-            console.log(data);
             let btns = "";
             if (btnno == 1) {
                 btns += `

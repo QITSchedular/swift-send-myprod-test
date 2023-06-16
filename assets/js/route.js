@@ -165,12 +165,11 @@ router.get("/agentsData", (req, res) => {
 
 /*--------------------[ Support ]--------------------*/
 
-router.get("/manageSupportTicket", (req, res) => {
+router.get("/supportTicket", (req, res) => {
     res.sendFile(`${path}/support/manage_support_ticket.html`);
 });
 
 router.get("/supportTicket/:id", (req, res) => {
-    console.log("hello");
     res.sendFile(`${path}/support/supportTicket.html`);
 });
 

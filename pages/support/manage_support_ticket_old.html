@@ -14,9 +14,13 @@
 
     <!-- App favicon -->
     <link rel="shortcut icon" href="/assets/images/favicon.ico" />
-
     <!-- Dragula css -->
     <link rel="stylesheet" href="/assets/libs/dragula/dragula.min.css" />
+    <!-- jsvectormap css -->
+    <link href="/assets/libs/jsvectormap/css/jsvectormap.min.css" rel="stylesheet" type="text/css" />
+
+    <!--Swiper slider css-->
+    <link href="/assets/libs/swiper/swiper-bundle.min.css" rel="stylesheet" type="text/css" />
 
     <!-- Layout config Js -->
     <script src="/assets/js/layout.js"></script>
@@ -77,23 +81,43 @@
                         </button>
                     </div>
                     <div class="d-flex align-items-center">
+                        <div class="dropdown d-md-none topbar-head-dropdown header-item">
+                            <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
+                                id="page-header-search-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                <i class="bx bx-search fs-22"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+                                aria-labelledby="page-header-search-dropdown">
+                                <form class="p-3">
+                                    <div class="form-group m-0">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Search ..."
+                                                aria-label="Recipient's username" />
+                                            <button class="btn btn-primary" type="submit">
+                                                <i class="mdi mdi-magnify"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
 
-
-                        <div class="ms-1 header-item">
+                        <div class="ms-1 header-item d-none d-sm-flex">
                             <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
                                 data-toggle="fullscreen">
                                 <i class="bx bx-fullscreen fs-22"></i>
                             </button>
                         </div>
 
-                        <div class="ms-1 header-item">
+                        <div class="ms-1 header-item d-none d-sm-flex">
                             <button type="button"
                                 class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle light-dark-mode">
                                 <i class="bx bx-moon fs-22"></i>
                             </button>
                         </div>
 
-                        <div class="ms-1 header-item">
+                        <div class="ms-1 header-item d-none d-sm-flex">
                             <button type="button" id="logout"
                                 class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle">
                                 <i class="mdi mdi-logout fs-22"></i>
@@ -161,29 +185,29 @@
                         </div>
                     </div>
                     <section class="row">
-                        <div class="choice col-lg-4 p-3 border border-primary border-opacity-25 pb-5" id="open">
+                        <div class="choice col-lg-4 p-3" id="open">
                             <div class="mb-3">
                                 <h6 class="fs-14 text-uppercase fw-semibold mb-0">
                                     Open Tickets
-                                    <div class="badge bg-danger align-bottom float-end" id="open_badge"></div>
+                                    <small class="badge bg-danger align-bottom ms-1 totaltask-badge">1</small>
                                 </h6>
                             </div>
                             <div id="opentickets"></div>
                         </div>
-                        <div class="choice col-lg-4 p-3 border border-primary border-opacity-25 pb-5" id="inprogress">
+                        <div class="choice col-lg-4 p-3" id="inprogress">
                             <div class="mb-3">
                                 <h6 class="fs-14 text-uppercase fw-semibold mb-0">
                                     In Progress Tickets
-                                    <div class="badge bg-warning align-bottom float-end" id="inprogress_badge"></div>
+                                    <small class="badge bg-warning align-bottom ms-1 totaltask-badge">2</small>
                                 </h6>
                             </div>
                             <div id="inprogresstickets"></div>
                         </div>
-                        <div class="choice col-lg-4 p-3 border border-primary border-opacity-25 pb-5" id="closed">
+                        <div class="choice col-lg-4 p-3" id="closed">
                             <div class="mb-3">
                                 <h6 class="fs-14 text-uppercase fw-semibold mb-0">
                                     Closed Tickets
-                                    <div class="badge bg-success align-bottom float-end" id="closed_badge"></div>
+                                    <small class="badge bg-success align-bottom ms-1 totaltask-badge">3</small>
                                 </h6>
                             </div>
                             <div id="closedtickets"></div>
@@ -192,7 +216,23 @@
                 </div>
 
                 <!-- footer -->
-                <footer class="footer"></footer>
+                <footer class="footer">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="text-center">
+                                    <p class="mb-0 text-muted">
+                                        &copy;
+                                        <script>
+                                            document.write(new Date().getFullYear());
+                                        </script>
+                                        Velzon. Created by Triangles
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
             </div>
         </div>
     </div>
@@ -209,6 +249,12 @@
             <div class="spinner-border text-primary avatar-sm" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
+        </div>
+    </div>
+
+    <div class="customizer-setting d-none d-md-block" id="chatbot">
+        <div class="btn-info btn-rounded shadow-lg btn btn-icon btn-lg p-2">
+            <i class="fa-solid fa-comment" id="iconchat"></i>
         </div>
     </div>
 
@@ -255,7 +301,7 @@
     <!-- JAVASCRIPT -->
     <script src="/assets/js/jquery.js"></script>
     <script src="/assets/js/main.js"></script>
-    <script src="/assets/js/support.js"></script>
+    <script src="/assets/js/chatbot.js"></script>
 
     <script src="/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/assets/libs/simplebar/simplebar.min.js"></script>
@@ -275,98 +321,62 @@
     <!-- App js -->
     <script src="/assets/js/app.js"></script>
 
-    <script>
-        let email;
+    <script type="text/javascript">
         $(document).ready(() => {
-            $.ajax({
-                url: "/getTickets",
-                method: "POST",
-                async: false,
-                data: {
-                    obj: {
-                        table: "support_agents",
-                        paramstr: `apikey = '${getCookie('apikey')}' --`
-                    }
-                },
-                success: function (data) {
-                    email = data[0].email;
-                }
-            });
 
-            function update_badge(email) {
+            $(".navbar-nav").html(
+                '<li class="nav-item"><a class="nav-link menu-link" href="/supportScan"><i class="ri-dashboard-2-line"></i><span data-key="t-apps">Scan WhatsApp</span></a></li><li class="nav-item"><a class="nav-link menu-link active" href="/manageSupportTicket"><i class="ri-apps-2-line"></i><span data-key="t-apps">Support Tickets</span></a></li>'
+            );
+
+            function ticketdata(object) {
+
+                $("#opentickets").html("");
+                $("#inprogresstickets").html("");
+                $("#closedtickets").html("");
+
+                console.log(object);
                 $.ajax({
                     url: "/getTickets",
                     method: "POST",
                     data: {
                         obj: {
-                            table: "support_ticket",
-                            paramstr: `agent_email = '${email}' --`
+                            table: object.table,
+                            paramstr: object.paramstr
                         }
                     },
                     success: function (data) {
-                        let open = 0, closed = 0, inprogress = 0;
-                        for (let i = 0; i < data.length; i++) {
-                            switch (data[i].status) {
-                                case "open": {
-                                    open++;
-                                    break;
-                                }
-                                case "inprogress": {
-                                    inprogress++;
-                                    break;
-                                }
-                                case "closed": {
-                                    closed++;
-                                    break;
-                                }
-                            }
-                        }
-                        $('#open_badge').html(open);
-                        $('#inprogress_badge').html(inprogress);
-                        $('#closed_badge').html(closed);
-                    }
-                });
-            }
-            update_badge(email);
-
-            function ticketdata(condition) {
-                $.ajax({
-                    url: "/getTickets",
-                    method: "POST",
-                    data: {
-                        obj: {
-                            table: "support_ticket",
-                            paramstr: `agent_email = '${email}' and ${condition} --`
-                        }
-                    },
-                    success: function (data) {
-                        $("#opentickets").html(``);
-                        $("#inprogresstickets").html(``);
-                        $("#closedtickets").html(``);
+                        console.log(data);
                         for (let i = 0; i < data.length; i++) {
                             var output = `<div class="card tickets" draggable="true">
-                                        <div class="card-body">
-                                            <div class="d-flex mb-2">
-                                                <a href="/supportTicket/${data[i].ticket_id}" class="text-muted fw-medium fs-14 flex-grow-1">
-                                                    #${data[i].ticket_id}
-                                                </a>
-                                            </div>
-                                            <h6 class="fs-15 text-truncate task-title">
-                                                <a href="/supportTicket/${data[i].ticket_id}" class="link-dark d-block">${data[i].t_subject}</a>
-                                            </h6>
-                                            <p class="text-muted">${data[i].t_description}</p>
-                                        </div>
-                                        <div class="card-footer border-top-dashed">
-                                            <div class="d-flex">
-                                                <div class="flex-grow-1">
-                                                    <span class="text-muted">
-                                                        <i class="ri-time-line align-bottom"></i>
-                                                        ${data[i].generation_time}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>`;
+                    <div class="card-body">
+                      <div class="d-flex mb-2">
+                        <a
+                          href="/supportTicket/${data[i].ticket_id}"
+                          class="text-muted fw-medium fs-14 flex-grow-1"
+                          >#${data[i].ticket_id}</a
+                        >
+                      </div>
+                      <h6 class="fs-15 text-truncate task-title">
+                        <a
+                          href="/supportTicket/${data[i].ticket_id}"
+                          class="link-dark d-block"
+                          >${data[i].t_subject}</a
+                        >
+                      </h6>
+                      <p class="text-muted">
+                        ${data[i].t_description}
+                      </p>
+                    </div>
+                    <div class="card-footer border-top-dashed">
+                      <div class="d-flex">
+                        <div class="flex-grow-1">
+                          <span class="text-muted"
+                            ><i class="ri-time-line align-bottom"></i>${data[i].generation_time}</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>`;
                             if (data[i].status == "open") {
                                 $("#opentickets").append(output);
                             } else if (data[i].status == "inprogress") {
@@ -390,44 +400,37 @@
                             j.addEventListener("dragleave", dragleave);
                             j.addEventListener("drop", Drop);
                         }
-                    }
+                    },
                 });
             }
-            ticketdata('true');
 
             function dragStart() {
                 dragItem = this;
-                $(this).css('opacity', '100%');
                 setTimeout(() => (this.style.display = "none"), 0);
             }
 
             function dragEnd() {
-                $(this).css('opacity', '100%');
                 setTimeout(() => (this.style.display = "block"), 0);
                 dragItem = null;
             }
 
             function Drop() {
                 this.append(dragItem);
-                let id = document.getElementById(this.id).lastChild.childNodes[1].childNodes[1].childNodes[1].outerText;
+                let id = document.getElementById(this.id).lastChild.childNodes[1].childNodes[1].childNodes[1].outerText;//.childNodes[this.childNodes.length - 1].childNodes[0].childNodes[0].childNodes[0].value);
+                alert(id);
                 $.ajax({
                     url: "/updateData",
-                    method: "PUT",
-                    data: {
-                        table: "support_ticket",
-                        paramstr: `status = '${this.id}'`,
-                        condition: `ticket_id='${id.trim().split('#')[1]}'`
-                    },
+                    method: "put",
+                    data: { table: "support_ticket", paramstr: "status='" + this.id + "'", condition: `ticket_id='${id.substring(1)}'` },
                     success: function (data) {
-                        update_badge(email);
-                        //ticketdata('true');
+                        console.log(data);
                     }
                 })
             }
 
             function dragOver(e) {
                 e.preventDefault();
-                $(this).addClass('border border-primary border-dashed');
+                this.style.border = "2px dotted cyan";
             }
 
             function dragEnter(e) {
@@ -435,52 +438,66 @@
             }
 
             function dragleave() {
-                e.preventDefault();
+                this.style.border = "none";
             }
-            $.ajax({
-                url: "/ticket_users",
-                method: "get",
-                success: function (data) {
-                    let output = `<option value="ALL">All</option>`;
-                    for (i = 0; i < data.length; i++) {
-                        output += `<option value="${data[i].apikey}">
+
+            function user() {
+                let output = `<option value="ALL">All</option>`;
+                $.ajax({
+                    url: "/ticket_users",
+                    method: "get",
+                    success: function (data) {
+                        for (i = 0; i < data.length; i++) {
+                            output += `<option value="${data[i].apikey}">
                                     ${data[i].uname} - ${data[i].apikey}
                                     </option>`;
+                        }
+                        $("#users").html(output);
                     }
-                    $("#users").html(output);
+                })
+            }
+            user();
+
+            let key = getCookie("apikey");
+            let agent_email;
+            console.log(key);
+            alert(key);
+            $.ajax({
+                url: `/getDataWithCondition`,
+                method: `post`,
+                data: {
+                    table: `support_agents`,
+                    paramstr: `apikey='${key}'`
+
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (!data.status_code) {
+                        console.log(data[0].email);
+                        agent_email = data[0].email;
+                        alert(agent_email);
+                        ticketdata({ table: "support_ticket", paramstr: `agent_email = '${agent_email}'--` });
+                    }
+                    else {
+                        alert("error");
+                    }
                 }
             })
 
-            // let key = getCookie("apikey");
-            // let agent_email;
-            // $.ajax({
-            //     url: `/getDataWithCondition`,
-            //     method: `post`,
-            //     data: {
-            //         table: `support_agents`,
-            //         paramstr: `apikey='${key}'`
-
-            //     },
-            //     success: function (data) {
-            //         console.log(data);
-            //         if (!data.status_code) {
-            //             console.log(data[0].email);
-            //             agent_email = data[0].email;
-            //             alert(agent_email);
-            //             ticketdata({ table: "support_ticket", paramstr: `agent_email = '${agent_email}'--` });
-            //         }
-            //         else {
-            //             alert("error");
-            //         }
-            //     }
-            // })
-
             $("#users").on('change', function () {
                 if ($('#users').val() == `ALL`) {
-                    ticketdata('true');
+                    alert($("#users").val());
+                    ticketdata({
+                        table: "support_ticket",
+                        paramstr: `agent_email = '${agent_email}'--`
+                    });
                 }
                 else {
-                    ticketdata(`apikey='${$('#users').val()}'`);
+                    alert($("#users").val());
+                    ticketdata({
+                        table: "support_ticket",
+                        paramstr: `apikey="${$('#users').val()}" and agent_email = '${agent_email}'--`
+                    });
                 }
             })
 
@@ -488,10 +505,16 @@
                 let val = $('#search').val().trim();
 
                 if (val == null || val == "") {
-                    ticketdata('true');
+                    ticketdata({
+                        table: "support_ticket",
+                        paramstr: `agent_email = '${agent_email}'--`,
+                    });
                 }
                 else {
-                    ticketdata(`(ticket_id LIKE '%${val}%' OR apikey LIKE '%${val}%' OR user LIKE '%${val}%' OR t_subject LIKE '%${val}%')`);
+                    ticketdata({
+                        table: "support_ticket",
+                        paramstr: `(ticket_id LIKE '%${val}%' OR apikey LIKE '%${val}%' OR user LIKE '%${val}%' OR t_subject LIKE '%${val}%') and agent_email = '${agent_email}'--`,
+                    });
                 }
             })
         });

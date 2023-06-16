@@ -221,13 +221,6 @@
         </div>
     </div>
 
-    <div class="customizer-setting d-none d-md-block">
-        <div class="btn-info btn-rounded shadow-lg btn btn-icon btn-lg p-2" data-bs-toggle="offcanvas"
-            data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas">
-            <i class="mdi mdi-spin mdi-cog-outline fs-22"></i>
-        </div>
-    </div>
-
     <!-- JAVASCRIPT -->
     <script src="/assets/js/jquery.js"></script>
     <script src="/assets/js/admin.js"></script>
@@ -283,7 +276,7 @@
                             limit: localStorage.getItem("limit"),
                         },
                         success: function (content) {
-                            console.log(content);
+                            // console.log(content);
                             if(content.status_code == "404"){
                                 swal({
                                     title: "No such record found",
@@ -326,8 +319,8 @@
                             paramstr: paramstr,
                         },
                         success: function (result) {
-                            console.log("below data of search");
-                            console.log(result);
+                            // console.log("below data of search");
+                            // console.log(result);
                            if (result.status_code == "404") {
                                 $("#mycomplementry").html(`<div class="noresult py-5">
                                     <div class="text-center">
@@ -374,7 +367,7 @@
                     limit: localStorage.getItem("limit"),
                 },
                 success: function (content) {
-                    console.log(content);
+                    // console.log(content);
                     displayAtBeginning(
                         content,
                         "previousBtn",
@@ -387,7 +380,7 @@
             });
 
             $(document).on("click", ".nextBtn", function () {
-                console.log(document.getElementsByClassName("mybtn"));
+                // console.log(document.getElementsByClassName("mybtn"));
                 var arr = document.getElementsByClassName("mybtn").length;
                 count = 0;
                 for (let pn = 1; pn <= arr; pn++) {
@@ -405,7 +398,7 @@
                                 limit: localStorage.getItem("limit"),
                             },
                             success: function (content) {
-                                console.log(content);
+                                // console.log(content);
                                 nextBtnDisplay(
                                     content,
                                     "previousBtn",
@@ -433,7 +426,7 @@
                             limit: localStorage.getItem("limit"),
                         },
                         success: function (content) {
-                            console.log(content);
+                            // console.log(content);
                             if(content.status_code == "404"){
                                 swal({
                                     title: "No such record found",
@@ -465,7 +458,7 @@
                         },
                     });
                 } else {
-                    console.log(document.getElementsByClassName("mysearchbtn"));
+                    // console.log(document.getElementsByClassName("mysearchbtn"));
                     var arr = document.getElementsByClassName("mysearchbtn").length;
                     count = 0;
                     let paramstr = `name like '%${str}%' or cast(contact_id as char) like '%${str}%' or apikey like '%${str}%' or cast(phone as char) like '%${str}%'`;
@@ -485,7 +478,7 @@
                                     paramstr: paramstr,
                                 },
                                 success: function (content) {
-                                    console.log(content);
+                                    // console.log(content);
                                     if(content.status_code == "404"){
                                 swal({
                                     title: "No such record found",
@@ -523,7 +516,7 @@
             });
 
             $(document).on("click", ".previousBtn", function () {
-                console.log(document.getElementsByClassName("mybtn"));
+                // console.log(document.getElementsByClassName("mybtn"));
                 var arr = document.getElementsByClassName("mybtn").length;
                 count = 0;
                 for (let pn = 1; pn <= arr; pn++) {
@@ -541,7 +534,7 @@
                                 limit: localStorage.getItem("limit"),
                             },
                             success: function (content) {
-                                console.log(content);
+                                // console.log(content);
                                 previousBtnDisplay(
                                     content,
                                     "previousBtn",
@@ -569,7 +562,7 @@
                             limit: localStorage.getItem("limit"),
                         },
                         success: function (content) {
-                            console.log(content);
+                            // console.log(content);
                             if(content.status_code == "404"){
                                 swal({
                                     title: "No such record found",
@@ -601,7 +594,7 @@
                         },
                     });
                 } else {
-                    console.log(document.getElementsByClassName("mysearchbtn"));
+                    // console.log(document.getElementsByClassName("mysearchbtn"));
                     var arr = document.getElementsByClassName("mysearchbtn").length;
                     count = 0;
                     let paramstr = `name like '%${str}%' or cast(contact_id as char) like '%${str}%' or apikey like '%${str}%' or cast(phone as char) like '%${str}%'`;
@@ -621,7 +614,7 @@
                                     paramstr: paramstr,
                                 },
                                 success: function (content) {
-                                    console.log(content);
+                                    // console.log(content);
                                     if(content.status_code == "404"){
                                 swal({
                                     title: "No such record found",
@@ -671,7 +664,7 @@
                         limit: localStorage.getItem("limit"),
                     },
                     success: function (content) {
-                        console.log(content);
+                        // console.log(content);
                         myBtnDisplay(
                             content,
                             "previousBtn",
@@ -699,7 +692,7 @@
                             limit: localStorage.getItem("limit"),
                         },
                         success: function (content) {
-                            console.log(content);
+                            // console.log(content);
                             if(content.status_code == "404"){
                                 swal({
                                     title: "No such record found",
@@ -745,7 +738,7 @@
                             paramstr: paramstr,
                         },
                         success: function (content) {
-                            console.log(content);
+                            // console.log(content);
                             if(content.status_code == "404"){
                                 swal({
                                     title: "No such record found",
