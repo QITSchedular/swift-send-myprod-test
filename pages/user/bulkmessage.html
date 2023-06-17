@@ -1179,7 +1179,7 @@
                     $(document).on("click", "#scanqr", function () {
                         console.log(iid);
                         $.ajax({
-                            url: `/qr/${iid}`,
+                            url: `/qrcode/${iid}`,
                             method: "GET",
                             beforeSend: function () {
                                 $("#QRbox, #loader").removeClass("d-none");
