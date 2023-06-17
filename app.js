@@ -373,7 +373,7 @@ passport.use(new GoogleStrategy(
     {
         clientID: "552657255780-ud1996049ike2guu982i3ms5ver5gbsf.apps.googleusercontent.com",
         clientSecret: "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",
-        callbackURL: `https://swiftsend.click/auth/google/callback`,
+        callbackURL: `/auth/google/callback`,
     }, function (accessToken, refreshToken, profile, done) {
         userProfile = profile;
         return done(null, userProfile);
@@ -456,11 +456,11 @@ app.post("/sheetdata", async (req, res) => {
         }
         object["colnames"] = colnames;
         object["values"] = data;
-        // console.log(object);
         res.send(object);
     }
     catch (e) {
         console.log(e);
+        res.send(status.nodatafound());
     }
 });
 
@@ -1144,7 +1144,6 @@ app.post("/sendmsgchannel", async function (req, res) {
                     const chatId = `91${contacts[i]}@c.us`;
                     let msgid = crypto.randomBytes(8).toString("hex");
                     if (obj[iid]) {
-
                         obj[iid].send_whatsapp_message(chatId, message).then((messageId) => {
                             conn.query(
                                 `insert into message values(?,?,?,?,?,?,?,?)`,
@@ -1159,7 +1158,7 @@ app.post("/sendmsgchannel", async function (req, res) {
                         })
                     }
                     else {
-                        res.send(status.userNotValid());
+                        return res.send(status.userNotValid());
                     }
                 }
             });

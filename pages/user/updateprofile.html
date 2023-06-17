@@ -189,7 +189,7 @@
         </div>
         <!-- Left Sidebar End -->
         <!-- Vertical Overlay-->
-       <!--  <div class="vertical-overlay"></div>-->
+        <!--  <div class="vertical-overlay"></div>-->
 
         <!-- ============================================================== -->
         <!-- Start right Content here -->
@@ -209,24 +209,28 @@
                     <div class="col-lg-12 mt-n5" id="boximage">
                         <div class="card">
                             <div class="card-header">
-                                <ul class="nav nav-tabs-custom nav-justified rounded card-header-tabs border-bottom-0" role="tablist">
+                                <ul class="nav nav-tabs-custom nav-justified rounded card-header-tabs border-bottom-0"
+                                    role="tablist">
                                     <li class="nav-item">
                                         <a class="nav-link active" data-bs-toggle="tab" href="#personalDetails"
                                             role="tab">
                                             <i class="bx bx-user-pin me-lg-1 me-md-1 fs-20 align-middle"></i>
-                                            <span class="d-none d-lg-inline-block d-md-inline-block">Personal Details</span>
+                                            <span class="d-none d-lg-inline-block d-md-inline-block">Personal
+                                                Details</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" data-bs-toggle="tab" href="#profileDetails" role="tab">
                                             <i class="bx bx-image-alt me-lg-1 me-md-1 fs-20 align-middle"></i>
-                                            <span class="d-none d-lg-inline-block d-md-inline-block">Update Profile Image</span>
+                                            <span class="d-none d-lg-inline-block d-md-inline-block">Update Profile
+                                                Image</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" data-bs-toggle="tab" href="#changePassword" role="tab">
                                             <i class="bx bxs-key me-lg-1 me-md-1 fs-20 align-middle"></i>
-                                            <span class="d-none d-lg-inline-block d-md-inline-block">Change Password</span>
+                                            <span class="d-none d-lg-inline-block d-md-inline-block">Change
+                                                Password</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -1037,46 +1041,56 @@
                 const image_file = document.getElementById('profile-img-file-input').files[0];
 
                 if (image_file.type.split("/")[0] === 'image') {
-                    let formData = new FormData()
-                    formData.append("img", image_file);
-                    $.ajax({
-                        url: "/profile_img",
-                        method: "POST",
-                        data: formData,
-                        contentType: false,
-                        processData: false,
-                        beforeSend: function () {
-                            $('.profileimg').attr('src', 'https://c.tenor.com/Tu0MCmJ4TJUAAAAC/load-loading.gif');
-                        },
-                        success: function (val) {
-                            switch (val.status_code) {
-                                case '400':
-                                case '401':
-                                case '404': {
-                                    InvalidUser();
-                                    break;
-                                }
+                    if (image_file.size / (1024 * 1024) < 1) {
+                        let formData = new FormData();
+                        formData.append("img", image_file);
+                        $.ajax({
+                            url: "/profile_img",
+                            method: "POST",
+                            data: formData,
+                            contentType: false,
+                            processData: false,
+                            beforeSend: function () {
+                                $('.profileimg').attr('src', '/assets/images/img_load.gif');
+                            },
+                            success: function (val) {
+                                switch (val.status_code) {
+                                    case '400':
+                                    case '401':
+                                    case '404': {
+                                        InvalidUser();
+                                        break;
+                                    }
 
-                                case '500': {
-                                    InternalServerError();
-                                    break;
-                                }
+                                    case '500': {
+                                        InternalServerError();
+                                        break;
+                                    }
 
-                                case '200': {
-                                    swal({
-                                        title: `Profile Image Updated.`,
-                                        type: 'success',
-                                        timer: 2000,
-                                        showConfirmButton: false,
-                                    }).then(function () {
-                                        userinfo();
-                                        displaydata();
-                                    })
-                                    break;
+                                    case '200': {
+                                        swal({
+                                            title: `Profile Image Updated.`,
+                                            type: 'success',
+                                            timer: 2000,
+                                            showConfirmButton: false,
+                                        }).then(function () {
+                                            userinfo();
+                                            displaydata();
+                                        })
+                                        break;
+                                    }
                                 }
                             }
-                        }
-                    })
+                        })
+                    }
+                    else{
+                        swal({
+                            title: `<h3 class="text-primary">File Size must be &lt 1 MB.</h3>`,
+                            type: 'error',
+                            timer: 2000,
+                            showConfirmButton: false,
+                        });
+                    }
                 }
                 else {
                     swal({

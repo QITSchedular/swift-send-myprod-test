@@ -1126,15 +1126,9 @@
                     url: "/updateData",
                     method: "PUT",
                     data: {
-                        paramstr: `name='${$("#editname").val()}', email='${$(
-                            "#editemail"
-                        ).val()}', password='${$(
-                            "#editpassword"
-                        ).val()}', category='${$(
-                            "#editcategory"
-                        ).val()}'`,
-                        condition: `agent_id=${$(this).attr("data-id")}`,
                         table: table,
+                        paramstr: `name='${$("#editname").val()}', email='${$("#editemail").val()}', password='${$("#editpassword").val()}', category='${$("#editcategory").val()}'`,
+                        condition: `agent_id=${$(this).attr("data-id")}`,
                     },
                     success: function (result) {
                         if (result.status_code == 200) {

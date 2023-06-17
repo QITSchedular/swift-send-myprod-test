@@ -273,103 +273,136 @@
                         </ul>
                         <div class="tab-content card-body">
                             <div class="tab-pane active" id="gsheetbulkmail" role="tabpanel">
-                                <div class="mb-3">
-                                    <button id="connect" class="btn btn-primary btn-load fs-14">
-                                        <i class="mdi mdi-google-spreadsheet align-middle me-lg-2 me-md-2"></i>
-                                        <span class="ms-sm-2">Connect</span>
-                                        <span class="d-none d-md-inline-block d-lg-inline-block">
-                                            with Google Sheet
-                                        </span>
-                                    </button>
-                                </div>
-                                <div id="after_connect_div_gsheet" class="d-none">
-                                    <div class="mb-3 row">
-                                        <div class="col-6">
-                                            <label for="spreedsheet" class="form-label">
-                                                Spreed-Sheet
-                                                <span class="text-danger">*</span>
-                                            </label>
-                                            <select class="form-select mb-3" id="spreedsheet"></select>
+                                <div class="row">
+                                    <div class="col-lg-6 mb-2">
+                                        <div
+                                            class="bg-info bg-opacity-10 border border-info p-2 rounded-3 text-info mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <i class="ri-error-warning-line align-middle me-2 fs-18"></i>
+                                                <div class="vr"></div>
+                                                <p class="fs-14 fw-medium mb-0 ms-2" style="text-align: justify;">
+                                                    Google Sheet must have column name like <span
+                                                        class="text-primary">name, phone, email</span> and
+                                                    sheet will
+                                                    select only first <span class="text-danger">200 Data</span>.
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div class="col-6">
-                                            <label for="sheetname" class="form-label">
-                                                Sheet
-                                                <span class="text-danger">*</span>
-                                            </label>
-                                            <select class="form-select mb-3" id="sheetname"></select>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3" data-simplebar data-simplebar-auto-hide="false"
-                                        style="height: 150px;">
-                                        <table class="table align-middle" id="sheet_data"></table>
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="gsheetmailtype" class="form-label">Select Mail
-                                            Type</label>
-                                        <select class="form-select w-25 type_change" id="gsheetmailtype">
-                                            <option disabled selected>Select Mail type</option>
-                                            <option value="custom">Custom Mail</option>
-                                            <option value="template">Template Mail</option>
-                                        </select>
-                                    </div>
-
-
-                                    <div class="d-none mb-3" id="gsheetmailtype_custom">
-                                        <label for="gsheetmailtype_custom_subject_box" class="form-label">
-                                            Subject
-                                            <span class="text-danger">*</span>
-                                            <span class="text-danger" id="err_gsheetmailtype_custom_subject_box"></span>
-                                        </label>
-                                        <input type="text" class="form-control required"
-                                            id="gsheetmailtype_custom_subject_box" data-type="message" />
-                                        <label for="gsheetmailtype_message_box" class="form-label">
-                                            Body
-                                            <span class="text-danger">*</span>
-                                            <span class="text-danger" id="err_gsheetmailtype_message_box"></span>
-                                        </label>
-                                        <div class="position-relative">
-                                            <textarea id="gsheetmailtype_message_box"
-                                                class="form-control mb-3 pe-5 required" data-type="message"
-                                                style="resize:none;"></textarea>
-                                            <button class="btn btn-link position-absolute end-0 top-0
-                                                             text-decoration-none text-muted" id="gsheet_cstm_mic">
-                                                <i class="fas fa-microphone text-primary fs-5"></i>
+                                        <div class="mb-3">
+                                            <button id="connect" class="btn btn-primary btn-load fs-14">
+                                                <i class="mdi mdi-google-spreadsheet align-middle me-lg-2 me-md-2"></i>
+                                                <span class="ms-sm-2">Connect</span>
+                                                <span class="d-none d-md-inline-block d-lg-inline-block">
+                                                    with Google Sheet
+                                                </span>
                                             </button>
                                         </div>
-                                        <button id="gsheetmailtype_custom_send" class="btn btn-primary btn-load">
-                                            <i class="fa-solid fa-paper-plane"></i>
-                                            Send to All
-                                        </button>
-                                    </div>
+                                        <div id="after_connect_div_gsheet" class="d-none">
+                                            <div class="col-12 mb-2">
+                                                <label for="spreedsheet" class="form-label">
+                                                    Spreed-Sheet
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <select class="form-select" id="spreedsheet"></select>
+                                            </div>
+                                            <div class="col-12 mb-2">
+                                                <label for="sheetname" class="form-label">
+                                                    Sheet
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <select class="form-select" id="sheetname"></select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="gsheetmailtype" class="form-label">
+                                                    Mail Type
+                                                </label>
+                                                <select class="form-select type_change" id="gsheetmailtype">
+                                                    <option disabled selected>Select Mail type</option>
+                                                    <option value="custom">Custom Mail</option>
+                                                    <option value="template">Template Mail</option>
+                                                </select>
+                                            </div>
 
-                                    <div class="d-none" id="gsheetmailtype_template">
-                                        <label for="gsheetmailtype_template_data" class="form-label">
-                                            Select Template
-                                            <span class="text-danger">*</span>
-                                            <span class="text-danger" id="err_gsheetmailtype_template_data"></span>
-                                        </label>
-                                        <select class="form-select w-50 mb-3"
-                                            id="gsheetmailtype_template_data"></select>
-                                        <div class="row mb-3" id="gsheetmailtype_template_column"></div>
-                                        <label for="gsheetmailtype_template_subject_box mb-3" class="form-label">
-                                            Subject
-                                            <span class="text-danger">*</span>
-                                            <span class="text-danger"
-                                                id="err_gsheetmailtype_template_subject_box"></span>
-                                        </label>
-                                        <input type="text" class="form-control required"
-                                            id="gsheetmailtype_template_subject_box" data-type="message" />
-                                        <label class="form-label">
-                                            Mail Preview
-                                        </label>
-                                        <textarea class="form-control mb-3" style="resize: none" cols="50" rows="6"
-                                            id="gsheetmailtype_template_textarea" readonly disabled></textarea>
-                                        <button id="gsheetmailtype_template_send" class="btn btn-primary btn-load">
-                                            <i class="mdi mdi-send me-lg-2 me-md-2"></i>
-                                            <span class="d-none d-lg-inline-block d-md-inline-block">
-                                                Send to All
-                                            </span>
-                                        </button>
+                                            <div class="d-none mb-3" id="gsheetmailtype_custom">
+                                                <label for="gsheetmailtype_custom_subject_box" class="form-label">
+                                                    Subject
+                                                    <span class="text-danger">*</span>
+                                                    <span class="text-danger"
+                                                        id="err_gsheetmailtype_custom_subject_box"></span>
+                                                </label>
+                                                <input type="text" class="form-control required mb-3"
+                                                    id="gsheetmailtype_custom_subject_box" data-type="message" />
+                                                <label for="gsheetmailtype_message_box" class="form-label">
+                                                    Body
+                                                    <span class="text-danger">*</span>
+                                                    <span class="text-danger"
+                                                        id="err_gsheetmailtype_message_box"></span>
+                                                </label>
+                                                <div class="position-relative">
+                                                    <textarea id="gsheetmailtype_message_box"
+                                                        class="form-control mb-3 pe-5 required" data-type="message"
+                                                        style="resize:none;" rows="10"></textarea>
+                                                    <button
+                                                        class="btn btn-link position-absolute end-0 top-0
+                                                                                                     text-decoration-none text-muted"
+                                                        id="gsheet_cstm_mic">
+                                                        <i class="fas fa-microphone text-primary fs-5"></i>
+                                                    </button>
+                                                </div>
+                                                <button id="gsheetmailtype_custom_send"
+                                                    class="btn btn-primary btn-load">
+                                                    <i class="mdi mdi-send me-lg-2 me-md-2"></i>
+                                                    <span class="d-none d-lg-inline-block d-md-inline-block">
+                                                        Send to All
+                                                    </span>
+                                                </button>
+                                            </div>
+
+                                            <div class="d-none" id="gsheetmailtype_template">
+                                                <label for="gsheetmailtype_template_data" class="form-label">
+                                                    Select Template
+                                                    <span class="text-danger">*</span>
+                                                    <span class="text-danger"
+                                                        id="err_gsheetmailtype_template_data"></span>
+                                                </label>
+                                                <select class="form-select mb-3"
+                                                    id="gsheetmailtype_template_data"></select>
+                                                <div class="row" id="gsheetmailtype_template_column"></div>
+                                                <label for="gsheetmailtype_template_subject_box" class="form-label">
+                                                    Subject
+                                                    <span class="text-danger">*</span>
+                                                    <span class="text-danger"
+                                                        id="err_gsheetmailtype_template_subject_box"></span>
+                                                </label>
+                                                <input type="text" class="form-control required mb-2"
+                                                    id="gsheetmailtype_template_subject_box" data-type="message" />
+                                                <label class="form-label">
+                                                    Mail Preview
+                                                </label>
+                                                <textarea class="form-control mb-3" style="resize: none" cols="50"
+                                                    rows="6" id="gsheetmailtype_template_textarea" readonly
+                                                    disabled></textarea>
+                                                <button id="gsheetmailtype_template_send"
+                                                    class="btn btn-primary btn-load">
+                                                    <i class="mdi mdi-send me-lg-2 me-md-2"></i>
+                                                    <span class="d-none d-lg-inline-block d-md-inline-block">
+                                                        Send to All
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label>Contact Data</label>
+                                        <div class="card" data-simplebar data-simplebar-auto-hide="false"
+                                            style="height: 450px;">
+                                            <div class="card-body" id="sheet_data">
+                                                <h5 class="d-flex justify-content-center text-muted text-center p-5">
+                                                    Preview of the data will show here after you select the
+                                                    Google Sheet
+                                                </h5>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -397,7 +430,7 @@
                                             </label>
                                             <input type="file" id="datafile" class="form-control" />
                                         </div>
-                                        <div id="after_connect_div_localfile" class="">
+                                        <div id="after_connect_div_localfile" class="d-none">
                                             <div class="mb-3">
                                                 <label for="localfilmailtype" class="form-label">Mail Type</label>
                                                 <select class="form-select type_change" id="localfilmailtype">
@@ -434,8 +467,10 @@
                                                 </div>
                                                 <button id="localfilmailtype_custom_send"
                                                     class="btn btn-primary btn-load">
-                                                    <i class="fa-solid fa-paper-plane"></i>
-                                                    Send to All
+                                                    <i class="mdi mdi-send me-lg-2 me-md-2"></i>
+                                                    <span class="d-none d-lg-inline-block d-md-inline-block">
+                                                        Send to All
+                                                    </span>
                                                 </button>
                                             </div>
                                             <div class="d-none" id="localfilmailtype_template">
@@ -522,55 +557,60 @@
                                                     <option value="template">template message</option>
                                                 </select>
                                             </div>
-                                        </div>
-
-                                        <div class="mb-3 d-none" id="channelmailtype_custom">
-                                            <label for="channel_message_box" class="form-label">
-                                                Message
-                                                <span class="text-danger">*</span>
-                                                <span class="text-danger" id="err_channel_message_box"></span>
-                                            </label>
-                                            <div class="position-relative">
-                                                <textarea id="channel_message_box"
-                                                    class="form-control mb-3 pe-5 required" data-type="message"
-                                                    style="resize:none;"></textarea>
-                                                <button class="btn btn-link position-absolute end-0 top-0
-                                                                         text-decoration-none text-muted"
-                                                    id="channel_cstm_mic">
-                                                    <i class="fas fa-microphone text-primary fs-5"></i>
-                                                </button>
+                                            <div class="mb-3 d-none" id="channelmailtype_custom">
+                                                <label for="channel_message_box" class="form-label">
+                                                    Message
+                                                    <span class="text-danger">*</span>
+                                                    <span class="text-danger" id="err_channel_message_box"></span>
+                                                </label>
+                                                <div class="position-relative">
+                                                    <textarea id="channel_message_box"
+                                                        class="form-control mb-3 pe-5 required" data-type="message"
+                                                        style="resize:none;"></textarea>
+                                                    <button
+                                                        class="btn btn-link position-absolute end-0 top-0
+                                                                                                                     text-decoration-none text-muted"
+                                                        id="channel_cstm_mic">
+                                                        <i class="fas fa-microphone text-primary fs-5"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="my-2 d-flex justify-content-end">
+                                                    <button class="btn btn-primary btn-load"
+                                                        id="channelmailtype_custom_send">
+                                                        <i class="mdi mdi-send me-lg-2 me-md-2"></i>
+                                                        <span class="d-none d-lg-inline-block d-md-inline-block">
+                                                            Send to All
+                                                        </span>
+                                                    </button>
+                                                </div>
                                             </div>
-                                            <div class="my-2 d-flex justify-content-end">
-                                                <button class="btn btn-primary btn-load"
-                                                    id="channelmailtype_custom_send">
-                                                    <i class="mdi mdi-send me-lg-2 me-md-2"></i>
-                                                    <span class="d-none d-lg-inline-block d-md-inline-block">
-                                                        Send to All
-                                                    </span>
-                                                </button>
-                                            </div>
-                                        </div>
 
-                                        <div class="d-none" id="channelmailtype_template">
-                                            <label for="channelmailtype_template_data" class="form-label">
-                                                Select Template
-                                                <span class="text-danger">*</span>
-                                                <span class="text-danger" id="err_channelmailtype_template_data"></span>
-                                            </label>
-                                            <select class="form-select mb-3"
-                                                id="channelmailtype_template_data"></select>
-                                            <div class="row mb-3" id="channelmailtype_template_column"></div>
-                                            <label class="form-label">
-                                                Message Preview
-                                            </label>
-                                            <textarea class="form-control mb-3" style="resize: none" cols="50" rows="6"
-                                                id="channelmailtype_template_textarea" readonly disabled></textarea>
-                                            <button id="channelmailtype_template_send" class="btn btn-primary btn-load">
-                                                <i class="mdi mdi-send me-lg-2 me-md-2"></i>
-                                                <span class="d-none d-lg-inline-block d-md-inline-block">
-                                                    Send to All
-                                                </span>
-                                            </button>
+                                            <div class="d-none" id="channelmailtype_template">
+                                                <label for="channelmailtype_template_data" class="form-label">
+                                                    Select Template
+                                                    <span class="text-danger">*</span>
+                                                    <span class="text-danger"
+                                                        id="err_channelmailtype_template_data"></span>
+                                                </label>
+                                                <select class="form-select mb-3"
+                                                    id="channelmailtype_template_data"></select>
+                                                <div class="row" id="channelmailtype_template_column"></div>
+                                                <label class="form-label">
+                                                    Message Preview
+                                                </label>
+                                                <textarea class="form-control mb-3" style="resize: none" cols="50"
+                                                    rows="6" id="channelmailtype_template_textarea" readonly
+                                                    disabled></textarea>
+                                                <div class="my-2 d-flex justify-content-end">
+                                                    <button id="channelmailtype_template_send"
+                                                        class="btn btn-primary btn-load">
+                                                        <i class="mdi mdi-send me-lg-2 me-md-2"></i>
+                                                        <span class="d-none d-lg-inline-block d-md-inline-block">
+                                                            Send to All
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -804,10 +844,8 @@
                     success: function (data) {
                         if (!data.status_code) {
                             if (data[0].emailpasscode == "" || data[0].emailpasscode == null) {
-                                console.log(false);
                                 callback(false);
                             } else {
-                                console.log(true);
                                 callback(true);
                             }
                         } else {
@@ -1099,60 +1137,74 @@
                         beforeSend: function () {
                             $("#sheet_data")
                                 .html(`<div class="text-center py-3">
-                                                    <div class="spinner-border text-primary" role="status">
-                                                        <span class="sr-only">Loading...</span>
-                                                    </div>
-                                                    <h5 class="mt-2">Fetching Data</h5>
-                                                </div>`);
+                                            <div class="spinner-border text-primary" role="status">
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
+                                            <h5 class="mt-2">Fetching Data</h5>
+                                        </div>`);
                         },
                         success: function (val) {
-                            clientarr = [];
-                            clientobj = val.colnames[0];
-                            clientvalue = val.values;
+                            if (val.status_code == 404) {
+                                $('#sheet_data')
+                                    .html(`<div class="d-flex justify-content-center text-danger text-center pt-5">
+                                                <lord-icon src="https://cdn.lordicon.com/nhfyhmlt.json"
+                                                    trigger="loop" colors="primary:#f06548"
+                                                    state="morph-intro-cross" style="width:70px;height:70px">
+                                                </lord-icon>
+                                            </div>
+                                            <p class="fs-15 text-center text-muted">
+                                                There is no Record in this Google Sheet
+                                            </p>`);
+                            }
+                            else {
+                                clientarr = [];
+                                clientobj = val.colnames[0];
+                                clientvalue = val.values;
 
-                            if (clientobj.includes("name") && clientobj.includes("phone") && clientobj.includes("email")) {
-                                $("#sheet_data").removeClass("text-danger");
-                                $("#sheet_data").removeClass("fs-15");
+                                if (clientobj.includes("name") && clientobj.includes("phone") && clientobj.includes("email")) {
 
-                                let result = {};
-                                for (let i = 0; i < clientvalue.length; i++) {
-                                    clientobj.forEach((key, j) => {
-                                        result[key] = clientvalue[i][j];
-                                    });
-                                    clientarr.push(result);
-                                    result = {};
-                                }
+                                    let result = {};
+                                    for (let i = 0; i < clientvalue.length; i++) {
+                                        clientobj.forEach((key, j) => {
+                                            result[key] = clientvalue[i][j];
+                                        });
+                                        clientarr.push(result);
+                                        result = {};
+                                        if (i >= 199) break;
+                                    }
 
-                                var data = '<thead class="table-light"><tr>';
-                                for (let i = 0; i < val.colnames[0].length; i++) {
-                                    data += `<th>${val.colnames[0][i]}</th>`;
-                                }
-                                data += '</tr></thead><tbody class="list form-check-all">';
-                                if (val.values[0].length > 0) {
+                                    var data = '<table class="table align-middle"><thead class="table-light"><tr>';
+
+                                    for (let i = 0; i < val.colnames[0].length; i++) {
+                                        data += `<th>${val.colnames[0][i]}</th>`;
+                                    }
+
+                                    data += '</tr></thead><tbody class="list form-check-all">';
+
                                     for (let i = 0; i < val.values.length; i++) {
                                         data += `<tr>`;
                                         for (let j = 0; j < val.colnames[0].length; j++) {
                                             data += `<td class="${val.colnames[0][j]}">${val.values[i][j]}</td>`;
                                         }
                                         data += "</tr>";
+                                        if (i >= 199) break;
                                     }
+
                                     data += "</tbody></table>";
                                     $('#sheet_data').html(data);
-                                } else {
-                                    data += `<tr>
-                                                <td colspan="${val.colnames.length}">
-                                                    <b>No Such column like name and phone in this sheet</b>
-                                                    <b>Required column is not in the sheet</b>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>`;
                                 }
-                                $('#sheet_data').html(data);
-                            } else {
-                                $("#sheet_data").addClass("text-danger");
-                                $("#sheet_data").addClass("fs-15");
-                                document.getElementById("sheet_data").innerHTML = "* Invalid Column Found!!\nSheet must have 'name', 'phone' and 'email' as Title!!";
+                                else {
+                                    $('#sheet_data')
+                                        .html(`<div class="d-flex justify-content-center text-danger text-center pt-5">
+                                                <lord-icon src="https://cdn.lordicon.com/nhfyhmlt.json"
+                                                    trigger="loop" colors="primary:#f06548"
+                                                    state="morph-intro-cross" style="width:70px;height:70px">
+                                                </lord-icon>
+                                            </div>
+                                            <p class="fs-15 text-center text-muted">
+                                                There is no such column like name, email, phone in this Google Sheet
+                                            </p>`);
+                                }
                             }
                         }
                     });
@@ -1171,7 +1223,6 @@
                             nullfield_validation(`col${i}`);
                         }
                         for (let i = 1; i <= nthcol; i++) {
-                            console.log(objFlag[`flag_col${i}`]);
                             if (objFlag[`flag_col${i}`] == 0) {
                                 flag = true;
                             } else {
@@ -1181,7 +1232,9 @@
                         }
                         nullfield_validation('gsheetmailtype_template_textarea');
                         nullfield_validation('gsheetmailtype_template_subject_box');
-                        if (objFlag.flag_gsheetmailtype_template_textarea == 0 && objFlag.flag_gsheetmailtype_template_subject_box == 0 && flag) {
+                        nullfield_validation('spreedsheet');
+                        nullfield_validation('sheetname');
+                        if (objFlag.flag_gsheetmailtype_template_textarea == 0 && objFlag.flag_gsheetmailtype_template_subject_box == 0 && objFlag.flag_spreedsheet == 0 && objFlag.flag_sheetname == 0 && flag) {
                             let selectedcol = new Array();
                             for (let i = 0; i < document.getElementsByClassName("selcol").length; i++) {
                                 let data2 = document.getElementsByClassName("selcol")[i].value;
@@ -1313,7 +1366,9 @@
 
                         nullfield_validation('gsheetmailtype_custom_subject_box');
                         nullfield_validation('gsheetmailtype_message_box');
-                        if (objFlag.flag_gsheetmailtype_message_box == 0 && objFlag.flag_gsheetmailtype_custom_subject_box == 0) {
+                        nullfield_validation('spreedsheet');
+                        nullfield_validation('sheetname');
+                        if (objFlag.flag_gsheetmailtype_message_box == 0 && objFlag.flag_gsheetmailtype_custom_subject_box == 0 && objFlag.flag_spreedsheet == 0 && objFlag.flag_sheetname == 0) {
                             $.ajax({
                                 url: "/bulkcustommail",
                                 method: "POST",
@@ -1429,7 +1484,7 @@
 
                 if (filedata && filedata.type == 'text/csv') {
                     $('#datafile').addClass('form-control-success');
-                    $('#after_connect_div_localfile').removeClass('d-none');
+
                     let formdata = new FormData();
                     formdata.append("csvfile", filedata);
 
@@ -1487,6 +1542,7 @@
 
                                     localStorage.setItem("colnames", colnames);
                                     $('#localfile_data').html(data);
+                                    $('#after_connect_div_localfile').removeClass('d-none');
                                 }
                                 else {
                                     $('#localfile_data')
@@ -2023,7 +2079,6 @@
                             nullfield_validation(`col${i}`);
                         }
                         for (let i = 1; i <= nthcol; i++) {
-                            console.log(objFlag[`flag_col${i}`]);
                             if (objFlag[`flag_col${i}`] == 0) {
                                 flag = true;
                             } else {
