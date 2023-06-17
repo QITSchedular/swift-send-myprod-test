@@ -1176,7 +1176,8 @@
                         }
                     });
 
-                    $("#scanqr").on("click", function () {
+                    $(document).on("click", "#scanqr", function () {
+                        console.log(iid);
                         $.ajax({
                             url: `/qr/${iid}`,
                             method: "GET",
