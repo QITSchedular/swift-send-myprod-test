@@ -498,12 +498,14 @@ app.get("/qr/:iid", async (req, res) => {
         const qrData = await obj[iid].generateqr();
         if (qrData.length < 0) {
             console.log("No qr");
-        } else {
+        }
+        else {
+            console.log(qrData);
             res.send(qrData);
         }
     } catch (error) {
-        console.log(error)
-        res.send(error)
+        console.log(error);
+        res.send(error);
     }
 });
 
