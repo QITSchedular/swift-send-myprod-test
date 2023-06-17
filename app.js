@@ -491,7 +491,7 @@ app.post("/file", async (req, res) => {
 
 
 // Bulkmessage : QRcode Generetor API
-app.get("/qrcode/:iid", async (req, res) => {
+app.get("/qr/:iid", async (req, res) => {
     let iid = req.params.iid;
     try {
         obj[iid] = new clients();
