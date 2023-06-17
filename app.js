@@ -411,7 +411,7 @@ app.get("/auth/google/callback", passport.authenticate("google", { failureRedire
                 if (err) return res.send(status.internalservererror());
                 if (result.length > 0) {
                     setCookie(res, "apikey", result[0].apikey, 1);
-                    res.redirect(`http://localhost:${process.env.PORT}/dashboard`);
+                    res.redirect(`/dashboard`);
                 }
                 else {
                     conn.query(`INSERT INTO users (apikey,uname,email,password,phone,phoneverify,country,state,city,registrationDate,image) VALUES(?,?,?,?,?,?,?,?,?,?,?)`, [apikey, Ac_name, Ac_mail, '', '', false, '', '', '', new Date(), profile],
@@ -419,7 +419,7 @@ app.get("/auth/google/callback", passport.authenticate("google", { failureRedire
                             if (err) return console.log(err);
                             if (result) {
                                 setCookie(res, "apikey", apikey, 1);
-                                res.redirect(`http://localhost:${process.env.PORT}/dashboard`);
+                                res.redirect(`/dashboard`);
                             }
                         });
                 }
