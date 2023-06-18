@@ -743,7 +743,8 @@
             $(document).on('click', '#mic', async function () {
 
                 mic("msg").then((result) => {
-                    let data = result.toString().split(" ");
+                    console.log(result);
+                    let data = result[0].split(" ");
                     console.log(data);
                     if (data[0] == "add" && data[1] == "instance") {
                         $("#add_instance_btn").click();

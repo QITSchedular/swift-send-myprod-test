@@ -81,7 +81,7 @@
                         </button>
                     </div>
                     <div class="d-flex align-items-center">
-                        
+
 
                         <div class="ms-1 header-item">
                             <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
@@ -292,7 +292,12 @@
                                     </div>
                                     <br />
                                     <div>
-                                        <button class="btn btn-success" id="reply">Reply</button>
+                                        <button class="btn btn-primary btn-load" id="reply">
+                                            <i class="mdi mdi-send me-lg-2 me-md-2"></i>
+                                            <span class="d-none d-lg-inline-block d-md-inline-block">
+                                                Reply
+                                            </span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -512,7 +517,7 @@
                         } else {
                             indexno = data.length;
                         }
-                        
+
                         $.ajax({
                             url: "/AgentReplyToTicket",
                             method: "POST",
@@ -530,7 +535,27 @@
                                 response: $("#response").val(),
                                 email: $("#ticket-user-email").html(),
                             },
+                            beforeSend: function () {
+                                $('#reply')
+                                    .removeClass('btn-primary btn-success')
+                                    .addClass('btn-warning')
+                                    .html(`<span class="d-flex align-items-center">
+                                        <span class="flex-grow-1 me-lg-2 me-md-2">
+                                            Sending
+                                        </span>
+                                        <span class="spinner-border flex-shrink-0" role="status">
+                                            <span class="visually-hidden"></span>
+                                        </span>
+                                    </span>`);
+                            },
                             success: function (data) {
+                                $('#reply')
+                                    .removeClass('btn-warning btn-success')
+                                    .addClass('btn-primary')
+                                    .html(`<i class="mdi mdi-send me-lg-2 me-md-2"></i>
+                                            <span class="d-none d-lg-inline-block d-md-inline-block">
+                                                Reply
+                                            </span>`);
                                 if (data.status_code == 200) {
                                     $("#response").val("");
                                     swal({
@@ -538,8 +563,9 @@
                                         type: "success",
                                         timer: 2000,
                                         showConfirmButton: false,
+                                    }).then(() => {
+                                        log();
                                     })
-                                    log();
                                 } else {
                                     swal({
                                         title: "Reply Not Sent",

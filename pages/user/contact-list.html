@@ -299,6 +299,17 @@
                                     aria-label="Close" id="close_btn_import_gsheet"></button>
                             </div>
                             <div class="offcanvas-body">
+                                <div class="bg-info bg-opacity-10 border border-info p-2 rounded-3 text-info mb-3">
+                                    <div class="d-flex align-items-center px-2">
+                                        <i class="ri-error-warning-line align-middle fs-18"></i>
+                                        <div class="vr mx-3"></div>
+                                        <p class="fs-14 fw-medium mb-0" style="text-align: justify;">
+                                            Google Sheet must have column name like
+                                            <span class="text-primary">name, phone, email.</span>
+                                            Only First <span class="text-danger">200</span> data will be added.
+                                        </p>
+                                    </div>
+                                </div>
                                 <div class="mb-3">
                                     <button id="connect" class="btn btn-primary btn-load fs-14">
                                         <i class="mdi mdi-google-spreadsheet align-middle me-lg-2 me-md-2"></i>
@@ -361,7 +372,7 @@
                                             Only <span class="text-danger">CSV</span>
                                             File Allowed and File must have column name like
                                             <span class="text-primary">name, phone, email.</span>
-                                            <span class="text-danger">Only 500 data allowed to add.</span>
+                                            Only <span class="text-danger">200</span> data will be added.
                                         </p>
                                     </div>
                                 </div>

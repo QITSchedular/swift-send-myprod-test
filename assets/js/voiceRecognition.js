@@ -18,9 +18,9 @@ async function mic(id) {
                         .map((result) => result[0])
                         .map((result) => result.transcript);
                     document.getElementById(`${id}`).innerHTML = transcript;
-
+                    
                 });
-
+                
                 recognition.addEventListener('speechend', () => {
                     resolve(transcript);
                 });

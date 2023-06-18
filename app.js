@@ -1050,7 +1050,7 @@ app.post("/sendmsg", async function (req, res) {
 
             let message = req.body.message;
 
-            conn.query(`select * from instance where instance_id = '${iid}' and apikey = '${apikey}' and token = '${token}'`,
+            conn.query(`select * from instance where instance_id = '${iid}' and apikey = '${apikey}'`,
                 async function (err, result) {
                     if (err || result.length <= 0) return res.send(status.forbidden());
                     if (obj[iid]) {

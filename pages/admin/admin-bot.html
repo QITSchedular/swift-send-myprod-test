@@ -43,7 +43,7 @@
                                     <img src="/assets/images/logo-sm.svg" alt="" height="60" />
                                 </span>
                                 <span class="logo-lg">
-                                    <img src="/assets/images/logo-dark.svg" alt="" height="100" width="200"/>
+                                    <img src="/assets/images/logo-dark.svg" alt="" height="100" width="200" />
                                 </span>
                             </a>
                             <a href="/" class="logo logo-light">
@@ -51,7 +51,7 @@
                                     <img src="/assets/images/logo-sm.svg" alt="" height="60" />
                                 </span>
                                 <span class="logo-lg">
-                                    <img src="/assets/images/logo-dark.svg" alt="" height="100" width="200"/>
+                                    <img src="/assets/images/logo-dark.svg" alt="" height="100" width="200" />
                                 </span>
                             </a>
                         </div>
@@ -67,7 +67,7 @@
                         </button>
                     </div>
                     <div class="d-flex align-items-center">
-                        
+
 
                         <div class="ms-1 header-item">
                             <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
@@ -133,7 +133,7 @@
         </div>
         <!-- Left Sidebar End -->
         <!-- Vertical Overlay-->
-       <!--  <div class="vertical-overlay"></div>-->
+        <!--  <div class="vertical-overlay"></div>-->
 
         <!-- ============================================================== -->
         <!-- Start right Content here -->
@@ -143,7 +143,7 @@
             <div class="page-content">
                 <div class="container-fluid">
                     <div class="row mb-2">
-                        <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="col-12">
                             <label class="form-label">
                                 AUTH STATUS
                             </label>
@@ -151,25 +151,25 @@
                             <div class="d-flex">
                                 <div class="edit">
                                     <button id="scanqr" class="btn btn-md btn-success">
+                                        <i class="ri-qr-code-line align-middle"></i>
                                         <span class="mx-1">
-                                            <i class="fa-solid fa-qrcode"></i>
+                                            Scan QR
                                         </span>
-                                        <span> Scan QR </span>
                                     </button>
                                     <div id="disconnect" class="d-none">
-                                        <button id="disconnect_btn" class="btn btn-outline-danger">
-                                            <span class="mx-1">
-                                                <i class="fa-solid fa-circle-exclamation"></i>
-                                            </span>
-                                            <span> Disconnect </span>
-                                        </button>
-                                        <div>
-                                            <span class="text-danger">Note: If you want disconnect from
-                                                here than you have to also
-                                                discnnect from linked devices from your phone, where you use
-                                                whatsapp
-                                                from this number.</span>
-                                        </div>
+                                            <button id="disconnect_btn" class="btn btn-outline-danger mb-3">
+                                                <span> Disconnect </span>
+                                            </button>
+                                            <div
+                                                class="bg-danger bg-opacity-10 border border-danger p-2 rounded-3 text-danger mb-3">
+                                                <div class="d-flex align-items-center">
+                                                    <i class="ri-error-warning-line align-middle fs-20"></i>
+                                                    <div class="vr mx-2"></div>
+                                                    <p class="fs-14 fw-medium mb-0" style="text-align: justify;">
+                                                        If you disconnect here than you must have to disconnect from linked devices from your phone, where you had scanned QR code to connect whatsapp.
+                                                    </p>
+                                                </div>
+                                            </div>
                                     </div>
                                 </div>
                             </div>

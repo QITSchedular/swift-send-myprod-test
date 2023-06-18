@@ -350,7 +350,7 @@
                                 </label>
                                 <div class="position-relative">
                                     <textarea id="msg" class="form-control pe-5 required" data-type="message"
-                                        style="resize:none;"></textarea>
+                                        style="resize:none;" rows="10"></textarea>
                                     <button class="btn btn-link position-absolute end-0 top-0
                                              text-decoration-none text-muted" id="sendmsg_mic">
                                         <i class="fas fa-microphone text-primary fs-5"></i>
@@ -617,7 +617,8 @@
                                                 <p class="fs-14 fw-medium mb-0 ms-2" style="text-align: justify;">
                                                     Only <span class="text-danger">CSV</span>
                                                     File Allowed and File must have column name like
-                                                    <span class="text-primary">name, phone, email</span>
+                                                    <span class="text-primary">name, phone, email</span> and CSV file will
+                                                    select only first <span class="text-danger">200 Data</span>.
                                                 </p>
                                             </div>
                                         </div>
@@ -1521,8 +1522,8 @@
                                                 }).then(function () {
                                                     $("#document_phone, #document_caption, #document_file").val("");
                                                     $('#send_image')
-                                                        .removeClass('btn-primary btn-warning')
-                                                        .addClass('btn-success')
+                                                        .removeClass('btn-success btn-warning')
+                                                        .addClass('btn-primary')
                                                         .html(`<i class= "mdi mdi-send me-lg-2 me-md-2"></i>
                                                             <span class="d-none d-lg-inline-block d-md-inline-block">
                                                                 Send
@@ -2306,6 +2307,7 @@
                                                 <span class="d-none d-lg-inline-block d-md-inline-block">
                                                     Send to All
                                                 </span>`);
+                                                $("#gsheetmsgtype_message_box").val('   ')
                                             });
                                             break;
                                         }
@@ -2315,7 +2317,7 @@
                         }
                     });
 
-                    $("#gsheetmsgtype_document_send").on("click", function () {
+                    $(document).on("click", "#gsheetmsgtype_document_send",function () {
                         nullfield_validation('gsheetmsgtype_document_file');
                         nullfield_validation('spreedsheet');
                         nullfield_validation('sheetname');
@@ -2409,8 +2411,8 @@
                                                 $("#gsheetmsgtype_document_file, #sheetname,#spreedsheet,#gsheetmsgtype").val("");
                                                 $("#sheet_data").html("");
                                                 $('#gsheetmsgtype_document_send')
-                                                    .removeClass('btn-primary btn-warning')
-                                                    .addClass('btn-success')
+                                                    .removeClass('btn-success btn-warning')
+                                                    .addClass('btn-primary')
                                                     .html(`<i class= "mdi mdi-send me-lg-2 me-md-2"></i>
                                                         <span class="d-none d-lg-inline-block d-md-inline-block">
                                                             Send
@@ -2481,9 +2483,10 @@
                                                 let y = localStorage.getItem("clientobj");
                                                 data += `<tr>`;
                                                 for (let j = 0; j < colnames.length; j++) {
-                                                    data += `<td class="name">` + colvalues[j] + `</td>`;
+                                                    data += `<td class="name">${colvalues[j]}</td>`;
                                                 }
                                                 data += `</tr>`;
+                                                if (i >= 199) break;
                                             }
                                             localStorage.setItem("colnames", colnames);
                                             data += `</tbody></table>`;
@@ -2811,8 +2814,8 @@
                                         case '1013': {
                                             userNotFound(iid);
                                             $('#localfilemsgtype_document_send')
-                                                .removeClass('btn-primary btn-warning')
-                                                .addClass('btn-success')
+                                                .removeClass('btn-success btn-warning')
+                                                .addClass('btn-primary')
                                                 .html(`<i class= "mdi mdi-send me-lg-2 me-md-2"></i>
                                                     <span class="d-none d-lg-inline-block d-md-inline-block">
                                                         Send
@@ -2880,9 +2883,10 @@
                                     case '404': {
                                         let output = `<div class="noresult p-5 container d-flex align-items-center justify-content-center">
                                                         <div class="text-center">
-                                                            <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop"
-                                                                colors="primary:#212529,secondary:#405189"
-                                                                style="width: 75px; height: 75px"></lord-icon>
+                                                            <lord-icon src="https://cdn.lordicon.com/nhfyhmlt.json"
+                                                                trigger="loop" colors="primary:#f06548"
+                                                                state="morph-intro-cross" style="width:70px;height:70px">
+                                                            </lord-icon>
                                                             <h5 class="mt-2">No Channels Created</h5>
                                                             <a class="btn btn-soft-primary" href="/instance/${iid}/channel">
                                                                 Create Channel
@@ -2935,10 +2939,11 @@
                                     case '404': {
                                         let data = `<div class= "noresult pt-5">
                                             <div class="text-center">
-                                                <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop"
-                                                    colors="primary:#212529,secondary:#405189"
-                                                    style="width: 75px; height: 75px"></lord-icon>
-                                                <h5 class="mt-2">No Channel Found</h5>
+                                                <lord-icon src="https://cdn.lordicon.com/nhfyhmlt.json"
+                                                    trigger="loop" colors="primary:#f06548"
+                                                    state="morph-intro-cross" style="width:70px;height:70px">
+                                                </lord-icon>
+                                                <h5 class="mt-2">No Contact in this channel</h5>
                                             </div>
                                         </div>`;
                                         $("#contact_data").html(data);
@@ -3025,7 +3030,6 @@
                                         if (val.length == 0) {
                                             $(`#channelmsgtype_template_data`).html(obj);
                                             $(document).on('change', `#channelmsgtype_template_data`, () => {
-                                                alert();
                                                 channelgetTemplateMessage($(`#channelmsgtype_template_data`).val());
                                             })
                                         }
@@ -3036,7 +3040,6 @@
                                             $(`#channelmsgtype_template_data`).html(obj);
 
                                             $(document).on('change', `#channelmsgtype_template_data`, () => {
-                                                alert();
                                                 channelgetTemplateMessage($(`#channelmsgtype_template_data`).val());
                                             })
 
@@ -3151,7 +3154,7 @@
                                                         .addClass('btn-primary')
                                                         .html(`<i class= "mdi mdi-send me-lg-2 me-md-2"></i>
                                                 <span class="d-none d-lg-inline-block d-md-inline-block">
-                                                    Send
+                                                    Send to All
                                                 </span>`);
                                                 });
                                                 break;
@@ -3373,10 +3376,10 @@
                                                     timer: 2000,
                                                     showConfirmButton: false,
                                                 }).then(function () {
-                                                    $("#channel_document", "#channelmsgtype", "#channel_list", "#contact_data").val("");
+                                                    $("#channel_document").val("");
                                                     $('#channelmsgtype_document_send')
-                                                        .removeClass('btn-primary btn-warning')
-                                                        .addClass('btn-success')
+                                                        .removeClass('btn-success btn-warning')
+                                                        .addClass('btn-primary')
                                                         .html(`<i class= "mdi mdi-send me-lg-2 me-md-2"></i>
                                                         <span class="d-none d-lg-inline-block d-md-inline-block">
                                                             Send to All
@@ -3396,7 +3399,7 @@
                         mic("msgvoice").then((result) => {
                             console.log(result);
                             let str = "";
-                            for (let i = 0; i < result.length; i++) {
+                            for (let i = 0; i < result[0].length; i++) {
                                 str += result[i];
                             }
                             let data = str.split(" ");
@@ -3426,7 +3429,6 @@
                                 }
                             }
                             else if (data[0] == "send" && data[1] == "message") {
-                                alert();
                                 $('#apiurl').prop('selectedIndex', 1);
                                 $('#apiurl').trigger('change', "sendmsg");
 
@@ -3482,7 +3484,6 @@
                             }
                             else if (data[0] == "manage" && data[1] != "" && data[1] != undefined) {
                                 let apikey = getCookie("apikey");
-                                alert(apikey);
                                 $.ajax({
                                     url: "/getData",
                                     method: "post",
@@ -3549,13 +3550,11 @@
 
                     $(document).on('click', `#sendmsg_mic`, async function () {
                         mic("msg").then((result) => {
-                            console.log(result);
                             let str = "";
-                            for (let i = 0; i < result.length; i++) {
+                            for (let i = 0; i < result[0].length; i++) {
                                 str += result[i];
                             }
                         })
-
                     })
 
                     $(document).on('click', '#send_doc_mic', async function () {
