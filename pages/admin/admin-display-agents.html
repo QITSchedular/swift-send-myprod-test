@@ -46,7 +46,7 @@
                                     <img src="/assets/images/logo-sm.svg" alt="" height="60" />
                                 </span>
                                 <span class="logo-lg">
-                                    <img src="/assets/images/logo-dark.svg" alt="" height="100" width="200"/>
+                                    <img src="/assets/images/logo-dark.svg" alt="" height="100" width="200" />
                                 </span>
                             </a>
                             <a href="/" class="logo logo-light">
@@ -54,7 +54,7 @@
                                     <img src="/assets/images/logo-sm.svg" alt="" height="60" />
                                 </span>
                                 <span class="logo-lg">
-                                    <img src="/assets/images/logo-dark.svg" alt="" height="100" width="200"/>
+                                    <img src="/assets/images/logo-dark.svg" alt="" height="100" width="200" />
                                 </span>
                             </a>
                         </div>
@@ -70,7 +70,7 @@
                         </button>
                     </div>
                     <div class="d-flex align-items-center">
-                        
+
 
                         <div class="ms-1 header-item">
                             <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
@@ -136,7 +136,7 @@
         </div>
         <!-- Left Sidebar End -->
         <!-- Vertical Overlay-->
-       <!--  <div class="vertical-overlay"></div>-->
+        <!--  <div class="vertical-overlay"></div>-->
 
         <!-- ============================================================== -->
         <!-- Start right Content here -->
@@ -209,11 +209,6 @@
                                     required />
                             </div>
                             <div class="mb-3">
-                                <label for="editpassword" class="form-label">Email</label>
-                                <input type="password" id="editpassword" class="form-control"
-                                    placeholder="Enter Password" required />
-                            </div>
-                            <div class="mb-3">
                                 <label for="editcategory" class="form-label">Category</label>
                                 <select id="editcategory" class="form-select" required>
                                     <option value="" selected>-- Select Category --</option>
@@ -227,7 +222,7 @@
                         </div>
                         <div class="modal-footer">
                             <div class="hstack gap-2 justify-content-end">
-                                <button class="btn btn-success" id="edit-btn">Edit Plan</button>
+                                <button class="btn btn-success" id="edit-btn">Edit Agent</button>
                             </div>
                         </div>
                     </div>
@@ -389,63 +384,11 @@
     <script src="/assets/sweetalert2/sweetalert2.all.js"></script>
 
     <script>
-        function deleteRecord(id) {
-            $.ajax({
-                url: "/adminDeleteRecord",
-                data: { id: id, table: "support_agents", column: "agent_id" },
-                method: "post",
-                success: function (data) {
-                    if (data.status_code == 200) {
-                        swal({
-                            title: "Recrd deleted",
-                            type: "success",
-                            timer: 1500,
-                            showConfirmButton: false,
-                        });
-                        $.ajax({
-                            url: "/getDataByPage",
-                            method: "post",
-                            data: {
-                                table: "support_agents",
-                                pgno: 1,
-                                limit: localStorage.getItem("limit"),
-                            },
-                            success: function (content) {
-                                // console.log(content);
-                                displayAtBeginning(
-                                    content,
-                                    "previousBtn",
-                                    "mybtn",
-                                    "nextBtn",
-                                    true
-                                );
-                            },
-                        });
-                    } else {
-                        swal({
-                            title: "Record can't be deleted!!",
-                            text: "Some Internal Server Error!! Try again later",
-                            type: "error",
-                            timer: 1500,
-                            showConfirmButton: false,
-                        });
-                    }
-                },
-            });
-        }
-
         $(document).ready(function () {
 
-            // $("#searchText").val("");
             let table = "support_agents";
 
-            function displayAtBeginning(
-                content,
-                prevclass,
-                myclass,
-                nextclass,
-                paramstr
-            ) {
+            function displayAtBeginning(content,prevclass,myclass,nextclass,paramstr) {
                 // console.log(content);
                 let out = `
                     <div class="gridjs-wrapper" style="height: auto">
@@ -481,8 +424,8 @@
                                 }" data-name="${Object.values(content[j])[1]}" data-email="${Object.values(content[j])[2]
                                 }" data-password="${Object.values(content[j])[3]
                                 }" data-category="${Object.values(content[j])[4]
-                                }" data-bs-target="#showModal"></td><td class="gridjs-td"><input type="button" class="btn btn-sm btn-danger" id="${Object.values(content[j])[0]
-                                }" value="Delete" onclick="deleteRecord(this.id)"></td></tr>`;
+                                }" data-bs-target="#showModal"></td><td class="gridjs-td"><input type="button" class="btn btn-sm btn-danger deleteBtn" id="${Object.values(content[j])[0]
+                                }" value="Delete"></td></tr>`;
                         }
                     }
                 }
@@ -614,8 +557,8 @@
                                 }" data-name="${Object.values(content[j])[1]}" data-email="${Object.values(content[j])[2]
                                 }" data-password="${Object.values(content[j])[3]
                                 }" data-category="${Object.values(content[j])[4]
-                                }" data-bs-target="#showModal"></td><td class="gridjs-td"><input type="button" class="btn btn-sm btn-danger" id="${Object.values(content[j])[0]
-                                }" value="Delete" onclick="deleteRecord(this.id)"></td></tr>`;
+                                }" data-bs-target="#showModal"></td><td class="gridjs-td"><input type="button" class="btn btn-sm btn-danger deleteBtn" id="${Object.values(content[j])[0]
+                                }" value="Delete"></td></tr>`;
                         }
                     }
 
@@ -759,8 +702,8 @@
                                 }" data-name="${Object.values(content[j])[1]}" data-email="${Object.values(content[j])[2]
                                 }" data-password="${Object.values(content[j])[3]
                                 }" data-category="${Object.values(content[j])[4]
-                                }" data-bs-target="#showModal"></td><td class="gridjs-td"><input type="button" class="btn btn-sm btn-danger" id="${Object.values(content[j])[0]
-                                }" value="Delete" onclick="deleteRecord(this.id)"></td></tr>`;
+                                }" data-bs-target="#showModal"></td><td class="gridjs-td"><input type="button" class="btn btn-sm btn-danger deleteBtn" id="${Object.values(content[j])[0]
+                                }" value="Delete"></td></tr>`;
                         }
                     }
 
@@ -898,16 +841,10 @@
                 for (let j = 0; j < content.length; j++) {
                     out += `<tr class="gridjs-tr">`;
                     for (let k = 0; k < Object.keys(content[j]).length; k++) {
-                        out += `<td data-column-id="${Object.values(content[j])[k]
-                            }" class="gridjs-td">${Object.values(content[j])[k]}</td>`;
+                        out += `<td data-column-id="${Object.values(content[j])[k]}" class="gridjs-td">${Object.values(content[j])[k]}</td>`;
                         if (k == Object.keys(content[j]).length - 1) {
                             out += `<td class="gridjs-td"><input type="button" id="${Object.values(content[j])[0]
-                                }" value="Update" class="btn btn-sm btn-success updateBtn" data-bs-toggle="modal" data-id="${Object.values(content[j])[0]
-                                }" data-name="${Object.values(content[j])[1]}" data-email="${Object.values(content[j])[2]
-                                }" data-password="${Object.values(content[j])[3]
-                                }" data-category="${Object.values(content[j])[4]
-                                }" data-bs-target="#showModal"></td><td class="gridjs-td"><input type="button" class="btn btn-sm btn-danger" id="${Object.values(content[j])[0]
-                                }" value="Delete" onclick="deleteRecord(this.id)"></td></tr>`;
+                                }" value="Update" class="btn btn-sm btn-success updateBtn" data-bs-toggle="modal" data-id="${Object.values(content[j])[0]}" data-name="${Object.values(content[j])[1]}" data-email="${Object.values(content[j])[2]}" data-password="${Object.values(content[j])[3]}" data-category="${Object.values(content[j])[4]}" data-bs-target="#showModal"></td><td class="gridjs-td"><input type="button" class="btn btn-sm btn-danger deleteBtn" id="${Object.values(content[j])[0]}" value="Delete"></td></tr>`;
                         }
                     }
 
@@ -1013,6 +950,47 @@
                 });
             }
 
+            $(document).on('click','.deleteBtn',function(){
+                $.ajax({
+                    url: "/adminDeleteRecord",
+                    data: {
+                        id: $(this).attr('id'),
+                        table: "support_agents",
+                        column: "apikey"
+                    },
+                    method: "POST",
+                    success: function (data) {
+                        if (data.status_code == 200) {
+                            swal({
+                                title: "Record deleted",
+                                type: "success",
+                                timer: 1500,
+                                showConfirmButton: false,
+                            });
+                            $.ajax({
+                                url: "/getDataByPage",
+                                method: "post",
+                                data: {
+                                    table: "support_agents",
+                                    pgno: 1,
+                                    limit: localStorage.getItem("limit"),
+                                },
+                                success: function (content) {
+                                    displayAtBeginning(content, "previousBtn", "mybtn", "nextBtn", true);
+                                }
+                            });
+                        } else {
+                            swal({
+                                title: "Record can't be deleted!!",
+                                text: "Some Internal Server Error!! Try again later",
+                                type: "error",
+                                timer: 1500,
+                                showConfirmButton: false,
+                            });
+                        }
+                    },
+                });
+            })
 
 
             // $(document).ready(function () {
@@ -1127,8 +1105,8 @@
                     method: "PUT",
                     data: {
                         table: table,
-                        paramstr: `name='${$("#editname").val()}', email='${$("#editemail").val()}', password='${$("#editpassword").val()}', category='${$("#editcategory").val()}'`,
-                        condition: `agent_id=${$(this).attr("data-id")}`,
+                        paramstr: `name='${$("#editname").val()}', email='${$("#editemail").val()}', category='${$("#editcategory").val()}'`,
+                        condition: `apikey='${$(this).attr("data-id")}'`,
                     },
                     success: function (result) {
                         if (result.status_code == 200) {
@@ -1213,7 +1191,7 @@
                         },
                     });
                 } else {
-                    let paramstr = `name like '%${str}%' or email like '%${str}%' or password like '%${str}%' or category like '%${str}%'`;
+                    let paramstr = `name like '%${str}%' or email like '%${str}%' or password like '%${str}%' or category like '%${str}%' or apikey like '%${str}%'`;
                     $.ajax({
                         url: "/adminSearchRecord",
                         method: "POST",

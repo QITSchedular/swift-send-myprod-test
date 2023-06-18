@@ -179,7 +179,7 @@
                                     </span>
                                     <div class="vr mx-2"></div>
                                     <span class="text-muted">
-                                        Develope By Triangles
+                                        Developed By Triangles
                                     </span>
                                 </div>
                             </div>
@@ -277,11 +277,13 @@
                 case 'admin':
                 case 'support': {
                     $('#signinwithgoogle').addClass('d-none');
+                    $('#forgot-pwd').addClass('d-none');
                     break;
                 }
 
                 case 'users': {
                     $('#signinwithgoogle').removeClass('d-none');
+                    $('#forgot-pwd').removeClass('d-none');
                     break;
                 }
             }

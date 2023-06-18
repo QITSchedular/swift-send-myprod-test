@@ -2861,24 +2861,10 @@ app.post("/resetpasswordmail", async (req, res) => {
     if (email) {
         const data = {
             table: 'users',
-            paramstr: `email = ${email} --`,
+            paramstr: `email = '${email}' --`,
             apikey: 'null'
         }
         tableData(data, async (result) => {
-            switch (result) {
-                case '500': {
-                    return res.send(status.internalservererror())
-                    break;
-                }
-
-                case '500': {
-                    break;
-                }
-
-                default: {
-
-                }
-            }
             let flag = false;
             for (let i in result) {
                 if (email == result[i].email) {
@@ -2896,7 +2882,7 @@ app.post("/resetpasswordmail", async (req, res) => {
                 "email": 'dashboardcrm.2022@gmail.com',
                 "passcode": 'dbwtdfmwrxmwzcat'
             };
-            sendEmail(sender, to, subject, body).then(() => {
+            sendEmail(sender, email, subject, body).then(() => {
                 return res.send(status.ok());
             }).catch((error) => {
                 console.log(`error in Sending  E-Mail ::::::: <${error}>`);
@@ -3062,7 +3048,8 @@ app.post("/addRecord", function (req, res) {
                 }
             }
         );
-    } else if (table == "template") {
+    }
+    else if (table == "template") {
         conn.query(
             `insert into template(temp_name,temp_message,userfields) values('${req.body.tname}','${req.body.message}',${req.body.userfields})`,
             (err, result) => {
@@ -3074,18 +3061,24 @@ app.post("/addRecord", function (req, res) {
                 }
             }
         );
-    } else if (table == "support_agents") {
-        conn.query(
-            `insert into support_agents(name,email,password,category) values('${req.body.aname}','${req.body.email}','${req.body.password}','${req.body.category}')`,
-            (err, result) => {
-                if (err) return res.send(status.internalservererror());
-                if (result.affectedRows == 1) {
-                    res.send(status.ok());
-                } else {
-                    res.send(status.internalservererror());
+    }
+    else if (table == "support_agents") {
+        const id = crypto.randomBytes(8).toString("hex");
+        bcrypt.hash(req.body.password, 10, (err, hash) => {
+            if (err) return res.send("err in bcrypt");
+            conn.query(`insert into support_agents values(?,?,?,?,?)`,
+                [id, req.body.aname, req.body.email, hash, req.body.category],
+                (err, result) => {
+                    if (err) return res.send(status.internalservererror());
+                    if (result.affectedRows == 1) {
+                        res.send(status.ok());
+                    } else {
+                        res.send(status.internalservererror());
+                    }
                 }
-            }
-        );
+            );
+        });
+
     }
 });
 
@@ -3546,8 +3539,38 @@ app.post("/addticket", async (req, res) => {
                             "passcode": 'dbwtdfmwrxmwzcat'
                         };
 
-                        sendEmail(sender, assignedAgent, `New support ticket (${t_id}): ${t_type}`, `Dear ${assignedAgent},\n\nYou have been assigned a new support ticket (${t_id}) for the category '${t_type}'.\n\nPlease log in to the support portal to view and respond to this ticket.\n\nThank you,\nThe support team`).then(() => {
-                            sendEmail(sender, email, `Support ticket (${t_id}) issued`, `Dear customer,\n\nThank you for submitting a support ticket (${t_id}).\n\nOur support team will review your ticket and get back to you as soon as possible.\n\nThank you,\nThe support team`).then(() => {
+                        const agent_body = `<body style="background-color: #f4f4f4;">
+                                            <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+                                                <p style="color: #555; font-size: 16px; line-height: 1.5;">Dear ${assignedAgent},</p>
+                                                <p style="color: #555; font-size: 14px; line-height: 1.5;">A new ticket has been assigned to you. Here are the details:</p>
+                                                <ul style="margin: 10px 0; padding: 0; list-style: none;">
+                                                    <li style="margin-bottom: 5px;">
+                                                        <strong style="color: #333;">Ticket ID : ${t_id}</strong> 
+                                                    </li>
+                                                </ul>
+                                                <p style="color: #555; font-size: 14px; line-height: 1.5;">Please login to  review the ticket and take necessary action accordingly.</p>
+                                                <p style="color: #555; font-size: 14px; line-height: 1.5;">Thank you for your attention.</p>
+                                                <p style="margin-top: 20px; font-size: 16px; color: #777;">Sincerely,<br>
+                                                <b>SwiftSend</b>
+                                            </div>
+                                        </body>`;
+
+                        const user_body = `<body>
+                                                <p>Dear Customer,</p>
+                                                <p>Thank you for reaching out to us. We have received your ticket and it is currently being reviewed by our support team. Here are the details:</p>
+                                                <ul style="margin: 10px 0; padding: 0; list-style: none;">
+                                                    <li style="margin-bottom: 5px;">
+                                                        <strong style="color: #333;">Ticket ID : ${t_id}</strong> 
+                                                    </li>
+                                                </ul>
+                                                <p>We understand the importance of your inquiry and will make every effort to provide you with a timely response. Please note that our support team may require additional information or clarification to assist you further. We kindly request your patience during this process.</p>
+                                                <p>Thank you for choosing our services. We appreciate your patience and look forward to resolving your issue.</p>
+                                                <p>Sincerely,</p>
+                                                <b>SwiftSend Support Team</b>
+                                            </body>`;
+
+                        sendEmail(sender, assignedAgent, `New Ticket assigned`, agent_body).then(() => {
+                            sendEmail(sender, email, `Ticket Acknowledgement | SwiftSend`, user_body).then(() => {
                                 return res.send(status.ok());
                             }).catch((error) => {
                                 console.log(`error in Sending  E-Mail ::::::: <${error}>`);
