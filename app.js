@@ -373,7 +373,7 @@ passport.use(new GoogleStrategy(
     {
         clientID: "552657255780-ud1996049ike2guu982i3ms5ver5gbsf.apps.googleusercontent.com",
         clientSecret: "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",
-        callbackURL: `https://swiftsend.click/auth/google/callback`,
+        callbackURL: `${process.env.DOMAIN}/auth/google/callback`,
     }, function (accessToken, refreshToken, profile, done) {
         userProfile = profile;
         return done(null, userProfile);
