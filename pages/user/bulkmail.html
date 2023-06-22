@@ -1162,7 +1162,7 @@
                                 clientvalue = val.values;
 
                                 if (clientobj.includes("name") && clientobj.includes("phone") && clientobj.includes("email")) {
-
+                                    localStorage.setItem("colnames", val.colnames);
                                     let result = {};
                                     for (let i = 0; i < clientvalue.length; i++) {
                                         clientobj.forEach((key, j) => {

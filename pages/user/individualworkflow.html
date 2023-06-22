@@ -1915,6 +1915,7 @@
                         clientarr = [];
                         clientobj = val.colnames[0];
                         clientvalue = val.values;
+                        localStorage.setItem("colnames", val.colnames);
                         let result = {};
                         for (let i = 0; i < clientvalue.length; i++) {
                             clientobj.forEach((key, j) => {

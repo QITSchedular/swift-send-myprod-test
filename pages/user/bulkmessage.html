@@ -1958,7 +1958,6 @@
                                     url: "/dis_cstm_template",
                                     method: "get",
                                     success: function (val) {
-                                        console.log("cstm_data", val);
                                         if (val.length == 0) {
                                             $(`#${display_id}_data`).html(obj);
                                             $(document).on('change', `#${display_id}_data`, () => {
@@ -1974,12 +1973,9 @@
                                             $(document).on('change', `#${display_id}_data`, () => {
                                                 getTemplateMessage(display_id, $(`#${display_id}_data`).val());
                                             })
-
                                         }
                                     }
                                 });
-
-
                             }
                         });
                     }
@@ -2051,7 +2047,7 @@
                                         clientvalue = val.values;
 
                                         if (clientobj.includes("name") && clientobj.includes("phone") && clientobj.includes("email")) {
-
+                                            localStorage.setItem("colnames", val.colnames);
                                             let result = {};
                                             for (let i = 0; i < clientvalue.length; i++) {
                                                 clientobj.forEach((key, j) => {
@@ -3026,7 +3022,6 @@
                                     url: "/dis_cstm_template",
                                     method: "get",
                                     success: function (val) {
-                                        console.log("cstm_data", val);
                                         if (val.length == 0) {
                                             $(`#channelmsgtype_template_data`).html(obj);
                                             $(document).on('change', `#channelmsgtype_template_data`, () => {
@@ -3046,8 +3041,6 @@
                                         }
                                     }
                                 });
-
-
                             }
                         });
                     }
