@@ -509,247 +509,6 @@ app.get("/qr/:iid", async (req, res) => {
     }
 });
 
-app.get("/adminBotWork/:iid", (req, res) => {
-    let iid = req.params.iid;
-    obj[iid].client.on('message', (message) => {
-
-        let questions = [
-            { question: '# Phone-number:', answer: '' },
-            { question: '# Ticket subject:', answer: '' },
-            { question: '# Registered Email:', answer: '' },
-            {
-                question: `# Write a name of your Ticket type:\n\t* Account Management\n\t* Technical Support\n\t* Payment Problem\n\t* Service Inquiry\n\t* Feedback and suggestions`, answer: ''
-            },
-            { question: `# Description:`, answer: '' }
-
-        ];
-        const answers = message.body.split('\n');
-        if (answers.length > 1) {
-            // Update the form questions with the user's answers
-            questions.forEach((q, i) => {
-                q.answer = answers[i];
-                // console.log(q.answer);
-            });
-            const generateUniqueId = () => {
-                const prefix = "W-";
-                const maxLength = 6 - prefix.length;
-                const maxNumber = Math.pow(10, maxLength) - 1;
-                const uniqueId = Math.floor(Math.random() * maxNumber) + 1;
-                return prefix + uniqueId.toString().padStart(maxLength, '0');
-            };
-            // Store the form data in a database
-            //console.log(answers);
-            const t_id = generateUniqueId();
-            let phone = answers[0];
-            let subject = answers[1];
-            let Email = answers[2];
-            let type = answers[3];
-            let description = answers[4];
-
-            let a_agents = new Array();
-            let a_Account_Management = new Array();
-            let a_Technical_Support = new Array();
-            let a_Payment_Problem = new Array();
-            let a_Service_Inquiry = new Array();
-            let a_Feedback = new Array();
-
-            conn.query(`select * from support_agents`, (err, result) => {
-                if (err || result.length <= 0) res.send(status.internalservererror());
-                if (result.length > 0) {
-                    for (let i = 0; i < result.length; i++) {
-                        a_agents.push(result[i].email);
-                        if (result[i].category == "Account Management") {
-                            // console.log(a_Account_Management);
-                            a_Account_Management.push(result[i].email);
-                        } else if (result[i].category == "Technical Support") {
-                            // console.log(a_Technical_Support);
-                            a_Technical_Support.push(result[i].email);
-                        } else if (result[i].category == "Payment Problem") {
-                            // console.log(a_Payment_Problem);
-                            a_Payment_Problem.push(result[i].email);
-                        }
-                        else if (result[i].category == "Service Inquiry") {
-                            // console.log(a_Service_Inquiry);
-                            a_Service_Inquiry.push(result[i].email);
-                        }
-                        else if (result[i].category == "Feedback and Suggestions") {
-                            // console.log(a_Feedback);
-                            a_Feedback.push(result[i].email);
-                        }
-                    }
-                    let categories = {
-                        "Account Management": a_Account_Management,
-                        "Technical Support": a_Technical_Support,
-                        "Payment Problem": a_Payment_Problem,
-                        "Service Inquiry": a_Service_Inquiry,
-                        "Feedback and Suggestions": a_Feedback,
-                    };
-                    const agentsInCategory = categories[type];
-                    const Agent_email = agentsInCategory[Math.floor(Math.random() * agentsInCategory.length)];
-
-                    //console.log(t_id + " " + phone + " " + subject + " " + type + " " + description);
-                    conn.query("select * from users where email='" + Email + "'", (err1, res1) => {
-
-                        if (err1) console.log(err1);
-                        if (res1.length > 0) {
-                            conn.query(`INSERT INTO support_ticket VALUES(?,?,?,?,?,?,?,?,?,?)`,
-                                [t_id, 'whatsapp', phone, subject, type, description, 'open', new Date(), res1[0].apikey, Agent_email], (err, res2) => {
-                                    if (err) console.log(err);
-                                    // console.log(res2);
-                                    if (res2 > 0) {
-                                        obj[iid].send_whatsapp_message(message.from, 'your support-ticket has been generated successfully!!!');
-                                    }
-                                })
-                        }
-
-                    })
-                }
-            })
-        }
-        else {
-            switch (message.body) {
-                case "hi":
-                case "Hi": {
-
-                    obj[iid].send_whatsapp_message(message.from, 'Hello! How can i help you??\nA. information \nB. query');
-                }
-                    break;
-                case "A":
-                    conn.query(
-                        `select description from bot where referencekey='A'`,
-                        async (error, results) => {
-                            if (error) console.log(error);
-                            if (results.length > 0) {
-                                // console.log(results);
-
-                                let count = 1;
-                                let msg = "*you have to write a number correspond to the problem which displaying in below message for the information.*\n";
-                                for (let i = 0; i < results.length; i++) {
-                                    msg += count + ". " + results[i].description + "\n";
-                                    count++;
-                                }
-                                await obj[iid].send_whatsapp_message(message.from, msg);
-
-                            }
-
-                        })
-                    break;
-                case '1':
-                    conn.query(
-                        `select description from bot where referencekey='1'`,
-                        async (error, results) => {
-                            if (error) console.log(error);
-                            if (results.length > 0) {
-                                // console.log(results);
-
-                                await obj[iid].send_whatsapp_message(message.from, results[0].description);
-                            }
-                        })
-                    break;
-                case '2':
-                    conn.query(
-                        `select description from bot where referencekey='2'`,
-                        async (error, results) => {
-                            if (error) console.log(error);
-                            if (results.length > 0) {
-                                // console.log(results);
-
-                                await obj[iid].send_whatsapp_message(message.from, results[0].description);
-                            }
-                        })
-                    break;
-                case '3':
-                    conn.query(
-                        `select description from bot where referencekey='3'`,
-                        async (error, results) => {
-                            if (error) console.log(error);
-                            if (results.length > 0) {
-                                // console.log(results);
-
-                                await obj[iid].send_whatsapp_message(message.from, results[0].description);
-                            }
-                        })
-                    break;
-                case '4':
-                    conn.query(
-                        `select description from bot where referencekey='4'`,
-                        async (error, results) => {
-                            if (error) console.log(error);
-                            if (results.length > 0) {
-                                // console.log(results);
-
-                                await obj[iid].send_whatsapp_message(message.from, results[0].description);
-                            }
-                        })
-                    break;
-                case '5':
-                    conn.query(
-                        `select description from bot where referencekey='5'`,
-                        async (error, results) => {
-                            if (error) console.log(error);
-                            if (results.length > 0) {
-                                // console.log(results);
-
-                                await obj[iid].send_whatsapp_message(message.from, results[0].description);
-                            }
-                        })
-                    break;
-                case '6':
-                    conn.query(
-                        `select description from bot where referencekey='6'`,
-                        async (error, results) => {
-                            if (error) console.log(error);
-                            if (results.length > 0) {
-                                // console.log(results);
-
-                                await obj[iid].send_whatsapp_message(message.from, results[0].description);
-                            }
-                        })
-                    break;
-                case '7':
-                    conn.query(
-                        `select description from bot where referencekey='7'`,
-                        async (error, results) => {
-                            if (error) console.log(error);
-                            if (results.length > 0) {
-                                // console.log(results);
-
-                                await obj[iid].send_whatsapp_message(message.from, results[0].description);
-                            }
-                        })
-                    break;
-                case '8':
-                    conn.query(
-                        `select description from bot where referencekey='8'`,
-                        async (error, results) => {
-                            if (error) console.log(error);
-                            if (results.length > 0) {
-                                // console.log(results);
-
-                                await obj[iid].send_whatsapp_message(message.from, results[0].description);
-                            }
-                        })
-                    break;
-                case '9':
-                    conn.query(
-                        `select description from bot where referencekey='9'`,
-                        async (error, results) => {
-                            if (error) console.log(error);
-                            if (results.length > 0) {
-                                // console.log(results);
-
-                                await obj[iid].send_whatsapp_message(message.from, results[0].description);
-                            }
-                        })
-                    break;
-                case "B":
-                    obj[iid].send_whatsapp_message(message.from, 'Please fill out this ticket-details:\n\n*Note:You have to answer all the details in a single message and newline.*\n\n' + questions.map(q => q.question).join('\n'));
-                    break;
-            }
-        }
-    });
-})
-
 // Bulkmessage : Authentication Client API
 app.get("/authenticated/:iid", async function (req, res) {
     apikey = req.cookies.apikey;
@@ -775,8 +534,6 @@ app.get("/authenticated/:iid", async function (req, res) {
         res.send(status.unauthorized());
     }
 });
-
-
 
 //Bulkmessage : Authentication Client API
 app.get("/adminbotauthenticated/:iid", async function (req, res) {
@@ -809,12 +566,6 @@ app.get("/supportAuthenticated/:iid", async function (req, res) {
         let iid = req.params.iid;
 
         await obj[iid].client.on("authenticated", (session) => {
-
-            // conn.query(`update instance set isActive = 1 where instance_id = '${iid}'`,
-            //     (err, result) => {
-            //         if (err || result.affectedRows < 1) res.send(status.internalservererror());
-
-            //     });
             res.send(status.ok());
         });
 
@@ -824,22 +575,6 @@ app.get("/supportAuthenticated/:iid", async function (req, res) {
         res.send(status.unauthorized());
     }
 });
-
-// Bulkmessage : Authentication Client API
-// app.get("/adminbotauthenticated", function (req, res) {
-//     try {
-//         adminBot.client.on("authenticated", (session) => {
-//             console.log("done");
-//             res.send(status.ok());
-
-//         });
-
-//     }
-//     catch (e) {
-//         //console.log(e);
-//         res.send(status.unauthorized());
-//     }
-// });
 
 // Bulkmessage : Disconnected Client API
 app.get("/disconnected/:iid", async (req, res) => {
@@ -895,6 +630,207 @@ app.get("/adminbotdisconnected/:iid", async (req, res) => {
     }
 });
 
+app.get("/adminBotWork/:iid", (req, res) => {
+    let iid = req.cookies.apikey;
+    obj[iid].client.on('message', (message) => {
+
+        let questions = [
+            { question: '# Phone-number:', answer: '' },
+            { question: '# Ticket subject:', answer: '' },
+            { question: '# Registered Email:', answer: '' },
+            {
+                question: `# Write a name of your Ticket type:\n\t* Account Management\n\t* Technical Support\n\t* Payment Problem\n\t* Service Inquiry\n\t* Feedback and suggestions`, answer: ''
+            },
+            { question: `# Description:`, answer: '' }
+
+        ];
+        const answers = message.body.split('\n');
+        if (answers.length > 1) {
+            // Update the form questions with the user's answers
+            questions.forEach((q, i) => {
+                q.answer = answers[i];
+            });
+            const generateUniqueId = () => {
+                const prefix = "W-";
+                const maxLength = 6 - prefix.length;
+                const maxNumber = Math.pow(10, maxLength) - 1;
+                const uniqueId = Math.floor(Math.random() * maxNumber) + 1;
+                return prefix + uniqueId.toString().padStart(maxLength, '0');
+            };
+            // Store the form data in a database
+            const t_id = generateUniqueId();
+            let phone = answers[0];
+            let subject = answers[1];
+            let Email = answers[2];
+            let type = answers[3];
+            let description = answers[4];
+
+            let a_agents = new Array();
+            let a_Account_Management = new Array();
+            let a_Technical_Support = new Array();
+            let a_Payment_Problem = new Array();
+            let a_Service_Inquiry = new Array();
+            let a_Feedback = new Array();
+
+            conn.query(`select * from support_agents`, (err, result) => {
+                if (err || result.length <= 0) res.send(status.internalservererror());
+                if (result.length > 0) {
+                    for (let i = 0; i < result.length; i++) {
+                        a_agents.push(result[i].email);
+                        if (result[i].category == "Account Management") {
+                            a_Account_Management.push(result[i].email);
+                        }
+                        else if (result[i].category == "Technical Support") {
+                            a_Technical_Support.push(result[i].email);
+                        }
+                        else if (result[i].category == "Payment Problem") {
+                            a_Payment_Problem.push(result[i].email);
+                        }
+                        else if (result[i].category == "Service Inquiry") {
+                            a_Service_Inquiry.push(result[i].email);
+                        }
+                        else if (result[i].category == "Feedback and Suggestions") {
+                            a_Feedback.push(result[i].email);
+                        }
+                    }
+                    let categories = {
+                        "Account Management": a_Account_Management,
+                        "Technical Support": a_Technical_Support,
+                        "Payment Problem": a_Payment_Problem,
+                        "Service Inquiry": a_Service_Inquiry,
+                        "Feedback and Suggestions": a_Feedback,
+                    };
+
+                    const agentsInCategory = categories[type];
+                    const Agent_email = agentsInCategory[Math.floor(Math.random() * agentsInCategory.length)];
+
+                    conn.query("select * from users where email='" + Email + "'", (err1, res1) => {
+
+                        if (err1) console.log(err1);
+                        if (res1.length > 0) {
+                            conn.query(`INSERT INTO support_ticket VALUES(?,?,?,?,?,?,?,?,?,?)`,
+                                [t_id, 'whatsapp', phone, subject, type, description, 'open', new Date(), res1[0].apikey, Agent_email], (err, res2) => {
+                                    if (err) console.log(err);
+                                    if (res2.affectedRows == 1) {
+                                        obj[iid].send_whatsapp_message(message.from, 'your support-ticket has been generated successfully!!!');
+                                    }
+                                })
+                        }
+                    })
+                }
+            })
+        }
+        else {
+            switch (message.body) {
+                case "hi":
+                case "Hi": {
+                    obj[iid].send_whatsapp_message(message.from, 'Hello! How can i help you??\nA. information \nB. query');
+                    break;
+                }
+                case "A":
+                    conn.query(`select description from bot where referencekey='A'`,
+                        async (error, results) => {
+                            if (error) console.log(error);
+                            if (results.length > 0) {
+                                let count = 1;
+                                let msg = "*you have to write a number correspond to the problem which displaying in below message for the information.*\n";
+                                for (let i = 0; i < results.length; i++) {
+                                    msg += count + ". " + results[i].description + "\n";
+                                    count++;
+                                }
+                                await obj[iid].send_whatsapp_message(message.from, msg);
+                            }
+                        })
+                    break;
+                case '1':
+                    conn.query(`select description from bot where referencekey='1'`,
+                        async (error, results) => {
+                            if (error) console.log(error);
+                            if (results.length > 0) {
+                                await obj[iid].send_whatsapp_message(message.from, results[0].description);
+                            }
+                        })
+                    break;
+                case '2':
+                    conn.query(`select description from bot where referencekey='2'`,
+                        async (error, results) => {
+                            if (error) console.log(error);
+                            if (results.length > 0) {
+                                await obj[iid].send_whatsapp_message(message.from, results[0].description);
+                            }
+                        })
+                    break;
+                case '3':
+                    conn.query(`select description from bot where referencekey='3'`,
+                        async (error, results) => {
+                            if (error) console.log(error);
+                            if (results.length > 0) {
+                                await obj[iid].send_whatsapp_message(message.from, results[0].description);
+                            }
+                        })
+                    break;
+                case '4':
+                    conn.query(`select description from bot where referencekey='4'`,
+                        async (error, results) => {
+                            if (error) console.log(error);
+                            if (results.length > 0) {
+                                await obj[iid].send_whatsapp_message(message.from, results[0].description);
+                            }
+                        })
+                    break;
+                case '5':
+                    conn.query(`select description from bot where referencekey='5'`,
+                        async (error, results) => {
+                            if (error) console.log(error);
+                            if (results.length > 0) {
+                                await obj[iid].send_whatsapp_message(message.from, results[0].description);
+                            }
+                        })
+                    break;
+                case '6':
+                    conn.query(`select description from bot where referencekey='6'`,
+                        async (error, results) => {
+                            if (error) console.log(error);
+                            if (results.length > 0) {
+                                await obj[iid].send_whatsapp_message(message.from, results[0].description);
+                            }
+                        })
+                    break;
+                case '7':
+                    conn.query(`select description from bot where referencekey='7'`,
+                        async (error, results) => {
+                            if (error) console.log(error);
+                            if (results.length > 0) {
+                                await obj[iid].send_whatsapp_message(message.from, results[0].description);
+                            }
+                        })
+                    break;
+                case '8':
+                    conn.query(`select description from bot where referencekey='8'`,
+                        async (error, results) => {
+                            if (error) console.log(error);
+                            if (results.length > 0) {
+                                await obj[iid].send_whatsapp_message(message.from, results[0].description);
+                            }
+                        })
+                    break;
+                case '9':
+                    conn.query(`select description from bot where referencekey='9'`,
+                        async (error, results) => {
+                            if (error) console.log(error);
+                            if (results.length > 0) {
+                                await obj[iid].send_whatsapp_message(message.from, results[0].description);
+                            }
+                        })
+                    break;
+                case "B":
+                    obj[iid].send_whatsapp_message(message.from, 'Please fill out this ticket-details:\n\n*Note:You have to answer all the details in a single message and newline.*\n\n' + questions.map(q => q.question).join('\n'));
+                    break;
+            }
+        }
+    });
+})
+
 // Bulkmessage : Send Bulk Template Message API
 app.post("/bulktemplatemessage", async function (req, res) {
     apikey = req.cookies.apikey;
@@ -914,13 +850,17 @@ app.post("/bulktemplatemessage", async function (req, res) {
 
             if (selectedcol.length == 1) {
                 msgarr = one(msg, clientobj, selectedcol);
-            } else if (selectedcol.length == 2) {
+            }
+            else if (selectedcol.length == 2) {
                 msgarr = two(msg, clientobj, selectedcol);
-            } else if (selectedcol.length == 3) {
+            }
+            else if (selectedcol.length == 3) {
                 msgarr = three(msg, clientobj, selectedcol);
-            } else if (selectedcol.length == 4) {
+            }
+            else if (selectedcol.length == 4) {
                 msgarr = four(msg, clientobj, selectedcol);
-            } else if (selectedcol.length == 5) {
+            }
+            else if (selectedcol.length == 5) {
                 msgarr = five(msg, clientobj, selectedcol);
             }
 
@@ -1509,6 +1449,108 @@ app.post("/sendMail", async (req, res) => {
 });
 
 // Bulkmail : Send Bulk Template Mail API
+
+// const MAX_RETRIES = 3; // Maximum number of retries
+// const EMAILS_PER_BATCH = 10; // Number of emails to send per batch
+// const DELAY_MS = 9000; // Delay in milliseconds between batches
+
+// app.post("/bulktemplatemail", async function (req, res) {
+//     try {
+//         const apikey = req.cookies.apikey;
+//         const isValidapikey = await checkAPIKey(apikey);
+//         if (!isValidapikey) {
+//             return res.send(status.forbidden());
+//         }
+
+//         const iid = req.body.iid;
+//         const token = req.body.token;
+//         const contacts = req.body.contacts;
+//         const msg = req.body.message;
+//         const clientobj = req.body.clientobj;
+//         const selectedcol = req.body.selectedcol;
+//         let msgarr;
+
+//         switch (selectedcol.length) {
+//             case 1:
+//                 msgarr = one(msg, clientobj, selectedcol);
+//                 break;
+//             case 2:
+//                 msgarr = two(msg, clientobj, selectedcol);
+//                 break;
+//             case 3:
+//                 msgarr = three(msg, clientobj, selectedcol);
+//                 break;
+//             case 4:
+//                 msgarr = four(msg, clientobj, selectedcol);
+//                 break;
+//             case 5:
+//                 msgarr = five(msg, clientobj, selectedcol);
+//                 break;
+//         }
+
+//         const result = await conn.query(
+//             `SELECT * FROM instance WHERE instance_id = '${iid}' AND apikey = '${apikey}' AND token = '${token}'`
+//         );
+//         if (result.length <= 0) {
+//             return res.send(status.forbidden());
+//         }
+
+//         const from = await findData(apikey, 'email');
+//         const sender = {
+//             hostname: await findData(apikey, 'hostname'),
+//             port: await findData(apikey, 'port'),
+//             email: from,
+//             passcode: await findData(apikey, 'emailpasscode')
+//         };
+
+//         const sendEmailWithRetry = async (to, subject, body) => {
+//             let retries = 0;
+//             while (retries < MAX_RETRIES) {
+//                 try {
+//                     await sendEmail(sender, to, subject, body);
+//                     return;
+//                 } catch (error) {
+//                     console.log(`Error in sending email to ${to}: ${error}`);
+//                     retries++;
+//                 }
+//             }
+//             throw new Error(`Failed to send email to ${to} after ${MAX_RETRIES} retries`);
+//         };
+
+//         const emailPromises = clientobj.map((_, i) => {
+//             const to = contacts[i];
+//             const subject = req.body.subject;
+//             const body = msgarr[i];
+
+//             const promise = sendEmailWithRetry(to, subject, body).then(() => {
+//                 const id = crypto.randomBytes(8).toString("hex");
+//                 return conn.query(
+//                     `INSERT INTO email VALUES(?,?,?,?,?,?,?,?,?)`,
+//                     [id, from, to, 'Bulk Mail Template', subject, body, iid, apikey, new Date()]
+//                 );
+//             });
+
+//             // Introduce delay after every EMAILS_PER_BATCH emails
+//             if ((i + 1) % EMAILS_PER_BATCH === 0) {
+//                 return new Promise((resolve) => {
+//                     setTimeout(() => {
+//                         resolve(promise);
+//                     }, DELAY_MS);
+//                 });
+//             }
+
+//             return promise;
+//         });
+
+//         await Promise.all(emailPromises);
+//         return res.send(status.ok());
+//     } catch (e) {
+//         console.log(e);
+//         return res.send(status.unauthorized());
+//     }
+// });
+
+
 app.post("/bulktemplatemail", async function (req, res) {
 
     apikey = req.cookies.apikey;
@@ -3096,230 +3138,6 @@ app.post("/adminDeleteRecord", (req, res) => {
     );
 });
 
-app.get("/adminBotWork/:iid", (req, res) => {
-    let iid = req.params.iid;
-    obj[iid].client.on('message', (message) => {
-
-        let questions = [
-            { question: '# Phone-number:', answer: '' },
-            { question: '# Ticket subject:', answer: '' },
-            { question: '# Registered Email:', answer: '' },
-            {
-                question: `# Write a name of your Ticket type:\n\t* Account Management\n\t* Technical Support\n\t* Payment Problem\n\t* Service Inquiry\n\t* Feedback and suggestions`, answer: ''
-            },
-            { question: `# Description:`, answer: '' }
-
-        ];
-        const answers = message.body.split('\n');
-        if (answers.length > 1) {
-            // Update the form questions with the user's answers
-            questions.forEach((q, i) => {
-                q.answer = answers[i];
-            });
-            const generateUniqueId = () => {
-                const prefix = "W-";
-                const maxLength = 6 - prefix.length;
-                const maxNumber = Math.pow(10, maxLength) - 1;
-                const uniqueId = Math.floor(Math.random() * maxNumber) + 1;
-                return prefix + uniqueId.toString().padStart(maxLength, '0');
-            };
-            // Store the form data in a database
-            const t_id = generateUniqueId();
-            let phone = answers[0];
-            let subject = answers[1];
-            let Email = answers[2];
-            let type = answers[3];
-            let description = answers[4];
-
-            let a_agents = new Array();
-            let a_Account_Management = new Array();
-            let a_Technical_Support = new Array();
-            let a_Payment_Problem = new Array();
-            let a_Service_Inquiry = new Array();
-            let a_Feedback = new Array();
-
-            conn.query(`select * from support_agents`, (err, result) => {
-                if (err || result.length <= 0) res.send(status.internalservererror());
-                if (result.length > 0) {
-                    for (let i = 0; i < result.length; i++) {
-                        a_agents.push(result[i].a_email);
-                        if (result[i].a_category == "Account Management") {
-                            a_Account_Management.push(result[i].a_email);
-                        } else if (result[i].a_category == "Technical Support") {
-                            a_Technical_Support.push(result[i].a_email);
-                        } else if (result[i].a_category == "Payment Problem") {
-                            a_Payment_Problem.push(result[i].a_email);
-                        }
-                        else if (result[i].a_category == "Service Inquiry") {
-                            a_Service_Inquiry.push(result[i].a_email);
-                        }
-                        else if (result[i].a_category == "Feedback and Suggestions") {
-                            a_Feedback.push(result[i].a_email);
-                        }
-                    }
-                    let categories = {
-                        "Account Management": a_Account_Management,
-                        "Technical Support": a_Technical_Support,
-                        "Payment Problem": a_Payment_Problem,
-                        "Service Inquiry": a_Service_Inquiry,
-                        "Feedback and Suggestions": a_Feedback,
-                    };
-                    const agentsInCategory = categories[type];
-                    const Agent_email = agentsInCategory[Math.floor(Math.random() * agentsInCategory.length)];
-
-                    conn.query("select * from users where email='" + Email + "'", (err1, res1) => {
-
-                        if (err1) return console.log(err1);
-                        if (res1.length > 0) {
-                            conn.query(`INSERT INTO support_ticket VALUES(?,?,?,?,?,?,?,?,?,?)`,
-                                [t_id, 'whatsapp', phone, subject, type, description, 'open', new Date(), res1[0].apikey, Agent_email], (err, res2) => {
-                                    if (err) console.log(err);
-                                    if (res2 > 0) {
-                                        obj[iid].send_whatsapp_message(message.from, 'your support-ticket has been generated successfully!!!');
-                                    }
-                                })
-                        }
-
-                    })
-                }
-            })
-        }
-        else {
-            switch (message.body) {
-                case "hi":
-                case "Hi": {
-
-                    obj[iid].send_whatsapp_message(message.from, 'Hello! How can i help you??\nA. information \nB. query');
-                }
-                    break;
-                case "A":
-                    conn.query(
-                        `select description from bot where referencekey='A'`,
-                        async (error, results) => {
-                            if (error) return console.log(error);
-                            if (results.length > 0) {
-
-                                let count = 1;
-                                let msg = "*you have to write a number correspond to the problem which displaying in below message for the information.*\n";
-                                for (let i = 0; i < results.length; i++) {
-                                    msg += count + ". " + results[i].description + "\n";
-                                    count++;
-                                }
-                                await obj[iid].send_whatsapp_message(message.from, msg);
-
-                            }
-
-                        })
-                    break;
-                case '1':
-                    conn.query(
-                        `select description from bot where referencekey='1'`,
-                        async (error, results) => {
-                            if (error) console.log(error);
-                            if (results.length > 0) {
-
-                                await obj[iid].send_whatsapp_message(message.from, results[0].description);
-                            }
-                        })
-                    break;
-                case '2':
-                    conn.query(
-                        `select description from bot where referencekey='2'`,
-                        async (error, results) => {
-                            if (error) console.log(error);
-                            if (results.length > 0) {
-
-                                await obj[iid].send_whatsapp_message(message.from, results[0].description);
-                            }
-                        })
-                    break;
-                case '3':
-                    conn.query(
-                        `select description from bot where referencekey='3'`,
-                        async (error, results) => {
-                            if (error) console.log(error);
-                            if (results.length > 0) {
-
-                                await obj[iid].send_whatsapp_message(message.from, results[0].description);
-                            }
-                        })
-                    break;
-                case '4':
-                    conn.query(
-                        `select description from bot where referencekey='4'`,
-                        async (error, results) => {
-                            if (error) console.log(error);
-                            if (results.length > 0) {
-
-                                await obj[iid].send_whatsapp_message(message.from, results[0].description);
-                            }
-                        })
-                    break;
-                case '5':
-                    conn.query(
-                        `select description from bot where referencekey='5'`,
-                        async (error, results) => {
-                            if (error) console.log(error);
-                            if (results.length > 0) {
-
-                                await obj[iid].send_whatsapp_message(message.from, results[0].description);
-                            }
-                        })
-                    break;
-                case '6':
-                    conn.query(
-                        `select description from bot where referencekey='6'`,
-                        async (error, results) => {
-                            if (error) console.log(error);
-                            if (results.length > 0) {
-
-                                await obj[iid].send_whatsapp_message(message.from, results[0].description);
-                            }
-                        })
-                    break;
-                case '7':
-                    conn.query(
-                        `select description from bot where referencekey='7'`,
-                        async (error, results) => {
-                            if (error) console.log(error);
-                            if (results.length > 0) {
-
-                                await obj[iid].send_whatsapp_message(message.from, results[0].description);
-                            }
-                        })
-                    break;
-                case '8':
-                    conn.query(
-                        `select description from bot where referencekey='8'`,
-                        async (error, results) => {
-                            if (error) console.log(error);
-                            if (results.length > 0) {
-
-                                await obj[iid].send_whatsapp_message(message.from, results[0].description);
-                            }
-                        })
-                    break;
-                case '9':
-                    conn.query(
-                        `select description from bot where referencekey='9'`,
-                        async (error, results) => {
-                            if (error) console.log(error);
-                            if (results.length > 0) {
-
-                                await obj[iid].send_whatsapp_message(message.from, results[0].description);
-                            }
-                        })
-                    break;
-                case "B":
-                    obj[iid].send_whatsapp_message(message.from, 'Please fill out this ticket-details:\n\n*Note:You have to answer all the details in a single message and newline.*\n\n' + questions.map(q => q.question).join('\n'));
-                    break;
-
-
-            }
-        }
-    });
-})
-
 app.get("/adminbotauthenticated/:iid", async function (req, res) {
     apikey = req.cookies.apikey;
 
@@ -3610,14 +3428,10 @@ app.post("/AgentReplyToTicket", async (req, res) => {
     let identity = req.body.identity;
     let category = req.body.category;
     let description = req.body.description;
-    let tstatus = req.body.status;
     let uname = req.body.uname;
     let contact = req.body.contact;
     let response = req.body.response;
-    let sindex = req.cookies.sindex;
-    let prefix = "+91";
-    contact = prefix.concat(contact);
-    let chatId = contact.substring(1) + "@c.us";
+    const chatId = `91${contact}@c.us`;
 
     const sender = {
         "hostname": 'smtp.gmail.com',
@@ -3637,20 +3451,32 @@ app.post("/AgentReplyToTicket", async (req, res) => {
 
     switch (category) {
         case 'whatsapp': {
-            supportclient[sindex].client
-                .sendMessage(chatId, `Hello ${uname}\n\nFor query #${id} \n${subject}\n\nWe have considered your query and send response on your email: ${to}`);
+            await obj[agent_id].send_whatsapp_message(chatId, `Hello ${uname}\n\nFor query #${id} \n\nWe have considered your query and send response on your email: ${to}\n\nPlease check your email or login to SwiftSend to view the reply`);
+            sendEmail(sender, to, subject, body).then(() => {
+                conn.query(`INSERT INTO ticket_reply VALUES (?,?,?,?,?,?)`,
+                    [indexno, identity, id, response, new Date(), agent_id], (err, result) => {
+                        if (err) return res.send(status.internalservererror());
+                        conn.query(`update support_ticket set status='inprogress' where ticket_id='${id}'`, (err2, result2) => {
+                            if (err2 || result2.affectedRows <= 0) return res.send(status.internalservererror());
+                            res.send(status.ok());
+                        });
+                    });
+            }).catch((error) => {
+                return console.log(`error in Sending  E-Mail ::::::: <${error}>`);
+            })
             break;
         }
 
         case 'email': {
             sendEmail(sender, to, subject, body).then(() => {
-                conn.query(`INSERT INTO ticket_reply VALUES (?,?,?,?,?,?)`, [indexno, identity, id, response, new Date(), agent_id], (err, result) => {
-                    if (err) return res.send(status.internalservererror());
-                    conn.query(`update support_ticket set status='inprogress' where ticket_id='${id}'`, (err2, result2) => {
-                        if (err2 || result2.affectedRows <= 0) return res.send(status.internalservererror());
-                        res.send(status.ok());
+                conn.query(`INSERT INTO ticket_reply VALUES (?,?,?,?,?,?)`,
+                    [indexno, identity, id, response, new Date(), agent_id], (err, result) => {
+                        if (err) return res.send(status.internalservererror());
+                        conn.query(`update support_ticket set status='inprogress' where ticket_id='${id}'`, (err2, result2) => {
+                            if (err2 || result2.affectedRows <= 0) return res.send(status.internalservererror());
+                            res.send(status.ok());
+                        });
                     });
-                });
             }).catch((error) => {
                 return console.log(`error in Sending  E-Mail ::::::: <${error}>`);
             })

@@ -436,7 +436,7 @@
                     $("#ticket-user-contact").html(data[0].user);
 
                     category = data[0].category;
-                    var index = getCookie("sindex");
+                    var index = getCookie("apikey");
                     if (category == "whatsapp") {
                         if (index == null || index == "") {
                             swal({
