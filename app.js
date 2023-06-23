@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 const sessions = require("express-session");
 const fileUpload = require("express-fileupload");
 const csvtojson = require("csvtojson");
-//
+
 const axios = require('axios');
 const bcrypt = require('bcrypt');
 const app = express();
@@ -30,8 +30,6 @@ const { Client, MessageMedia, NoAuth } = require("whatsapp-web.js");
 
 let obj = [], apikey, userProfile;
 
-const SESSION_FILE_PATH = './assets/json/session-data.json';
-
 // const conn = mysql.createConnection({
 //     host: process.env.DB_HOST,
 //     user: process.env.DB_USER,
@@ -39,21 +37,21 @@ const SESSION_FILE_PATH = './assets/json/session-data.json';
 //     database: process.env.DB_NAME,
 // });
 
-// const conn = mysql.createConnection({
-//     host: '164.52.208.110',
-//     user: 'qitsolution_tempuser',
-//     password: 'Qit123@#india',
-//     database: 'qitsolution_swiftsend',
-// })
+const conn = mysql.createConnection({
+    host: '164.52.208.110',
+    user: 'qitsolution_tempuser',
+    password: 'Qit123@#india',
+    database: 'qitsolution_swiftsend',
+})
 
 //Db itentifier: swift-send-db-itentifier
 // username: admin
-const conn = mysql.createConnection({
-    host: process.env.HOST,
-    user: process.env.USER,
-    password: process.env.PASSWORD,
-    database: process.env.DATABASE,
-})
+// const conn = mysql.createConnection({
+//     host: process.env.HOST,
+//     user: process.env.USER,
+//     password: process.env.PASSWORD,
+//     database: process.env.DATABASE,
+// })
 
 conn.connect((err) => {
     if (err) {
