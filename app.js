@@ -412,7 +412,7 @@ app.get("/auth/google/callback", passport.authenticate("google", { failureRedire
                     res.redirect(`/dashboard`);
                 }
                 else {
-                    conn.query(`INSERT INTO users (apikey,uname,email,password,phone,phoneverify,country,state,city,registrationDate,image) VALUES(?,?,?,?,?,?,?,?,?,?,?)`, [apikey, Ac_name, Ac_mail, '', '', false, '', '', '', new Date(), profile],
+                    conn.query(`INSERT INTO users (apikey,uname,email,password,phone,phoneverify,country,state,city,registrationDate,image) VALUES(?,?,?,?,?,?,?,?,?,?,?)`, [apikey, Ac_name, Ac_mail, '', null, false, '', '', '', new Date(), profile],
                         function (err, result) {
                             if (err) return console.log(err);
                             if (result) {
