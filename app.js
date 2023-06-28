@@ -1037,7 +1037,6 @@ app.post("/bulkcustommessage", async function (req, res) {
                         const chatId = `91${contacts[i]}@c.us`;
                         let msgid = crypto.randomBytes(8).toString("hex");
                         if (obj[iid]) {
-
                             obj[iid].send_whatsapp_message(chatId, message).then((messageId) => {
                                 conn.query(`insert into message values(?,?,?,?,?,?,?,?)`,
                                     [msgid, message, 'Bulk Message custom', chatId, iid, apikey, token, new Date()],
@@ -1583,6 +1582,7 @@ app.post("/bulktemplatemail", async function (req, res) {
                     if (err || result.length <= 0) return res.send(status.forbidden());
 
                     const from = await findData(apikey, 'email');
+                    const subject = req.body.subject;
                     const sender = {
                         hostname: await findData(apikey, 'hostname'),
                         port: await findData(apikey, 'port'),
@@ -1591,7 +1591,6 @@ app.post("/bulktemplatemail", async function (req, res) {
                     };
                     for (let i = 0; i < clientobj.length; i++) {
                         const to = contacts[i];
-                        const subject = req.body.subject;
                         const body = msgarr[i];
 
                         sendEmail(sender, to, subject, body).then(() => {
@@ -1633,17 +1632,18 @@ app.post("/bulkcustommail", async function (req, res) {
             conn.query(`select * from instance where instance_id = '${iid}' and apikey = '${apikey}' and token = '${token}'`,
                 async function (err, result) {
                     if (err || result.length <= 0) return res.send(status.forbidden());
+                    const from = await findData(apikey, 'email');
+                    const subject = req.body.subject;
+                    const body = req.body.message;
+                    const sender = {
+                        "hostname": await findData(apikey, 'hostname'),
+                        "port": await findData(apikey, 'port'),
+                        "email": from,
+                        "passcode": await findData(apikey, 'emailpasscode')
+                    };
                     for (let i = 0; i < contacts.length; i++) {
-                        const from = await findData(apikey, 'email');
                         const to = contacts[i];
-                        const subject = req.body.subject;
-                        const body = req.body.message;
-                        const sender = {
-                            "hostname": await findData(apikey, 'hostname'),
-                            "port": await findData(apikey, 'port'),
-                            "email": from,
-                            "passcode": await findData(apikey, 'emailpasscode')
-                        };
+                        
                         sendEmail(sender, to, subject, body).then(() => {
                             const id = crypto.randomBytes(8).toString("hex");
                             conn.query(`insert into email values(?,?,?,?,?,?,?,?,?)`,
@@ -1682,17 +1682,17 @@ app.post("/sendmailchannel", async function (req, res) {
 
             conn.query(`select * from instance where instance_id = '${iid}' and apikey = '${apikey}' and token = '${token}'`, async function (err, result) {
                 if (err || result.length <= 0) return res.send(status.forbidden());
+                const from = await findData(apikey, 'email');
+                const subject = req.body.subject;
+                const body = req.body.message;
+                const sender = {
+                    "hostname": await findData(apikey, 'hostname'),
+                    "port": await findData(apikey, 'port'),
+                    "email": from,
+                    "passcode": await findData(apikey, 'emailpasscode')
+                };
                 for (let i = 0; i < contacts.length; i++) {
-                    const from = await findData(apikey, 'email');
                     const to = contacts[i];
-                    const subject = req.body.subject;
-                    const body = req.body.message;
-                    const sender = {
-                        "hostname": await findData(apikey, 'hostname'),
-                        "port": await findData(apikey, 'port'),
-                        "email": from,
-                        "passcode": await findData(apikey, 'emailpasscode')
-                    };
                     sendEmail(sender, to, subject, body).then(() => {
                         const id = crypto.randomBytes(8).toString("hex");
                         conn.query(`insert into email values(?,?,?,?,?,?,?,?,?)`,
