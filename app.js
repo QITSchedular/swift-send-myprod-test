@@ -37,21 +37,21 @@ let obj = [], apikey, userProfile;
 //     database: process.env.DB_NAME,
 // });
 
-const conn = mysql.createConnection({
-    host: '164.52.208.110',
-    user: 'qitsolution_tempuser',
-    password: 'Qit123@#india',
-    database: 'qitsolution_swiftsend',
-})
+// const conn = mysql.createConnection({
+//     host: '164.52.208.110',
+//     user: 'qitsolution_tempuser',
+//     password: 'Qit123@#india',
+//     database: 'qitsolution_swiftsend',
+// })
 
 //Db itentifier: swift-send-db-itentifier
 // username: admin
-// const conn = mysql.createConnection({
-//     host: process.env.HOST,
-//     user: process.env.USER,
-//     password: process.env.PASSWORD,
-//     database: process.env.DATABASE,
-// })
+const conn = mysql.createConnection({
+    host: process.env.HOST,
+    user: process.env.USER,
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE,
+})
 
 conn.connect((err) => {
     if (err) {
