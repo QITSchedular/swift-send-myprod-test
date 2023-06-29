@@ -297,7 +297,7 @@
                                                     <div class="card mb-0">
                                                         <div class="card-body">
                                                             <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal"></button>
+                                                                data-bs-dismiss="modal" id="otp-close-btn"></button>
 
                                                             <div class="mb-2">
                                                                 <div class="avatar-lg mx-auto">
@@ -413,9 +413,10 @@
                                                                             <div class="mb-3">
                                                                                 <label for="digit6-input"
                                                                                     class="visually-hidden">
-                                                                                    Digit 4</label>
+                                                                                    Digit 6</label>
                                                                                 <input type="number"
                                                                                     class="form-control form-control-lg bg-light p-0 text-center"
+                                                                                    onkeyup="moveToNext(6, event)"
                                                                                     maxLength="1" id="digit6-input">
                                                                             </div>
                                                                         </div>
@@ -423,8 +424,7 @@
                                                                 </form>
                                                                 <div class="mt-3">
                                                                     <button type="button" id="verify"
-                                                                        class="btn btn-success w-100"
-                                                                        data-bs-dismiss="modal">Verify</button>
+                                                                        class="btn btn-success btn-load w-100">Verify</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -472,8 +472,9 @@
                                             <div class="col-lg-8 col-md-8 col-sm-12">
                                                 <div class="mb-3">
                                                     <div class="justify-content-lg-start justify-content-sm-center">
-                                                        <button class="btn btn-primary" id="updatepersonalinfo">
-                                                            <span>Update</span>
+                                                        <button class="btn btn-primary btn-load"
+                                                            id="updatepersonalinfo">
+                                                            Update
                                                         </button>
                                                     </div>
                                                 </div>
@@ -710,15 +711,14 @@
         }
 
         // send otp message function
-        function phoneAuth(number) {
-            firebase.auth().signInWithPhoneNumber(number, window.recaptchaVerifier).then(function (confirmationResult) {
-                window.confirmationResult = confirmationResult;
-                coderesult = confirmationResult;
-                console.log(coderesult);
-            }).catch(function (error) {
-                console.log(error.message);
-            });
-        }
+        // function phoneAuth(number) {
+        //     firebase.auth().signInWithPhoneNumber(number, window.recaptchaVerifier).then(function (confirmationResult) {
+        //         window.confirmationResult = confirmationResult;
+        //         coderesult = confirmationResult;
+        //     }).catch(function (error) {
+        //         console.log(error.message);
+        //     });
+        // }
 
         $(document).ready(function () {
             chkLogin();
@@ -864,12 +864,17 @@
                 render();
                 if (objFlag.flag_phone == 0) {
                     var phone_str = $('#phonecode').val() + "" + $('#phoneInput').val();
-
-                    $('#resendcodelink').removeClass("d-none");
-                    $('#otpinput').removeClass("d-none");
-                    $('#numberinput').addClass("d-none");
-                    phoneAuth(phone_str);
-                    $('#digit1-input').focus();
+                    
+                    firebase.auth().signInWithPhoneNumber(phone_str, window.recaptchaVerifier).then(function (confirmationResult) {
+                        window.confirmationResult = confirmationResult;
+                        coderesult = confirmationResult;
+                        $('#resendcodelink').removeClass("d-none");
+                        $('#otpinput').removeClass("d-none");
+                        $('#numberinput').addClass("d-none");
+                        $('#digit1-input').focus();
+                    }).catch(function (error) {
+                        console.log(error.message);
+                    });
                 }
                 else {
                     $('.phone').focus();
@@ -891,7 +896,31 @@
                     $.ajax({
                         url: "/phoneverify",
                         method: "PUT",
+                        beforeSend: function () {
+                            $('#verify')
+                                .removeClass('btn-primary btn-success')
+                                .addClass('btn-warning')
+                                .html(`<span class="d-flex align-items-center">
+                                        <span class="flex-grow-1 me-lg-2 me-md-2">
+                                            Verifying
+                                        </span>
+                                        <span class="spinner-border flex-shrink-0" role="status">
+                                            <span class="visually-hidden"></span>
+                                        </span>
+                                    </span>`);
+                        },
                         success: function (val) {
+                            $('#verify')
+                                .removeClass('btn-primary btn-success')
+                                .addClass('btn-warning')
+                                .html(`<span class="d-flex align-items-center">
+                                        <span class="flex-grow-1 me-lg-2 me-md-2">
+                                            Verify
+                                        </span>
+                                        <span class="spinner-border flex-shrink-0" role="status">
+                                            <span class="visually-hidden"></span>
+                                        </span>
+                                    </span>`);
                             switch (val.status_code) {
                                 case '401': {
                                     InvalidUser();
@@ -912,6 +941,7 @@
                                         timer: 2000,
                                         showConfirmButton: false,
                                     }).then(function () {
+                                        $('otp-close-btn').click();
                                         displaydata();
                                     })
                                     break;
@@ -920,7 +950,6 @@
                         }
                     })
                 }).catch(function (error) {
-                    console.log(error.message);
                     swal({
                         title: 'Phone number not verified',
                         text: 'Must be wrong OTP / Number ',
@@ -992,18 +1021,23 @@
                                 "city": $('#cityInput').val().toUpperCase().trim(),
                             },
                             beforeSend: function () {
-                                $('#updatepersonalinfo').html('Updating ...');
-                                $('#updatepersonalinfo').removeClass('btn-primary');
-                                $('#updatepersonalinfo').removeClass('btn-success');
-                                $('#updatepersonalinfo').addClass('btn-warning');
-                            },
-                            complete: function () {
-                                $('#updatepersonalinfo').html('Done');
-                                $('#updatepersonalinfo').removeClass('btn-primary');
-                                $('#updatepersonalinfo').removeClass('btn-warning');
-                                $('#updatepersonalinfo').addClass('btn-success');
+                                $('#updatepersonalinfo')
+                                    .removeClass('btn-primary btn-success')
+                                    .addClass('btn-warning')
+                                    .html(`<span class="d-flex align-items-center">
+                                        <span class="flex-grow-1 me-lg-2 me-md-2">
+                                            Updating
+                                        </span>
+                                        <span class="spinner-border flex-shrink-0" role="status">
+                                            <span class="visually-hidden"></span>
+                                        </span>
+                                    </span>`);
                             },
                             success: function (val) {
+                                $('#updatepersonalinfo')
+                                    .removeClass('btn-warning btn-success')
+                                    .addClass('btn-primary')
+                                    .html(`Update`);
                                 switch (val.status_code) {
                                     case '401': {
                                         InvalidUser();
@@ -1083,7 +1117,7 @@
                             }
                         })
                     }
-                    else{
+                    else {
                         swal({
                             title: `<h3 class="text-primary">File Size must be &lt 1 MB.</h3>`,
                             type: 'error',

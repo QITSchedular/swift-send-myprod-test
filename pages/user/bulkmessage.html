@@ -1244,7 +1244,6 @@
                     });
 
                     $(document).on("click", "#scanqr", function () {
-                        console.log(iid);
                         $.ajax({
                             url: `/qr/${iid}`,
                             method: "GET",
@@ -1253,7 +1252,6 @@
                                 $("#output").addClass("d-none");
                             },
                             success: function (data) {
-                                console.log("Qrcode : ", data);
                                 $("#loader").addClass("d-none");
                                 $("#output").html("");
 
