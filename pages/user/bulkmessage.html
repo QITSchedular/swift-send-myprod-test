@@ -2791,7 +2791,6 @@
                                     </span>`);
                                 },
                                 success: function (val) {
-                                    console.log(val);
                                     switch (val.status_code) {
                                         case '401': {
                                             InvalidUser();
@@ -2834,10 +2833,6 @@
                                         }
 
                                         case '200': {
-                                            $('#gsheetmsgtype_document_send')
-                                                .removeClass('btn-primary btn-warning')
-                                                .addClass('btn-success')
-                                                .html('Sent');
                                             swal({
                                                 title: `Document sent.`,
                                                 type: 'success',
@@ -2847,8 +2842,8 @@
                                                 $("#localfilemsgtype_document_file,#datafile,#localfilemsgtype").val("");
                                                 $("#localfile_data").html("");
                                                 $('#localfilemsgtype_document_send')
-                                                    .removeClass('btn-primary btn-warning')
-                                                    .addClass('btn-success')
+                                                    .removeClass('btn-success btn-warning')
+                                                    .addClass('btn-primary')
                                                     .html(`<i class= "mdi mdi-send me-lg-2 me-md-2"></i>
                                                     <span class="d-none d-lg-inline-block d-md-inline-block">
                                                         Send
