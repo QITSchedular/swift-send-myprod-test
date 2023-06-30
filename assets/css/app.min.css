@@ -3724,7 +3724,7 @@
 }
 
 .bg-pattern {
-    background: url(../images/modal-bg.png) #fff
+    background: url(../images/img-pattern.png) #fff
 }
 
 .w-xs {
@@ -16507,7 +16507,7 @@ span.flatpickr-weekday {
 }
 
 .user-chat {
-    background: url(../images/chat-bg-pattern.png);
+    /* background: url(../images/chat-bg-pattern.png); */
     -webkit-transition: all .4s;
     transition: all .4s;
     position: relative;
@@ -17644,7 +17644,7 @@ span.flatpickr-weekday {
 }
 
 .bg-overlay-pattern {
-    background-image: url(../images/landing/bg-pattern.png);
+    /* background-image: url(../images/landing/bg-pattern.png); */
     background-color: transparent;
     background-position: center;
     background-size: cover;

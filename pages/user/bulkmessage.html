@@ -617,7 +617,8 @@
                                                 <p class="fs-14 fw-medium mb-0 ms-2" style="text-align: justify;">
                                                     Only <span class="text-danger">CSV</span>
                                                     File Allowed and File must have column name like
-                                                    <span class="text-primary">name, phone, email</span> and CSV file will
+                                                    <span class="text-primary">name, phone, email</span> and CSV file
+                                                    will
                                                     select only first <span class="text-danger">200 Data</span>.
                                                 </p>
                                             </div>
@@ -699,6 +700,15 @@
                                                     </label>
                                                     <input type="file" class="form-control mb-3" style="resize: none"
                                                         id="localfilemsgtype_document_file" data-type="message">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="localfilemsgtype_template_document_caption" class="form-label">
+                                                        Caption
+                                                        <span class="text-danger"
+                                                            id="err_localfilemsgtype_template_document_caption"></span>
+                                                    </label>
+                                                    <textarea class="form-control mb-3" style="resize: none" cols="50"
+                                                        rows="6" id="localfilemsgtype_template_document_caption"></textarea>
                                                 </div>
                                                 <button id="localfilemsgtype_document_send"
                                                     class="btn btn-primary btn-load">
@@ -2311,7 +2321,7 @@
                         }
                     });
 
-                    $(document).on("click", "#gsheetmsgtype_document_send",function () {
+                    $(document).on("click", "#gsheetmsgtype_document_send", function () {
                         nullfield_validation('gsheetmsgtype_document_file');
                         nullfield_validation('spreedsheet');
                         nullfield_validation('sheetname');
@@ -2758,6 +2768,7 @@
                             let formData = new FormData();
                             formData.append("iid", iid);
                             formData.append("image", document.getElementById('localfilemsgtype_document_file').files[0]);
+                            formData.append("caption", $('#localfilemsgtype_template_document_caption').val());
                             formData.append("token", $('#token').val().trim());
                             formData.append("phonearray", contacts_str);
                             $.ajax({

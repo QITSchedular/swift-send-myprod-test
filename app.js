@@ -2327,7 +2327,7 @@ app.get("/userinfo", async (req, res) => {
 
 app.get("/get-landingpage-data", (req, res) => {
     try {
-        conn.query(`SELECT COUNT(*) AS total FROM users UNION ALL SELECT COUNT(*) FROM instance UNION ALL SELECT COUNT(*) FROM message`,
+        conn.query(`SELECT COUNT(*) AS total FROM users UNION ALL SELECT COUNT(*) FROM instance UNION ALL SELECT COUNT(*) FROM message UNION ALL SELECT COUNT(*) FROM email`,
             (err, result) => {
                 if (err) return res.send(err);
                 if (result.length > 0) {
