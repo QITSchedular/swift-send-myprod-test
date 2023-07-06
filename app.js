@@ -105,11 +105,6 @@ passport.deserializeUser(function (obj, cb) {
 });
 
 const port = process.env.PORT;
-
-// const browser = puppeteer.launch({
-//     executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
-// });
-
 class clients {
     client;
     constructor() {
@@ -156,7 +151,6 @@ class clients {
     }
 
     async checkAuth() {
-
         try {
             const authstatus = new Promise((resolve) => {
                 this.client.on('ready', () => {
@@ -377,16 +371,6 @@ passport.use(new GoogleStrategy(
         return done(null, userProfile);
     }
 ));
-// passport.use(new GoogleStrategy(
-//     {
-//         clientID: "998325770347-9s0fe9oph1a8blesbtl7hkccgs69fc1h.apps.googleusercontent.com",
-//         clientSecret: "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",
-//         callbackURL: `${process.env.DOMAIN}/auth/google/callback`,
-//     }, function (accessToken, refreshToken, profile, done) {
-//         userProfile = profile;
-//         return done(null, userProfile);
-//     }
-// ));
 
 app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
@@ -953,7 +937,7 @@ app.post("/sendimage", async function (req, res) {
                                                 })
                                         });
                                     }).catch((error) => {
-                                        console.error(`error in sending Document ::::::: <${error}>`);
+                                        console.error(`error in sending Document  to ${i+1} row data ::::::: <${error}>`);
                                         res.send(status.userNotValid());
                                         return;
                                     });
@@ -1616,6 +1600,56 @@ app.post("/bulktemplatemail", async function (req, res) {
         return res.send(status.unauthorized());
     }
 });
+
+// app.post("/bulkcustommail", async function (req, res) {
+//     apikey = req.cookies.apikey;
+
+//     const isValidapikey = await checkAPIKey(apikey);
+//     try {
+//         if (isValidapikey) {
+//             const token = req.body.token;
+//             const iid = req.body.iid;
+//             const contacts = req.body.contacts;
+//             const from = await findData(apikey, 'email');
+//             const subject = req.body.subject;
+//             const body = req.body.message;
+//             const sender = {
+//                 "hostname": await findData(apikey, 'hostname'),
+//                 "port": await findData(apikey, 'port'),
+//                 "email": from,
+//                 "passcode": await findData(apikey, 'emailpasscode')
+//             };
+
+//             conn.query(`SELECT * FROM instance WHERE instance_id = '${iid}' AND apikey = '${apikey}' AND token = '${token}'`,
+//                 async function (err, result) {
+//                     if (err || result.length <= 0) return res.send(status.forbidden());
+
+//                     const promises = contacts.map(async (to) => {
+//                         try {
+//                             await sendEmail(sender, to, subject, body);
+//                             const id = crypto.randomBytes(8).toString("hex");
+//                             conn.query(`INSERT INTO email VALUES (?,?,?,?,?,?,?,?,?)`,
+//                                 [id, from, to, 'Bulk Mail Custom', subject, body, iid, apikey, new Date()],
+//                                 (err, result) => {
+//                                     if (err || result.affectedRows <= 0) console.log("Error in saving email to database");
+//                                 });
+//                         } catch (error) {
+//                             console.log(`Error in sending email to ${to}: ${error}`);
+//                         }
+//                     });
+
+//                     Promise.all(promises)
+//                         .then(() => res.send(status.ok()))
+//                         .catch(() => res.send(status.badRequest()));
+//                 });
+//         } else {
+//             res.send(status.unauthorized());
+//         }
+//     } catch (e) {
+//         console.log(e);
+//         res.send(status.unauthorized());
+//     }
+// });
 
 // Bulkmail : Send Bulk Custom Mail API
 app.post("/bulkcustommail", async function (req, res) {
@@ -3498,7 +3532,6 @@ app.post("/ClientReplyToTicketAgent", async (req, res) => {
     const subject = `Support-Ticket ${id}`;
     const body = `<div><b>Hello ${agent_email},</b><br><br>Ticket-Id: #${id}<br><br>subject: ${subject}<br><br>description:${response}</div>`;
 
-
     const sender = {
         "hostname": await findData(apikey, 'hostname'),
         "port": await findData(apikey, 'port'),
@@ -3755,4 +3788,5 @@ app.use((req, res) => {
 app.listen(port, () => {
     console.log(`Your server is up and running on : ${port}`);
     console.log(`http://localhost:${port}/signin`);
+    console.log(`https://swiftsend.click`);
 });
