@@ -40,107 +40,34 @@
 </head>
 
 <style>
-    .positivity {
-        /* position: absolute;
-        top: 0%;
-        left: 50%;
-        transform: translate(-50%, -50%); */
+    body {
+        cursor: url(../assets/images/logo-sm.svg), url(../assets/images/logo-sm.svg), url(../assets/images/logo-sm.svg), default;
+    }
 
-        width: auto;
-        height: auto;
-        padding: 1rem;
-        overflow: hidden;
+    .waviy span {
+        font-family: "Comic Sans MS", "Comic Sans";
+        position: relative;
+        display: inline-block;
+        color: #1fa1e0;
+        font-size: 60px;
         text-transform: uppercase;
+        animation: waviy 1.5s infinite ease-in-out reverse;
+        animation-delay: calc(0.2s * var(--i));
     }
 
-    .positivity .positivity__alone {
-        font-size: 2rem;
-        font-family: serif;
-        color: #000000;
-    }
+    @keyframes waviy {
 
-    .positivity .positivity__words .change {
-        position: absolute;
-        left: 10%;
-        opacity: 0;
-        -webkit-animation: changeword 8s linear infinite;
-        animation: changeword 8s linear infinite;
-        font-family: serif;
-        font-size: 2rem;
-        font-weight: bolder;
-    }
-
-    .positivity .positivity__words .change:nth-child(1) {
-        -webkit-animation-delay: 0s;
-        animation-delay: 0s;
-    }
-
-    .positivity .positivity__words .change:nth-child(2) {
-        -webkit-animation-delay: 2s;
-        animation-delay: 2s;
-    }
-
-    .positivity .positivity__words .change:nth-child(3) {
-        -webkit-animation-delay: 4s;
-        animation-delay: 4s;
-    }
-
-    .positivity .positivity__words .change:nth-child(4) {
-        -webkit-animation-delay: 6s;
-        animation-delay: 6s;
-    }
-
-    @-webkit-keyframes changeword {
         0% {
-            transform: translateY(-50px);
-            opacity: 0;
+            /* transform: translateY(-10px); */
         }
 
-        5% {
-            opacity: 1;
-            transform: translateY(0);
+        50% {
+            transform: translateY(-10px);
+            color: #0ab39c;
         }
 
-        20% {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        30% {
-            opacity: 0;
-            transform: translateY(50px);
-        }
-
-        80% {
-            opacity: 0;
-            transform: translateY(50px);
-        }
-    }
-
-    @keyframes changeword {
-        0% {
-            transform: translateY(-50px);
-            opacity: 0;
-        }
-
-        5% {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        20% {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        30% {
-            opacity: 0;
-            transform: translateY(50px);
-        }
-
-        80% {
-            opacity: 0;
-            transform: translateY(50px);
+        100% {
+            /* transform: translateY(-10px); */
         }
     }
 </style>
@@ -157,6 +84,7 @@
                     <img src="../assets/images/logo-dark.svg" class="card-logo card-logo-light" alt="logo light"
                         height="80">
                 </a>
+
                 <button class="navbar-toggler py-0 fs-20 text-body" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -179,10 +107,8 @@
                         </li>
                     </ul>
 
-                    <div class="">
-                        <a href="/signin" class="btn btn-link fw-medium text-decoration-none text-dark">Sign in</a>
-                        <a href="/signup" class="btn btn-primary">Sign Up</a>
-                    </div>
+                    <a href="/signin" class="btn btn-link fw-medium text-decoration-none text-dark">Sign in</a>
+                    <a href="/signup" class="btn btn-primary">Sign Up</a>
                 </div>
 
             </div>
@@ -197,8 +123,19 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-8 col-sm-10">
                         <div class="text-center mt-lg-5 pt-5">
-                            <h1 class="display-6 fw-semibold mb-3 lh-base">The better way to communicate with
-                                <span class="text-info">SwiftSend</span>
+                            <h1 class="display-6 fw-semibold mb-5 lh-base">
+                                <span class="m-0 p-0">The better way to communicate with</span>
+                                <div class="waviy">
+                                    <span style="--i:1">S</span>
+                                    <span style="--i:2">W</span>
+                                    <span style="--i:3">I</span>
+                                    <span style="--i:4">F</span>
+                                    <span style="--i:5">T</span>
+                                    <span style="--i:6">S</span>
+                                    <span style="--i:7">E</span>
+                                    <span style="--i:8">N</span>
+                                    <span style="--i:9">D</span>
+                                </div>
                             </h1>
 
                             <div class="d-flex gap-4 justify-content-center mt-4 ">
@@ -279,15 +216,13 @@
                         <div class="text-center mb-5">
                             <h3 class="mb-3 fw-semibold">Key Features</h3>
                             <p class="text-muted mb-4 ff-secondary">"Simplify, automate, and elevate your communication
-                                with our powerful web app."</p>
+                                with SwiftSend"</p>
                         </div>
                     </div>
-                    <!-- end col -->
                 </div>
-                <!-- end row -->
 
                 <div class="row g-3">
-                    <div class="col-lg-4">
+                    <div class="col-lg-4" data-aos="fade-right">
                         <div class="d-flex p-3">
                             <div class="flex-shrink-0 me-3">
                                 <div class="avatar-sm icon-effect">
@@ -306,7 +241,7 @@
                         </div>
                     </div>
                     <!-- end col -->
-                    <div class="col-lg-4">
+                    <div class="col-lg-4" data-aos="fade-right">
                         <div class="d-flex p-3">
                             <div class="flex-shrink-0 me-3">
                                 <div class="avatar-sm icon-effect">
@@ -324,7 +259,7 @@
                         </div>
                     </div>
                     <!-- end col -->
-                    <div class="col-lg-4">
+                    <div class="col-lg-4" data-aos="fade-right">
                         <div class="d-flex p-3">
                             <div class="flex-shrink-0 me-3">
                                 <div class="avatar-sm icon-effect">
@@ -343,7 +278,7 @@
                         </div>
                     </div>
                     <!-- end col -->
-                    <div class="col-lg-4">
+                    <div class="col-lg-4" data-aos="fade-right">
                         <div class="d-flex p-3">
                             <div class="flex-shrink-0 me-3">
                                 <div class="avatar-sm icon-effect">
@@ -361,7 +296,7 @@
                         </div>
                     </div>
                     <!-- end col -->
-                    <div class="col-lg-4">
+                    <div class="col-lg-4" data-aos="fade-right">
                         <div class="d-flex p-3">
                             <div class="flex-shrink-0 me-3">
                                 <div class="avatar-sm icon-effect">
@@ -379,7 +314,7 @@
                         </div>
                     </div>
                     <!-- end col -->
-                    <div class="col-lg-4">
+                    <div class="col-lg-4" data-aos="fade-right">
                         <div class="d-flex p-3">
                             <div class="flex-shrink-0 me-3">
                                 <div class="avatar-sm icon-effect">
@@ -398,7 +333,7 @@
                         </div>
                     </div>
                     <!-- end col -->
-                    <div class="col-lg-4">
+                    <div class="col-lg-4" data-aos="fade-right">
                         <div class="d-flex p-3">
                             <div class="flex-shrink-0 me-3">
                                 <div class="avatar-sm icon-effect">
@@ -417,7 +352,7 @@
                         </div>
                     </div>
                     <!-- end col -->
-                    <div class="col-lg-4">
+                    <div class="col-lg-4" data-aos="fade-right">
                         <div class="d-flex p-3">
                             <div class="flex-shrink-0 me-3">
                                 <div class="avatar-sm icon-effect">
@@ -435,7 +370,7 @@
                         </div>
                     </div>
                     <!-- end col -->
-                    <div class="col-lg-4">
+                    <div class="col-lg-4" data-aos="fade-right">
                         <div class="d-flex p-3">
                             <div class="flex-shrink-0 me-3">
                                 <div class="avatar-sm icon-effect">
@@ -454,7 +389,7 @@
                         </div>
                     </div>
                     <!-- end col -->
-                    <div class="col-lg-4">
+                    <div class="col-lg-4" data-aos="fade-right">
                         <div class="d-flex p-3">
                             <div class="flex-shrink-0 me-3">
                                 <div class="avatar-sm icon-effect">
@@ -474,7 +409,7 @@
                         </div>
                     </div>
                     <!-- end col -->
-                    <div class="col-lg-4">
+                    <div class="col-lg-4" data-aos="fade-right">
                         <div class="d-flex p-3">
                             <div class="flex-shrink-0 me-3">
                                 <div class="avatar-sm icon-effect">
@@ -492,7 +427,7 @@
                         </div>
                     </div>
                     <!-- end col -->
-                    <div class="col-lg-4">
+                    <div class="col-lg-4" data-aos="fade-right">
                         <div class="d-flex p-3">
                             <div class="flex-shrink-0 me-3">
                                 <div class="avatar-sm icon-effect">
@@ -656,8 +591,7 @@
                 <div class="col-lg-8">
                     <div class="text-center mb-5">
                         <h3 class="mb-3 fw-semibold">Choose the plan that's right for you</h3>
-                        <p class="text-muted mb-4">Simple pricing. No hidden fees. Advanced features for you
-                            business.</p>
+                        <p class="text-muted mb-4">Simple pricing. No hidden fees.</p>
                     </div>
                 </div>
                 <!-- end col -->
@@ -688,8 +622,6 @@
                             <div class="row mt-4 justify-content-center mx-sm-5 mx-lg-0 mx-md-3" id="year_data"></div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
             <!-- </div> -->
@@ -841,6 +773,11 @@
     <script src="../assets/libs/feather-icons/feather.min.js"></script>
     <script src="../assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
     <script src="../assets/js/plugins.js"></script>
+
+    <!-- aos js -->
+    <script src="/assets/libs/aos/aos.js"></script>
+    <!-- animation init -->
+    <script src="/assets/js/pages/animation-aos.init.js"></script>
 
     <!--Swiper slider js-->
     <script src="../assets/libs/swiper/swiper-bundle.min.js"></script>
