@@ -2309,6 +2309,11 @@
 
             })
 
+            $(document).on("click", ".copy", function () {
+                var param = $(this).attr("id").substring(5);
+                copy_api(param);
+            });
+
         })
     </script>
 

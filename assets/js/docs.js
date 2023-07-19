@@ -8,7 +8,7 @@ $(document).ready(function () {
 
     let iid = ($('#iid').val() == "" || $('#iid').val() == "") ? `{{ instance_id }}` : $('#iid').val();
 
-    $('#apiurl').text(`http://localhost:8081/api/${iid}/${document.URL.split('/')[4]}`);
+    $('#apiurl').text(`https://swiftsend.click/api/${iid}/${document.URL.split('/')[4]}`);
 
     $(document).on('click', '#save', function () {
         nullfield_validation('iid');
@@ -19,7 +19,7 @@ $(document).ready(function () {
 
             iid = $('#iid').val();
 
-            $('#apiurl').text(`http://localhost:8081/api/${iid}/${document.URL.split('/')[4]}`);
+            $('#apiurl').text(`https://swiftsend.click/api/${iid}/${document.URL.split('/')[4]}`);
             $('#iid, #apikey').removeClass('form-control-success form-control-danger');
         }
         $.ajax({
@@ -68,7 +68,7 @@ $(document).ready(function () {
 
         iid = `{{ instance_id }}`;
 
-        $('#apiurl').text(`http://localhost:8081/api/${iid}/${document.URL.split('/')[4]}`);
+        $('#apiurl').text(`https://swiftsend.click/api/${iid}/${document.URL.split('/')[4]}`);
         $('#iid, #apikey').removeClass('form-control-success form-control-danger');
     })
 

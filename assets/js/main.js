@@ -184,6 +184,10 @@ function focusEvent(sourceid, targetid) {
 
 function copy_api(id) {
     var copyText = document.getElementById(id);
+    // var copyText = $('#' + id);
+
+    // copyText.select();
+    // copyText.setSelectionRange(0, 99999);
     navigator.clipboard.writeText(copyText.value || copyText.textContent);
 }
 
@@ -208,6 +212,8 @@ $(document).ready(function () {
                         </div>`);
     $(document).on('click', '#logout', function () {
         document.cookie = "apikey=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        sessionStorage.removeItem("apikey");
+        sessionStorage.removeItem("iid");
         location.href = "/signin";
     });
 

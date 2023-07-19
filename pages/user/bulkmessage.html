@@ -1821,17 +1821,6 @@
                     }
                     authdone();
 
-                    function copy_api(id) {
-                        var copyText = document.getElementById(id);
-
-                        // var copyText = $('#' + id);
-
-                        // copyText.select();
-                        // copyText.setSelectionRange(0, 99999);
-
-                        navigator.clipboard.writeText(copyText.value);
-                    }
-
                     $(document).on("click", ".copy", function () {
                         var param = $(this).attr("id").substring(5);
                         copy_api(param);

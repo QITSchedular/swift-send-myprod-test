@@ -277,7 +277,7 @@ const tableData = (data, callback) => {
     }
 }
 
-async function sendEmail(sender, to, subject, body) {
+async function sendEmail(sender, contacts, subject, body) {
     let transporter = nodemailer.createTransport({
         host: sender.hostname,
         port: sender.port,
@@ -290,7 +290,8 @@ async function sendEmail(sender, to, subject, body) {
 
     let mailOptions = {
         from: sender.email,
-        to: to,
+        to: contacts.to,
+        bcc: contacts.bcc,
         subject: subject,
         html: body,
     };
@@ -937,7 +938,7 @@ app.post("/sendimage", async function (req, res) {
                                                 })
                                         });
                                     }).catch((error) => {
-                                        console.error(`error in sending Document  to ${i+1} row data ::::::: <${error}>`);
+                                        console.error(`error in sending Document  to ${i + 1} row data ::::::: <${error}>`);
                                         res.send(status.userNotValid());
                                         return;
                                     });
@@ -1142,7 +1143,7 @@ app.post('/schedule', async (req, res) => {
                                                                 async function (err, result) {
                                                                     if (err || result.affectedRows < 1) return console.log(status.internalservererror());
                                                                     let body = "Your scheduled task has completed without any error.";
-                                                                    sendEmail(sender, to, subject, body).then(() => {
+                                                                    sendEmail(sender, { to: to, bcc: "" }, subject, body).then(() => {
                                                                         return console.log("Email Sent Scuuessfully");
                                                                     }).catch((error) => {
                                                                         return console.log(`error in Sending  E-Mail ::::::: <${error}>`);
@@ -1156,7 +1157,7 @@ app.post('/schedule', async (req, res) => {
                                                     async function (err, result) {
                                                         if (err || result.affectedRows < 1) return console.log(status.internalservererror());
                                                         let body = `Your scheduled task has not completed due to : ${error}`;
-                                                        sendEmail(sender, to, subject, body).then(() => {
+                                                        sendEmail(sender, { to: to, bcc: "" }, subject, body).then(() => {
                                                             return console.log("Email Sent Scuuessfully");
                                                         }).catch((error) => {
                                                             return console.log(`error in Sending  E-Mail ::::::: <${error}>`);
@@ -1171,7 +1172,7 @@ app.post('/schedule', async (req, res) => {
                                             function (err, result) {
                                                 if (err || result.affectedRows < 1) return console.log(status.internalservererror());
                                                 let body = `Your scheduled task has not completed due to : disconnected instance.`;
-                                                sendEmail(sender, to, subject, body).then(() => {
+                                                sendEmail(sender, { to: to, bcc: "" }, subject, body).then(() => {
                                                     return console.log("Email Sent Scuuessfully");
                                                 }).catch((error) => {
                                                     return console.log(`error in Sending  E-Mail ::::::: <${error}>`);
@@ -1234,7 +1235,7 @@ app.post('/schedule', async (req, res) => {
 
                                                                                 let body = "Your scheduled task has completed without any error.";
 
-                                                                                sendEmail(sender, to, subject, body).then(() => {
+                                                                                sendEmail(sender, { to: to, bcc: "" }, subject, body).then(() => {
                                                                                     return console.log("Email Sent Scuuessfully");
                                                                                 }).catch((error) => {
                                                                                     return console.log(`error in Sending  E-Mail ::::::: <${error}>`);
@@ -1251,7 +1252,7 @@ app.post('/schedule', async (req, res) => {
                                                                     if (i === contacts.length - 1) {
                                                                         let body = "Your scheduled task has completed without any error.";
 
-                                                                        sendEmail(sender, to, subject, body).then(() => {
+                                                                        sendEmail(sender, { to: to, bcc: "" }, subject, body).then(() => {
                                                                             console.log("Email Sent Scuuessfully");
                                                                         }).catch((error) => {
                                                                             console.log(`error in Sending  E-Mail ::::::: <${error}>`);
@@ -1265,7 +1266,7 @@ app.post('/schedule', async (req, res) => {
                                                             function (err, result) {
                                                                 if (err || result.affectedRows < 1) return console.log(status.internalservererror());
                                                                 let body = `Your scheduled task has not completed due to : ${error}`;
-                                                                sendEmail(sender, to, subject, body).then(() => {
+                                                                sendEmail(sender, { to: to, bcc: "" }, subject, body).then(() => {
                                                                     return console.log("Email Sent Scuuessfully");
                                                                 }).catch((error) => {
                                                                     return console.log(`error in Sending  E-Mail ::::::: <${error}>`);
@@ -1280,7 +1281,7 @@ app.post('/schedule', async (req, res) => {
                                                     function (err, result) {
                                                         if (err || result.affectedRows < 1) return console.log(status.internalservererror());
                                                         let body = `Your scheduled task has not completed due to : disconnected instance.`;
-                                                        sendEmail(sender, to, subject, body).then(() => {
+                                                        sendEmail(sender, { to: to, bcc: "" }, subject, body).then(() => {
                                                             return console.log("Email Sent Scuuessfully");
                                                         }).catch((error) => {
                                                             return console.log(`error in Sending  E-Mail ::::::: <${error}>`);
@@ -1408,7 +1409,7 @@ app.post("/sendMail", async (req, res) => {
                         "email": from,
                         "passcode": await findData(apikey, 'emailpasscode')
                     };
-                    sendEmail(sender, to, subject, body).then(() => {
+                    sendEmail(sender, { to: to, bcc: "" }, subject, body).then(() => {
                         const id = crypto.randomBytes(8).toString("hex");
                         conn.query(`insert into email values(?,?,?,?,?,?,?,?,?)`,
                             [id, from, to, 'GMAIL', subject, body, iid, apikey, new Date()],
@@ -1577,7 +1578,7 @@ app.post("/bulktemplatemail", async function (req, res) {
                         const to = contacts[i];
                         const body = msgarr[i];
 
-                        sendEmail(sender, to, subject, body).then(() => {
+                        sendEmail(sender, { to: to, bcc: "" }, subject, body).then(() => {
                             const id = crypto.randomBytes(8).toString("hex");
                             conn.query(`insert into email values(?,?,?,?,?,?,?,?,?)`,
                                 [id, from, to, 'Bulk Mail Template', subject, body, iid, apikey, new Date()],
@@ -1601,56 +1602,6 @@ app.post("/bulktemplatemail", async function (req, res) {
     }
 });
 
-// app.post("/bulkcustommail", async function (req, res) {
-//     apikey = req.cookies.apikey;
-
-//     const isValidapikey = await checkAPIKey(apikey);
-//     try {
-//         if (isValidapikey) {
-//             const token = req.body.token;
-//             const iid = req.body.iid;
-//             const contacts = req.body.contacts;
-//             const from = await findData(apikey, 'email');
-//             const subject = req.body.subject;
-//             const body = req.body.message;
-//             const sender = {
-//                 "hostname": await findData(apikey, 'hostname'),
-//                 "port": await findData(apikey, 'port'),
-//                 "email": from,
-//                 "passcode": await findData(apikey, 'emailpasscode')
-//             };
-
-//             conn.query(`SELECT * FROM instance WHERE instance_id = '${iid}' AND apikey = '${apikey}' AND token = '${token}'`,
-//                 async function (err, result) {
-//                     if (err || result.length <= 0) return res.send(status.forbidden());
-
-//                     const promises = contacts.map(async (to) => {
-//                         try {
-//                             await sendEmail(sender, to, subject, body);
-//                             const id = crypto.randomBytes(8).toString("hex");
-//                             conn.query(`INSERT INTO email VALUES (?,?,?,?,?,?,?,?,?)`,
-//                                 [id, from, to, 'Bulk Mail Custom', subject, body, iid, apikey, new Date()],
-//                                 (err, result) => {
-//                                     if (err || result.affectedRows <= 0) console.log("Error in saving email to database");
-//                                 });
-//                         } catch (error) {
-//                             console.log(`Error in sending email to ${to}: ${error}`);
-//                         }
-//                     });
-
-//                     Promise.all(promises)
-//                         .then(() => res.send(status.ok()))
-//                         .catch(() => res.send(status.badRequest()));
-//                 });
-//         } else {
-//             res.send(status.unauthorized());
-//         }
-//     } catch (e) {
-//         console.log(e);
-//         res.send(status.unauthorized());
-//     }
-// });
-
 // Bulkmail : Send Bulk Custom Mail API
 app.post("/bulkcustommail", async function (req, res) {
     apikey = req.cookies.apikey;
@@ -1661,7 +1612,12 @@ app.post("/bulkcustommail", async function (req, res) {
             const token = req.body.token;
             const iid = req.body.iid;
 
-            var contacts = req.body.contacts;
+            const contacts = req.body.contacts;
+
+            const contactObj = {
+                to: '',
+                bcc: contacts
+            }
 
             conn.query(`select * from instance where instance_id = '${iid}' and apikey = '${apikey}' and token = '${token}'`,
                 async function (err, result) {
@@ -1675,24 +1631,37 @@ app.post("/bulkcustommail", async function (req, res) {
                         "email": from,
                         "passcode": await findData(apikey, 'emailpasscode')
                     };
-                    for (let i = 0; i < contacts.length; i++) {
-                        const to = contacts[i];
-                        
-                        sendEmail(sender, to, subject, body).then(() => {
+
+                    sendEmail(sender, contactObj, subject, body).then(() => {
+                        contacts.map((value, key) => {
                             const id = crypto.randomBytes(8).toString("hex");
-                            conn.query(`insert into email values(?,?,?,?,?,?,?,?,?)`,
-                                [id, from, to, 'Bulk Mail Custom', subject, body, iid, apikey, new Date()],
-                                (err, result) => {
-                                    if (err || result.affectedRows <= 0) return res.send(status.internalservererror());
-                                    if (i === contacts.length - 1) {
+                            conn.query(`CALL insertEmailRecord (?,?,?,?,?,?,?,?,?)`,
+                                [id, from, value, 'Bulk Mail Custom', subject, body, iid, apikey, new Date()],
+                                function (err, result) {
+                                    if (err) return console.log("err", err);
+                                    if (key === contacts.length - 1) {
                                         return res.send(status.ok());
                                     }
                                 });
-                        }).catch((error) => {
-                            console.log(`error in Sending  E-Mail ::::::: <${error}>`);
-                            return res.send(status.badRequest());
                         })
-                    }
+
+
+                        // contacts.map((item, index) => {
+                        //     console.log(item);
+                        //     const id = crypto.randomBytes(8).toString("hex");
+                        //     conn.query(`insert into email values(?,?,?,?,?,?,?,?,?)`,
+                        //         [id, from, item, 'Bulk Mail Custom', subject, body, iid, apikey, new Date()],
+                        //         (err, result) => {
+                        //             if (err || result.affectedRows <= 0) return res.send(status.internalservererror());
+                        //             if (index === contacts.length - 1) {
+                        //                 return res.send(status.ok());
+                        //             }
+                        //         });
+                        // })
+                    }).catch((error) => {
+                        console.log(`error in Sending  E-Mail ::::::: <${error}>`);
+                        return res.send(status.badRequest());
+                    })
                 });
         } else res.send(status.unauthorized());
     }
@@ -1727,7 +1696,7 @@ app.post("/sendmailchannel", async function (req, res) {
                 };
                 for (let i = 0; i < contacts.length; i++) {
                     const to = contacts[i];
-                    sendEmail(sender, to, subject, body).then(() => {
+                    sendEmail(sender, { to: to, bcc: "" }, subject, body).then(() => {
                         const id = crypto.randomBytes(8).toString("hex");
                         conn.query(`insert into email values(?,?,?,?,?,?,?,?,?)`,
                             [id, from, to, 'Bulk Mail Channel', subject, body, iid, apikey, new Date()],
@@ -2049,7 +2018,7 @@ app.post("/sendEmailVerification", (req, res) => {
             "passcode": 'dbwtdfmwrxmwzcat'
         };
 
-        sendEmail(sender, to, subject, body).then(() => {
+        sendEmail(sender, { to: to, bcc: "" }, subject, body).then(() => {
             return res.send(status.ok());
         }).catch((error) => {
             return res.send(status.badRequest());
@@ -2708,7 +2677,7 @@ app.post('/api/:iid/email', async (req, res) => {
                     "email": await findData(apikey, 'email'),
                     "passcode": await findData(apikey, 'emailpasscode')
                 };
-                sendEmail(sender, to, subject, body).then(() => {
+                sendEmail(sender, { to: to, bcc: "" }, subject, body).then(() => {
                     return res.send({ "status_code": "200", "Message": "Email Sent" });
                 }).catch((error) => {
                     return res.send({ "status_code": "1013", "Message": `Error in sending Email <${error}>` });
@@ -2732,7 +2701,7 @@ app.get('/api/:iid/:fld', async (req, res) => {
             tableData({
                 table: 'instance',
                 paramstr: `instance_id = '${req.params.iid}'`,
-                apikey: req.headers.apikey
+                apikey: apikey
             }, (result) => {
                 if (result.status_code == 500) return res.send(status.internalservererror());
                 if (result.status_code == 404) return res.send({ "status_code": "401", "Message": "Invalid Instance ID" });
@@ -2740,7 +2709,7 @@ app.get('/api/:iid/:fld', async (req, res) => {
                 tableData({
                     table: `${req.params.fld}`,
                     paramstr: `instance_id = '${req.params.iid}'`,
-                    apikey: req.headers.apikey
+                    apikey: apikey
                 }, (result) => {
                     if (result.status_code == 500) return res.send(status.internalservererror());
                     if (result.status_code == 404) return res.send(status.nodatafound());
@@ -2956,7 +2925,7 @@ app.post("/resetpasswordmail", async (req, res) => {
                 "email": 'dashboardcrm.2022@gmail.com',
                 "passcode": 'dbwtdfmwrxmwzcat'
             };
-            sendEmail(sender, email, subject, body).then(() => {
+            sendEmail(sender, { to: email, bcc: "" }, subject, body).then(() => {
                 return res.send(status.ok());
             }).catch((error) => {
                 console.log(`error in Sending  E-Mail ::::::: <${error}>`);
@@ -3419,8 +3388,8 @@ app.post("/addticket", async (req, res) => {
                                                 <b>SwiftSend Support Team</b>
                                             </body>`;
 
-                        sendEmail(sender, assignedAgent, `New Ticket assigned`, agent_body).then(() => {
-                            sendEmail(sender, email, `Ticket Acknowledgement | SwiftSend`, user_body).then(() => {
+                        sendEmail(sender, { to: assignedAgent, bcc: "" }, `New Ticket assigned`, agent_body).then(() => {
+                            sendEmail(sender, { to: email, bcc: "" }, `Ticket Acknowledgement | SwiftSend`, user_body).then(() => {
                                 return res.send(status.ok());
                             }).catch((error) => {
                                 console.log(`error in Sending  E-Mail ::::::: <${error}>`);
@@ -3484,7 +3453,7 @@ app.post("/AgentReplyToTicket", async (req, res) => {
     switch (category) {
         case 'whatsapp': {
             await obj[agent_id].send_whatsapp_message(chatId, `Hello ${uname}\n\nFor query #${id} \n\nWe have considered your query and send response on your email: ${to}\n\nPlease check your email or login to SwiftSend to view the reply`);
-            sendEmail(sender, to, subject, body).then(() => {
+            sendEmail(sender, { to: to, bcc: "" }, subject, body).then(() => {
                 conn.query(`INSERT INTO ticket_reply VALUES (?,?,?,?,?,?)`,
                     [indexno, identity, id, response, new Date(), agent_id], (err, result) => {
                         if (err) return res.send(status.internalservererror());
@@ -3500,7 +3469,7 @@ app.post("/AgentReplyToTicket", async (req, res) => {
         }
 
         case 'email': {
-            sendEmail(sender, to, subject, body).then(() => {
+            sendEmail(sender, { to: to, bcc: "" }, subject, body).then(() => {
                 conn.query(`INSERT INTO ticket_reply VALUES (?,?,?,?,?,?)`,
                     [indexno, identity, id, response, new Date(), agent_id], (err, result) => {
                         if (err) return res.send(status.internalservererror());
@@ -3539,7 +3508,7 @@ app.post("/ClientReplyToTicketAgent", async (req, res) => {
         "passcode": await findData(apikey, 'emailpasscode')
     };
 
-    sendEmail(sender, to, subject, body).then(() => {
+    sendEmail(sender, { to: to, bcc: "" }, subject, body).then(() => {
         conn.query(`INSERT INTO ticket_reply VALUES (?,?,?,?,?,?)`, [indexno, identity, id, response, new Date(), apikey], (err, result) => {
             if (err) return res.send(status.internalservererror());
             conn.query(`update support_ticket set status='inprogress' where ticket_id='${id}'`, (err2, result2) => {
