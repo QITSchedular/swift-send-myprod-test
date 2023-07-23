@@ -344,12 +344,30 @@
                                                             <table class="table table-bordered">
                                                                 <tr>
                                                                     <th style="width: 40%;">
-                                                                        Name
+                                                                        phone
                                                                         <span class="text-danger fs-12 mx-2">
                                                                             (Required)
                                                                         </span>
                                                                     </th>
-                                                                    <td style="width: 70%;">Name of Channel</td>
+                                                                    <td style="width: 70%;">Receiver's phone number</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th style="width: 40%;">
+                                                                        Document
+                                                                        <span class="text-danger fs-12 mx-2">
+                                                                            (Required)
+                                                                        </span>
+                                                                    </th>
+                                                                    <td style="width: 70%;">Document you want to send</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th style="width: 40%;">
+                                                                        type
+                                                                        <span class="text-danger fs-12 mx-2">
+                                                                            (Required)
+                                                                        </span>
+                                                                    </th>
+                                                                    <td style="width: 70%;" class="text-primary">document</td>
                                                                 </tr>
                                                             </table>
                                                         </div>
@@ -370,17 +388,15 @@
                                                         <div class="accordion-body">
                                                             <table class="table">
                                                                 <tr>
-                                                                    <th class="text-success text-center"
-                                                                        style="width: 20%;">
-                                                                        201
+                                                                    <th class="text-success text-center" style="width: 20%;">
+                                                                        200
                                                                     </th>
                                                                     <td style="width: 80%;">
-                                                                        Channel Created
+                                                                        Document Sent
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <th class="text-danger text-center"
-                                                                        style="width: 20%;">
+                                                                    <th class="text-danger text-center" style="width: 20%;">
                                                                         401
                                                                     </th>
                                                                     <td style="width: 80%;">
@@ -388,12 +404,19 @@
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <th class="text-danger text-center"
-                                                                        style="width: 20%;">
+                                                                    <th class="text-danger text-center" style="width: 20%;">
                                                                         500
                                                                     </th>
                                                                     <td style="width: 80%;">
                                                                         Internal Server Error
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th class="text-danger text-center" style="width: 20%;">
+                                                                        1013
+                                                                    </th>
+                                                                    <td style="width: 80%;">
+                                                                        Document not sent due to Inactive instance
                                                                     </td>
                                                                 </tr>
                                                             </table>

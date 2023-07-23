@@ -2612,7 +2612,7 @@ app.post("/getDataWithCondition", (req, res) => {
 app.post('/api/:iid/message', async (req, res) => {
     apikey = req.headers.apikey;
     const iid = req.params.iid;
-    const message = req.body.message;
+
     const chatId = `91${req.body.phone}@c.us`;
     const isValidapikey = await checkAPIKey(apikey);
     try {
@@ -2627,17 +2627,60 @@ app.post('/api/:iid/message', async (req, res) => {
                 if (result.length > 1) return res.send(status.duplicateRecord());
 
                 if (obj[iid]) {
-                    obj[iid].send_whatsapp_message(chatId, message).then((messageId) => {
-                        var msgid = crypto.randomBytes(8).toString("hex");
-                        conn.query(`insert into message values(?,?,?,?,?,?,?,?)`,
-                            [msgid, message, 'Test Single Message', chatId, iid, apikey, "none", new Date()],
-                            function (err, result) {
-                                if (err || result.affectedRows < 1) return res.send(status.internalservererror());
-                                res.send(status.ok());
+                    if (req.body.type === 'message') {
+                        const message = req.body.message;
+                        obj[iid].send_whatsapp_message(chatId, message).then((messageId) => {
+                            var msgid = crypto.randomBytes(8).toString("hex");
+                            conn.query(`insert into message values(?,?,?,?,?,?,?,?)`,
+                                [msgid, message, 'Test Single Message', chatId, iid, apikey, "none", new Date()],
+                                function (err, result) {
+                                    if (err || result.affectedRows < 1) return res.send(status.internalservererror());
+                                    res.send(status.ok());
+                                });
+                        }).catch((error) => {
+                            return res.send({ "status_code": "1013", "Message": "Error in sending message / Inactive instance" });
+                        })
+                    }
+                    else if (req.body.type === 'document') {
+                        createfolder(`image_data/${apikey}/${iid}`);
+                        if (req.files && Object.keys(req.files).length !== 0) {
+                            const uploadedFile = req.files.image;
+                            const uploadPath = `${__dirname}/assets/upload/image_data/${apikey}/${iid}/${uploadedFile.name}`;
+
+                            uploadedFile.mv(uploadPath, async function (err) {
+                                if (err) res.send(status.badRequest());
+                                let filepath = `${__dirname}/assets/upload/image_data/${apikey}/${iid}/${uploadedFile.name}`;
+
+                                const media = MessageMedia.fromFilePath(filepath);
+                                const caption = (req.body.caption) ? req.body.caption : null;
+                                let msgid = crypto.randomBytes(8).toString("hex");
+                                await obj[iid].send_whatsapp_document(chatId, media, caption).then((messageId) => {
+                                    cloudinary.uploader.upload(filepath, { folder: 'M3' }).then((data) => {
+                                        conn.query(`insert into message values(?,?,?,?,?,?,?,?)`,
+                                            [msgid, data.secure_url, `Document-${req.files.image.mimetype}`, chatId, iid, apikey, "none", new Date()],
+                                            function (err, result) {
+                                                if (err || result.affectedRows < 1) return res.send(status.internalservererror());
+                                                return res.send(status.ok());
+                                            });
+                                    }).catch((err) => {
+                                        console.log(`error in storing Document on cloudinary ::::::: <${err}>`);
+                                        conn.query(`insert into message values(?,?,?,?,?,?,?,?)`,
+                                            [msgid, uploadedFile.name, `Document-${req.files.image.mimetype}`, chatId, iid, apikey, "none", new Date()],
+                                            function (err, result) {
+                                                if (err || result.affectedRows < 1) return res.send(status.internalservererror());
+                                                return res.send(status.ok());
+                                            })
+                                    });
+                                }).catch((error) => {
+                                    console.error(`error in sending Document ::::::: <${error}>`);
+                                    return res.send({ "status_code": "1013", "Message": "Error in sending Doucment / Inactive instance" });
+                                });
                             });
-                    }).catch((error) => {
-                        res.send({ "status_code": "1013", "Message": "Error in sending message / Inactive instance" });
-                    })
+                        }
+                    }
+                    else {
+                        return res.send({ "status_code": "1013", "Message": "Missing information in body (type* -> missing)" });
+                    }
                 }
                 else {
                     res.send({ "status_code": "1013", "Message": "Error in sending message / Inactive instance" });
