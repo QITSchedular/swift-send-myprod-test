@@ -192,6 +192,11 @@ function copy_api(id) {
 }
 
 $(document).ready(function () {
+    $(document).on("click", ".copy", function () {
+        var param = $(this).attr("id").substring(5);
+        copy_api(param);
+    });
+
     let page = document.URL.split("/");
 
     sessionStorage.setItem(`data-preloader`, `enable`);

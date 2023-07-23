@@ -189,10 +189,29 @@
                     </div>
                     <div class="card card-body">
                         <div class="d-flex justify-content-evenly gap-3">
-                            <input type="text" class="form-control required" id="iid" placeholder="Enter Instance ID"
-                                data-type="message" autocomplete="off" />
-                            <input type="text" class="form-control required" id="apikey" placeholder="Enter API KEY"
-                                data-type="message" autocomplete="off" />
+                            <div class="input-group">
+                                <span class="input-group-text bg-soft-primary text-primary fw-medium">
+                                    Instance Id
+                                </span>
+                                <input type="text" class="form-control required w-50" id="iid"
+                                    placeholder="Enter Instance ID" data-type="message" autocomplete="off" />
+                                    <button class="input-group-text copy" type="button" id="copy_iid" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="Copy Instance ID">
+                                        <i class="fa-regular fa-copy align-middle fs-5"></i>
+                                    </button>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-text bg-soft-primary text-primary fw-medium">
+                                    Apikey
+                                </span>
+                                <input type="text" class="form-control required w-50" id="apikey"
+                                    placeholder="Enter API KEY" data-type="message" autocomplete="off" />
+                                <button class="input-group-text copy" type="button" id="copy_apikey" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="Copy APIKEY">
+                                    <i class="fa-regular fa-copy align-middle fs-5"></i>
+                                </button>
+                            </div>
+                            <div class="vr"></div>
                             <button type="button" class="btn btn-primary" id="save">
                                 Save
                             </button>
@@ -396,7 +415,7 @@
         <div class="card mb-0">
             <div class="card-header align-items-center d-flex bg-primary text-white-50">
                 <div class="flex-grow-1">
-                    <h5 class="fs-15 text-white mb-1 profile-username">Velzon ChatBot</h5>
+                    <h5 class="fs-15 text-white mb-1 profile-username">SwiftSend ChatBot</h5>
                     <p class="mb-0 fs-12 lh-1">Ask here for help</p>
                 </div>
                 <div>

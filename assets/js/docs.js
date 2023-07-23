@@ -1,5 +1,10 @@
 $(document).ready(function () {
-    if (getCookie('apikey')){
+    $(document).on("click", ".copy", function () {
+        var param = $(this).attr("id").substring(5);
+        copy_api(param);
+    });
+    
+    if (getCookie('apikey')) {
         sessionStorage.setItem('apikey', getCookie('apikey'));
     }
     const page = document.URL.split('/');
