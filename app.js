@@ -2704,7 +2704,6 @@ async function getAttachmentObject(attachments, apikey, iid) {
                     });
                 })
             ).then(() => {
-                console.log(attachments_size)
                 resolve({ fileobj, attachments_size });
             }).catch((error) => {
                 reject(error);
@@ -2741,7 +2740,8 @@ app.post('/api/:iid/email', async (req, res) => {
                     "email": await findData(apikey, 'email'),
                     "passcode": await findData(apikey, 'emailpasscode')
                 };
-                const attachments = Array.isArray(req.files.attachments) ? req.files.attachments : [req.files.attachments];
+                
+                const attachments = (req.files) ? Array.isArray(req.files.attachments) ? req.files.attachments : [req.files.attachments] : [];
 
                 getAttachmentObject(attachments, apikey, iid)
                     .then(({ fileobj, attachments_size }) => {
