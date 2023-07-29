@@ -277,7 +277,7 @@ const tableData = (data, callback) => {
     }
 }
 
-async function sendEmail(sender, contacts, subject, body) {
+async function sendEmail(sender, contacts, subject, body, attachments = null) {
     let transporter = nodemailer.createTransport({
         host: sender.hostname,
         port: sender.port,
@@ -294,6 +294,7 @@ async function sendEmail(sender, contacts, subject, body) {
         bcc: contacts.bcc,
         subject: subject,
         html: body,
+        attachments: attachments
     };
 
     return await new Promise((resolve, reject) => {
@@ -452,7 +453,7 @@ app.post("/file", async (req, res) => {
         if (req.files && req.files.csvfile.mimetype === 'text/csv') {
             let csvData = await req.files.csvfile.data.toString("utf8");
             return csvtojson().fromString(csvData).then((json) => {
-                return res.status(201).json({
+                return res.json({
                     csv: csvData,
                     json: json
                 });
@@ -1644,20 +1645,6 @@ app.post("/bulkcustommail", async function (req, res) {
                                     }
                                 });
                         })
-
-
-                        // contacts.map((item, index) => {
-                        //     console.log(item);
-                        //     const id = crypto.randomBytes(8).toString("hex");
-                        //     conn.query(`insert into email values(?,?,?,?,?,?,?,?,?)`,
-                        //         [id, from, item, 'Bulk Mail Custom', subject, body, iid, apikey, new Date()],
-                        //         (err, result) => {
-                        //             if (err || result.affectedRows <= 0) return res.send(status.internalservererror());
-                        //             if (index === contacts.length - 1) {
-                        //                 return res.send(status.ok());
-                        //             }
-                        //         });
-                        // })
                     }).catch((error) => {
                         console.log(`error in Sending  E-Mail ::::::: <${error}>`);
                         return res.send(status.badRequest());
@@ -2694,6 +2681,40 @@ app.post('/api/:iid/message', async (req, res) => {
     }
 });
 
+async function getAttachmentObject(attachments, apikey, iid) {
+    return new Promise((resolve, reject) => {
+        try {
+            let fileobj = new Array(), attachments_size = 0;
+            createfolder(`image_data/${apikey}/${iid}`);
+            Promise.all(
+                attachments.map((value, key) => {
+                    attachments_size += attachments[key].size;
+                    const uploadPath = `${__dirname}/assets/upload/image_data/${apikey}/${iid}/${attachments[key].name}`;
+
+                    return new Promise((resolveMv, rejectMv) => {
+                        attachments[key].mv(uploadPath, function (err) {
+                            if (err) {
+                                rejectMv(err);
+                            }
+                            else {
+                                fileobj.push({ path: uploadPath });
+                                resolveMv();
+                            }
+                        });
+                    });
+                })
+            ).then(() => {
+                console.log(attachments_size)
+                resolve({ fileobj, attachments_size });
+            }).catch((error) => {
+                reject(error);
+            });
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+
 // Docs : Send Message Testing API
 app.post('/api/:iid/email', async (req, res) => {
     apikey = req.headers.apikey;
@@ -2720,11 +2741,27 @@ app.post('/api/:iid/email', async (req, res) => {
                     "email": await findData(apikey, 'email'),
                     "passcode": await findData(apikey, 'emailpasscode')
                 };
-                sendEmail(sender, { to: to, bcc: "" }, subject, body).then(() => {
-                    return res.send({ "status_code": "200", "Message": "Email Sent" });
-                }).catch((error) => {
-                    return res.send({ "status_code": "1013", "Message": `Error in sending Email <${error}>` });
-                })
+                const attachments = Array.isArray(req.files.attachments) ? req.files.attachments : [req.files.attachments];
+
+                getAttachmentObject(attachments, apikey, iid)
+                    .then(({ fileobj, attachments_size }) => {
+                        if (attachments_size <= 10000000) {
+                            sendEmail(sender, { to: to, bcc: "" }, subject, body, fileobj).then(() => {
+                                return res.send({ "status_code": "200", "Message": "Email Sent" });
+                            }).catch((error) => {
+                                return res.send({ "status_code": "1013", "Message": `Error in sending Email <${error}>` });
+                            }).finally(()=>{
+                                deleteFolder(`/image_data/${apikey}/${iid}`);
+                            })
+                        }
+                        else {
+                            console.log("Total file size exceeds the limit (10 MB)");
+                            return res.send({ code: "401", message: "Total file size exceeds the limit (10 MB)" });
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    });
             });
         } else res.send({ "status_code": "401", "Message": "Invalid API KEY" });
     }

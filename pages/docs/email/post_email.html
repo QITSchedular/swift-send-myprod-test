@@ -203,8 +203,8 @@
                                 </span>
                                 <input type="text" class="form-control required w-50" id="iid"
                                     placeholder="Enter Instance ID" data-type="message" autocomplete="off" />
-                                <button class="input-group-text copy" type="button" id="copy_iid" data-bs-toggle="tooltip"
-                                    data-bs-placement="top" title="Copy Instance ID">
+                                <button class="input-group-text copy" type="button" id="copy_iid"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Copy Instance ID">
                                     <i class="fa-regular fa-copy align-middle fs-5"></i>
                                 </button>
                             </div>
@@ -214,8 +214,8 @@
                                 </span>
                                 <input type="text" class="form-control required w-50" id="apikey"
                                     placeholder="Enter API KEY" data-type="message" autocomplete="off" />
-                                <button class="input-group-text copy" type="button" id="copy_apikey" data-bs-toggle="tooltip"
-                                    data-bs-placement="top" title="Copy APIKEY">
+                                <button class="input-group-text copy" type="button" id="copy_apikey"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Copy APIKEY">
                                     <i class="fa-regular fa-copy align-middle fs-5"></i>
                                 </button>
                             </div>
@@ -264,6 +264,14 @@
                                     </label>
                                     <input type="text" class="form-control required mb-2" id="subject"
                                         placeholder="Enter Subject" data-type="message" />
+
+                                    <label for="attachment_file" class="form-label">
+                                        Attachment
+                                        <span class="text-danger" id="err_attachment_file"></span>
+                                    </label>
+                                    <input type="file" id="attachment_file" class="form-control required mb-2"
+                                        data-type="message" multiple />
+
                                     <label for="body" class="form-label">
                                         Body
                                         <span class="text-danger">*</span>
@@ -605,6 +613,14 @@
                 oninput_validation($(this).attr('id'));
             });
 
+            $(document).on('click', '#attachmentSwitch', () => {
+                $('#attachment_file').toggle();
+            })
+
+            $('#to').val('hpgh048@gmail.com')
+            $('#subject').val('Attachment')
+            $('#body').val('as');
+
             $(document).on('click', '#test', function () {
                 nullfield_validation('to');
                 nullfield_validation('subject');
@@ -615,17 +631,27 @@
                     oninput_validation('body');
                     if (objFlag.flag_to == 0 && objFlag.flag_subject == 0 && objFlag.flag_body == 0) {
                         const iid = sessionStorage.getItem('iid') || `{{ instance_id }}`;
+
+                        let formData = new FormData();
+                        // formData.append("attachments", document.getElementById('attachment_file').files[0]);
+                        formData.append("to", `${$('#to').val().trim()}`);
+                        formData.append("subject", `${$('#subject').val()}`);
+                        formData.append("body", `${$('#body').val()}`);
+
+                        const attachmentFiles = document.getElementById('attachment_file').files;
+                        for (let i = 0; i < attachmentFiles.length; i++) {
+                            formData.append("attachments", attachmentFiles[i]);
+                        }
+
                         $.ajax({
                             url: `/api/${iid}/email`,
                             method: `POST`,
                             headers: {
                                 "apikey": $('#apikey').val()
                             },
-                            data: {
-                                "to": `${$('#to').val().trim()}`,
-                                "subject": `${$('#subject').val()}`,
-                                "body": `${$('#body').val()}`,
-                            },
+                            contentType: false,
+                            processData: false,
+                            data: formData,
                             beforeSend: function () {
                                 $('#test')
                                     .addClass('btn-warning')

@@ -609,6 +609,7 @@
                         formData.append("image", document.getElementById('document_file').files[0]);
                         formData.append("phone", $('#phone').val().trim());
                         formData.append("type", 'document');
+                        
                         $.ajax({
                             url: `/api/${iid}/message`,
                             method: `POST`,
