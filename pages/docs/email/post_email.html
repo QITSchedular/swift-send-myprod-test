@@ -374,7 +374,7 @@
                                                             <table class="table table-bordered">
                                                                 <tr>
                                                                     <th style="width: 40%;">
-                                                                        To
+                                                                        to
                                                                         <span class="text-danger fs-12 mx-2">
                                                                             (Required)
                                                                         </span>
@@ -383,7 +383,7 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <th style="width: 40%;">
-                                                                        Subject
+                                                                        subject
                                                                         <span class="text-danger fs-12 mx-2">
                                                                             (Required)
                                                                         </span>
@@ -392,12 +392,21 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <th style="width: 40%;">
-                                                                        Body
+                                                                        body
                                                                         <span class="text-danger fs-12 mx-2">
                                                                             (Required)
                                                                         </span>
                                                                     </th>
                                                                     <td style="width: 70%;">Body For Email</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th style="width: 40%;">
+                                                                        attachments
+                                                                        <span class="text-danger fs-12 mx-2">
+                                                                            (Required)
+                                                                        </span>
+                                                                    </th>
+                                                                    <td style="width: 70%;">Attachment For Email</td>
                                                                 </tr>
                                                             </table>
                                                         </div>
@@ -616,10 +625,6 @@
             $(document).on('click', '#attachmentSwitch', () => {
                 $('#attachment_file').toggle();
             })
-
-            $('#to').val('hpgh048@gmail.com')
-            $('#subject').val('Attachment')
-            $('#body').val('as');
 
             $(document).on('click', '#test', function () {
                 nullfield_validation('to');
